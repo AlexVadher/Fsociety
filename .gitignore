@@ -1,0 +1,19 @@
+# Ignorar archivos y carpetas generadas por Node.js
+node_modules/
+npm-debug.log
+
+# Ignorar archivos y carpetas generadas por el editor de código
+.vscode/
+*.swp
+*.swo
+
+# Ignorar archivos de configuración local
+.env
+
+# Ignorar archivos de registro
+logs/
+*.log
+
+# Ignorar archivos de respaldo
+*.bak
+*.backup
