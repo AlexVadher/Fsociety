@@ -1,0 +1,76 @@
+<div x-data="{ modalIsOpen: false }">
+    <!-- Button to open the modal -->
+    
+
+    <a href="#" @click="modalIsOpen = true"  class="text-white hover:text-gray-300">Registrarse</a>
+
+    <!-- Modal Background -->
+    <div x-show="modalIsOpen"  x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalIsOpen"  @click.self="modalIsOpen = false" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
+        <!-- Modal Container -->
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative"> 
+            <!-- Close Button -->
+            <button @click="modalIsOpen = false" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+            <!-- Contenido del modal -->
+                <h2 class="text-2xl font-semibold mb-4 text-center">Registrarse</h2>
+                <form action="/register" method="post" class="space-y-4">
+                        <!-- Campo Nombre -->
+                        <div class="flex items-center">
+                            <label class="w-32 text-gray-700 font-medium" for="nombre">Nombre</label>
+                            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="nombre" id="nombre" placeholder="Ejemplo: Luis" required>
+                        </div>
+                        <!-- Campo Apellido -->
+                        <div class="flex items-center">
+                            <label class="w-32 text-gray-700 font-medium" for="apellido">Apellido</label>
+                            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="apellido" id="apellido" placeholder="Ejemplo: Fernandez" required>
+                        </div>
+                        <!-- Campo Correo Electrónico -->
+                        <div class="flex items-center">
+                            <label class="w-32 text-gray-700 font-medium" for="correo">Correo Electrónico</label>
+                            <input type="email" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="correo" id="correo" placeholder="Ejemplo: luis@example.com" required>
+                        </div>
+                        <!-- Campo Contraseña -->
+                        <div class="flex items-center">
+                            <label class="w-32 text-gray-700 font-medium" for="contraseña">Contraseña</label>
+                            <input type="password" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="contraseña" id="contraseña" placeholder="Contraseña" required>
+                        </div>
+                        <!-- Campo Teléfono -->
+                        <div class="flex items-center">
+                            <label class="w-32 text-gray-700 font-medium" for="telefono">Teléfono</label>
+                            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="telefono" id="telefono" placeholder="Ejemplo: 123-456-7890">
+                        </div>
+                        <!-- Campo Género -->
+                        <div class="flex items-center">
+                            <label class="w-32 text-gray-700 font-medium" for="genero">Género</label>
+                            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="genero" id="genero" placeholder="Ejemplo: Masculino">
+                        </div>
+                        <!-- Campo Orientación Sexual -->
+                        <div class="flex items-center">
+                            <label class="w-32 text-gray-700 font-medium" for="orientacionSexual">Orientación Sexual</label>
+                            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="orientacionSexual" id="orientacionSexual" placeholder="Ejemplo: Heterosexual">
+                        </div>
+                        <!-- Campo País -->
+                        <div class="flex items-center">
+                            <label class="w-32 text-gray-700 font-medium" for="pais">País</label>
+                            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="pais" id="pais" placeholder="Ejemplo: Colombia">
+                        </div>
+                        <!-- campo Rol -->
+                        <div class="flex items center">
+                            <label class="w-32 text-gray-700 font-medium" for="idRol">Rol</label>
+                            <select name="idRol" id="idRol" class="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" required>
+                                <option value="1">Administrador</option>
+                                <option value="2">Usuario</option>
+                            </select>
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Crear Usuario</button>
+                        </div>
+                    </form>
+            <!-- Modal Actions -->
+            <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-center gap-2">
+                
+            </div>
+        </div>
+    </div>
+</div>

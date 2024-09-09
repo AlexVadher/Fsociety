@@ -1,0 +1,39 @@
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="/" class="text-white text-xl font-bold">
+            navegador
+        </a>
+        <button type="button" class="text-white focus:outline-none md:hidden" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="hidden w-full md:flex md:items-center md:w-auto" id="navbarNav">
+            <ul class="flex flex-col md:flex-row md:ml-auto space-y-2 md:space-y-0 md:space-x-4">
+                <li class="nav-item">
+                    <a href="/" class="text-white hover:text-gray-300">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/hotels" class="text-white hover:text-gray-300">Hoteles</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/activities" class="text-white hover:text-gray-300">Actividades</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/additionalServices" class="text-white hover:text-gray-300">Servicios Adicionales</a>
+                </li>
+                {{#if isAuthenticated}}
+                    <li class="nav-item">
+                        {{>profile}}
+                        {{user.nombre}}
+                    </li>
+                {{else}}
+                    <li class="nav-item">
+                        {{>login}}
+                    </li>
+                    <li class="nav-item">
+                        {{>register}}
+                    </li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+</nav>
