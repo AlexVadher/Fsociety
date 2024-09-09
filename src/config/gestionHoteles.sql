@@ -148,3 +148,5 @@ CREATE TABLE detallesReservasHabitaciones (
     FOREIGN KEY (idReserva) REFERENCES reservas(id),
     FOREIGN KEY (idHabitacion) REFERENCES habitaciones(id)
 );
+
+ALTER TABLE usuarios ADD COLUMN guid VARCHAR(36) NOT NULL;
