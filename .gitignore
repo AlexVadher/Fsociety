@@ -17,3 +17,7 @@ logs/
 # Ignorar archivos de respaldo
 *.bak
 *.backup
+
+ignorar paquetes de npm
+package-lock.json
+package.json

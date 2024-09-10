@@ -47,7 +47,7 @@ class userModel {
     }
 
     // Método para actualizar la información de un usuario
-    static async updateUser(userId, userData) {
+    static async updateUser({userId, userData}) {
         try {
             const {
                 nombre,
@@ -62,7 +62,7 @@ class userModel {
 
             // Actualizando la información del usuario en la base de datos
             const [result] = await pool.query(
-                'UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, telefono = ?, genero = ?, orientacionSexual = ?, pais = ?, idRol = ? WHERE idUsuario = ?',
+                'UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, telefono = ?, genero = ?, orientacionSexual = ?, pais = ?, idRol = ? WHERE id = ?',
                 [
                     nombre,
                     apellido,
@@ -115,6 +115,28 @@ class userModel {
                 [guid],
             );
             return rows[0]; // Devuelve el primer usuario encontrado con el GUID proporcionado
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    // Método para eliminar un usuario por su ID
+    static async deleteUser(userId) {
+        try {
+            const [result] = await pool.query(
+                'DELETE FROM usuarios WHERE id = ?',
+                [userId],
+            );
+            return result; // Devuelve el resultado de la eliminación del usuario
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+    // Metodo para obtener la lista de usuarios
+    static async getUsers() {
+        try {
+            const [rows] = await pool.query('SELECT * FROM usuarios');
+            return rows; // Devuelve la lista de usuarios
         } catch (error) {
             throw new Error(error);
         }

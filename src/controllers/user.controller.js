@@ -82,8 +82,28 @@ export class userController {
         }
     }
 
+    // Método para obtener los datos del usuario para el formulario de edición
+    static async getUserData(req, res) {
+        try {
+            // Obtener el id del usuario desde req.user
+            const {id} = req.user;
+
+            // Llamar al método getUserById de la clase UserModel
+            const user = await UserModel.getUserById(id);
+
+            console.log('Datos del usuario:', user); // Registro de resultado
+
+            res.render('users/profileEdit', {user});
+        } catch (err) {
+            console.error('Error al obtener los datos del usuario:', err);
+            return res
+                .status(500)
+                .json({message: 'Error interno del servidor.'});
+        }
+    }
+
     // Método para actualizar la información del usuario
-    static async updateUser(req, res) {
+    static async editUserProfile(req, res) {
         try {
             // Obtener el id del usuario desde req.params
             const {id} = req.params;
@@ -121,6 +141,56 @@ export class userController {
             });
         } catch (err) {
             console.error('Error al actualizar el usuario:', err); // Mejorar el registro de errores
+            res.status(500).json({
+                message: 'Error 500:' + err.message,
+                body: req.body,
+            });
+        }
+    }
+
+    // Método para eliminar un usuario
+    static async deleteUser(req, res) {
+        try {
+            // Obtener el id del usuario desde req.params
+            const {id} = req.params;
+
+            // Llamar al método deleteUser de la clase UserModel
+            const result = await UserModel.deleteUser(id);
+
+            console.log('Resultado de la eliminación del usuario:', result); // Registro de resultado
+
+            res.status(200).json({
+                message: 'Usuario eliminado exitosamente',
+                body: result,
+            });
+        } catch (err) {
+            console.error('Error al eliminar el usuario:', err); // Mejorar el registro de errores
+            res.status(500).json({
+                message: 'Error 500:' + err.message,
+                body: req.body,
+            });
+        }
+    }
+
+    /* static async listClientes(req, res) {
+        try {
+            const clientes = await ClienteDAO.getAll();
+            res.render('personas/list', {clientes});
+        } catch (error) {
+            res.status(500).json({message: error.message});
+        }
+    } */
+
+    // Método para obtener la lista de usuarios
+    static async getUsers(req, res) {
+        try {
+            // Llamar al método getUsers de la clase UserModel
+            const users = await UserModel.getUsers();
+
+            console.log('Lista de usuarios:', users); // Registro de resultado
+            res.render('index', {users}); // Asegúrate de pasar la lista de usuarios a la vista
+        } catch (err) {
+            console.error('Error al obtener la lista de usuarios:', err); // Mejorar el registro de errores
             res.status(500).json({
                 message: 'Error 500:' + err.message,
                 body: req.body,

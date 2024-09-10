@@ -1,4 +1,4 @@
-<nav class="bg-sky-400 p-2">
+<nav class="bg-sky-400 p-2 rounded-b-lg">
     <div class="container mx-auto flex justify-between items-center">
         <a href="/" class="text-white text-xl font-bold flex items-center">
             <img src="/img/logo.svg" alt="Logo" class="w-16 h-16 my-0"> <!-- Ajusta el tamaño del logo -->
@@ -20,7 +20,6 @@
                 <li class="nav-item">
                     <a href="/additionalServices" class="font-bold text-neutral-950 hover:text-slate-100">Servicios Adicionales</a>
                 </li>
-                
             </ul>
             {{#if isAuthenticated}} 
                     {{>profile}}

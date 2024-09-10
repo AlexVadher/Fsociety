@@ -1,0 +1,94 @@
+<div class="flex min-h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-700 mb-6">Configuración de Perfil</h2>
+    <nav class="space-y-4">
+      <a href="/profile/profileEdit/{{user.id}}" class="block px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">
+        <i class="fas fa-user-edit mr-2"></i>
+        Editar Perfil
+      </a>
+      <a href="/profile/changePassword/{{user.id}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-md">
+        <i class="fas fa-key mr-2"></i>
+        Cambiar Contraseña
+      </a>
+      <a href="/profile/settings/{{user.id}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-md">
+        <i class="fas fa-cog mr-2"></i>
+        Configuración
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8">
+    <h1 class="text-2xl font-semibold mb-6">Editar Perfil</h1>
+    <!-- Aquí se puede incluir el formulario de edición de perfil o la configuración seleccionada -->
+    <!-- Archivo: views/profileEdit.hbs -->
+    <div class="container mx-auto px-4 py-8">
+      <!-- Contenedor del formulario -->
+      <div class="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-6">
+        <!-- Título -->
+        <h2 class="text-2xl font-semibold mb-6 text-center">Editar Perfil</h2>
+
+        <!-- Formulario de edición -->
+        <form action="/profile/update/{{user.id}}" method="post" class="space-y-6">
+          <!-- Campo Nombre -->
+          <div class="flex items-center">
+            <label class="w-32 text-gray-700 font-medium" for="nombre">Nombre</label>
+            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="nombre" id="nombre" value="{{user.nombre}}" placeholder="Ejemplo: Luis" required>
+          </div>
+
+          <!-- Campo Apellido -->
+          <div class="flex items-center">
+            <label class="w-32 text-gray-700 font-medium" for="apellido">Apellido</label>
+            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="apellido" id="apellido" value="{{user.apellido}}" placeholder="Ejemplo: Fernandez" required>
+          </div>
+
+          <!-- Campo Correo Electrónico -->
+          <div class="flex items-center">
+            <label class="w-32 text-gray-700 font-medium" for="correo">Correo Electrónico</label>
+            <input type="email" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="correo" id="correo" value="{{user.correo}}" placeholder="Ejemplo: luis@example.com" required>
+          </div>
+
+          <!-- Campo Teléfono -->
+          <div class="flex items-center">
+            <label class="w-32 text-gray-700 font-medium" for="telefono">Teléfono</label>
+            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="telefono" id="telefono" value="{{user.telefono}}" placeholder="Ejemplo: 123-456-7890">
+          </div>
+
+          <!-- Campo Género -->
+          <div class="flex items-center">
+            <label class="w-32 text-gray-700 font-medium" for="genero">Género</label>
+            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="genero" id="genero" value="{{user.genero}}" placeholder="Ejemplo: Masculino">
+          </div>
+
+          <!-- Campo Orientación Sexual -->
+          <div class="flex items-center">
+            <label class="w-32 text-gray-700 font-medium" for="orientacionSexual">Orientación Sexual</label>
+            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="orientacionSexual" id="orientacionSexual" value="{{user.orientacionSexual}}" placeholder="Ejemplo: Heterosexual">
+          </div>
+
+          <!-- Campo País -->
+          <div class="flex items-center">
+            <label class="w-32 text-gray-700 font-medium" for="pais">País</label>
+            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="pais" id="pais" value="{{user.pais}}" placeholder="Ejemplo: Colombia">
+          </div>
+
+          <!-- Campo Rol (solo administrador puede cambiar) -->
+          {{!-- <div class="flex items-center">
+            <label class="w-32 text-gray-700 font-medium" for="idRol">Rol</label>
+            <select name="idRol" id="idRol" class="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" {{#unless isAdmin}}disabled{{/unless}}>
+              <option value="1" {{#ifEquals user.idRol "1"}}selected{{/ifEquals}}>Administrador</option>
+              <option value="2" {{#ifEquals user.idRol "2"}}selected{{/ifEquals}}>Usuario</option>
+            </select>
+          </div> --}}
+
+          <!-- Botón de Enviar -->
+          <div class="mt-6">
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Actualizar Perfil</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
