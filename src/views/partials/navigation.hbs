@@ -1,39 +1,33 @@
-<nav class="bg-gray-800 p-4">
+<nav class="bg-sky-400 p-2">
     <div class="container mx-auto flex justify-between items-center">
-        <a href="/" class="text-white text-xl font-bold">
-            navegador
+        <a href="/" class="text-white text-xl font-bold flex items-center">
+            <img src="/img/logo.svg" alt="Logo" class="w-16 h-16 my-0"> <!-- Ajusta el tamaño del logo -->
         </a>
         <button type="button" class="text-white focus:outline-none md:hidden" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="toggleMenu()">
             <i class="fas fa-bars"></i>
         </button>
-        <div class="hidden w-full md:flex md:items-center md:w-auto" id="navbarNav">
-            <ul class="flex flex-col md:flex-row md:ml-auto space-y-2 md:space-y-0 md:space-x-4">
+        <div class="hidden w-full md:flex md:items-end md:w-auto " id="navbarNav">
+            <ul class="flex flex-col md:flex-row md:ml-auto space-y-2 md:space-y-0 md:space-x-6">
                 <li class="nav-item">
-                    <a href="/" class="text-white hover:text-gray-300">Inicio</a>
+                    <a href="/" class="font-bold text-neutral-950 hover:text-slate-100">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/hotels" class="text-white hover:text-gray-300">Hoteles</a>
+                    <a href="/hotels" class="font-bold text-neutral-950 hover:text-slate-100">Hoteles</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/activities" class="text-white hover:text-gray-300">Actividades</a>
+                    <a href="/activities" class="font-bold text-neutral-950 hover:text-slate-100">Actividades</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/additionalServices" class="text-white hover:text-gray-300">Servicios Adicionales</a>
+                    <a href="/additionalServices" class="font-bold text-neutral-950 hover:text-slate-100">Servicios Adicionales</a>
                 </li>
-                {{#if isAuthenticated}}
-                    <li class="nav-item">
-                        {{>profile}}
-                        {{user.nombre}}
-                    </li>
-                {{else}}
-                    <li class="nav-item">
-                        {{>login}}
-                    </li>
-                    <li class="nav-item">
-                        {{>register}}
-                    </li>
-                {{/if}}
+                
             </ul>
+            {{#if isAuthenticated}} 
+                    {{>profile}}
+                    {{user.nombre}}
+                {{else}}
+                    {{>login}}
+            {{/if}}
         </div>
     </div>
 </nav>

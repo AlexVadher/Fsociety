@@ -14,11 +14,11 @@
 
 
 
-<div x-data="{ modalIsOpen: false }">
+<div x-data="{ modalIsOpen: false }" class="ml-4 -mb-1">
     <!-- Button to open the modal -->
     
 
-    <a href="#" @click="modalIsOpen = true"  class="text-white hover:text-gray-300">login</a>
+    <button type="button" @click="modalIsOpen = true" class=" font-bold bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-600 transition duration-200">Login</button>
 
     <!-- Modal Background -->
     <div x-show="modalIsOpen"  x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalIsOpen"  @click.self="modalIsOpen = false" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
@@ -41,9 +41,9 @@
                 </div>
                 <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200">Login</button>
             </form>
-            <!-- Modal Actions -->
-            <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-center gap-2">
-                
+            <div class="mt-4 text-center">
+                <p>¿No tienes una cuenta? {{>register}}</p>
+                <p>Al registrarte, aceptas nuestras <a href="/politicas" class="text-blue-500">políticas de privacidad</a></p>
             </div>
         </div>
     </div>
