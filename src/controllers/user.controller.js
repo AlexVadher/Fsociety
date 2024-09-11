@@ -65,7 +65,7 @@ export class userController {
                     .json({message: 'Usuario no encontrado.'});
             }
 
-            // Devolver la información del perfil del usuario
+            // validamos la informacion en consola
             /* return res.json({
             guid: user.guid,
             email: user.email,
@@ -82,18 +82,21 @@ export class userController {
         }
     }
 
-    // Método para obtener los datos del usuario para el formulario de edición
+    // Controlador para editar el perfil del usuario
     static async getUserData(req, res) {
         try {
-            // Obtener el id del usuario desde req.user
             const {id} = req.user;
-
-            // Llamar al método getUserById de la clase UserModel
             const user = await UserModel.getUserById(id);
+            console.log('Datos del usuario:', user);
 
-            console.log('Datos del usuario:', user); // Registro de resultado
+            // Obtener la ruta actual del request
+            const currentPath = req.path;
 
-            res.render('users/profileEdit', {user});
+            res.render('users/profileEdit', {
+                user,
+                layout: 'profile',
+                currentPath,
+            });
         } catch (err) {
             console.error('Error al obtener los datos del usuario:', err);
             return res
@@ -148,6 +151,114 @@ export class userController {
         }
     }
 
+    // Método para validar la contraseña actual del usuario y actualizarla si es correcta
+    /* static async validatePassword(req, res) {
+        try {
+            // Obtener el id del usuario desde req.user
+            const {id} = req.user;
+
+            // Obtener la contraseña actual desde req.body
+            const {currentPassword} = req.body;
+
+            // Llamar al método validatePassword de la clase UserModel
+            const result = await UserModel.validatePassword({
+                id,
+                currentPassword,
+            });
+
+            if (!result) {
+                // si la contraseña no es valida se envia un mensaje de error
+                return res.status(400).json({
+                    message: 'Contraseña incorrecta',
+                });
+            } else {
+                // si la contraseña es valida se actualiza la contraseña del usuario
+
+                // Obtener la nueva contraseña desde req.body
+                const {newPassword} = req.body;
+
+                // Llamar al método updatePassword de la clase UserModel
+                const result = await UserModel.updatePassword({
+                    id,
+                    newPassword,
+                });
+            }
+            console.log(
+                'Resultado de la actualización de la contraseña:',
+                result,
+            ); // Registro de resultado
+
+            res.status(200).json({
+                message: 'Contraseña actualizada exitosamente',
+                body: result,
+            });
+
+            console.log('Resultado de la validación de la contraseña:', result); // Registro de resultado
+
+            res.status(200).json({
+                message: 'Contraseña validada exitosamente',
+                body: result,
+            });
+        } catch (err) {
+            console.error('Error al validar la contraseña:', err); // Mejorar el registro de errores
+            res.status(500).json({
+                message: 'Error 500:' + err.message,
+                body: req.body,
+            });
+        }
+    } */
+
+    // Método para validar la contraseña actual del usuario y actualizarla si es correcta
+    static async validatePassword(req, res) {
+        try {
+            // Obtener el id del usuario desde req.user
+            const {id} = req.user;
+
+            // Obtener la contraseña actual y la nueva contraseña desde req.body
+            const {currentPassword, newPassword} = req.body;
+
+            // Validar la contraseña actual llamando al método validatePassword de la clase UserModel
+            const isValidPassword = await UserModel.validatePassword({
+                id,
+                currentPassword,
+            });
+
+            if (!isValidPassword) {
+                // Si la contraseña no es válida, enviar un mensaje de error
+                return res.status(400).json({
+                    message: 'Contraseña incorrecta',
+                });
+            }
+
+            // Si la contraseña es válida, actualizar la contraseña del usuario
+            const updateResult = await UserModel.updatePassword({
+                id,
+                newPassword,
+            });
+
+            // renderizar la vista de cambio de contraseña con un mensaje de exito en la actualizacion
+            res.render('partials/changePassword', {
+                message: 'Contraseña actualizada exitosamente',
+            });
+
+            console.log(
+                'Resultado de la actualización de la contraseña:',
+                updateResult,
+            ); // Registro de resultado
+
+            // Enviar una respuesta exitosa
+            return res.status(200).json({
+                message: 'Contraseña actualizada exitosamente',
+                body: updateResult,
+            });
+        } catch (err) {
+            console.error('Error al validar la contraseña:', err); // Mejorar el registro de errores
+            return res.status(500).json({
+                message: 'Error 500: ' + err.message,
+                body: req.body,
+            });
+        }
+    }
     // Método para eliminar un usuario
     static async deleteUser(req, res) {
         try {

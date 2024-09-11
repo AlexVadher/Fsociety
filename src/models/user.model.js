@@ -81,6 +81,61 @@ class userModel {
         }
     }
 
+    // Método para validar las contraseña del usuario antes de actualizar la nueva contraseña
+    static async validatePassword({userId, password}) {
+        try {
+            // Obtener la contraseña del usuario desde la base de datos
+            const [rows] = await pool.query(
+                'SELECT contraseña FROM usuarios WHERE id = ?',
+                [userId],
+            );
+
+            // Verificar si la contraseña proporcionada coincide con la contraseña almacenada en la base de datos
+            const isPasswordValid = await argon2.verify(
+                rows[0].contraseña,
+                password,
+            );
+            return isPasswordValid; // Devuelve true si la contraseña es válida, de lo contrario, devuelve false
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    // Método para actualizar la información de un usuario
+    static async updateUser({userId, userData}) {
+        try {
+            const {
+                nombre,
+                apellido,
+                correo,
+                telefono,
+                genero,
+                orientacionSexual,
+                pais,
+                idRol,
+            } = userData;
+
+            // Actualizando la información del usuario en la base de datos
+            const [result] = await pool.query(
+                'UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, telefono = ?, genero = ?, orientacionSexual = ?, pais = ?, idRol = ? WHERE id = ?',
+                [
+                    nombre,
+                    apellido,
+                    correo,
+                    telefono,
+                    genero,
+                    orientacionSexual,
+                    pais,
+                    idRol,
+                    userId,
+                ],
+            );
+            return result; // Devuelve el resultado de la actualización del usuario en la base de datos
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
     // Método para obtener un usuario por su ID
     static async getUserById(userId) {
         try {

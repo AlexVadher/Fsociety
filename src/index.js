@@ -1,4 +1,5 @@
 import express from 'express';
+import session from 'express-session';
 import morgan from 'morgan';
 import {engine} from 'express-handlebars';
 import {join, dirname} from 'path';
@@ -6,13 +7,25 @@ import {fileURLToPath} from 'url';
 import cookieParser from 'cookie-parser'; // Importar cookie-parser
 import dotenv from 'dotenv';
 import userRouter from './routes/user.routes.js'; // Rutas para los usuarios
-import authMiddleware from './middlewares/authToken.middleware.js'; // Middleware de autenticación
 
 dotenv.config(); // Cargar variables de entorno
 
 // Inicializar express
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Configurar cookie-parser
+app.use(cookieParser());
+
+// Middleware para verificar la autenticación del usuario
+app.use(
+    session({
+        secret: process.env.JWT_PRIVATE_KEY, // Cambia esto por una clave secreta segura
+        resave: false, // No guardar la sesión si no se realiza ningún cambio
+        saveUninitialized: true,
+        cookie: {secure: false}, // Cambia a true si usas HTTPS
+    }),
+);
 
 // Configuración del puerto
 app.set('port', process.env.PORT || 3000);
@@ -26,6 +39,10 @@ app.engine(
         layoutsDir: join(app.get('views'), 'layouts'),
         partialsDir: join(app.get('views'), 'partials'),
         extname: '.hbs',
+        helpers: {
+            ifEquals: (arg1, arg2, options) =>
+                arg1 === arg2 ? options.fn(this) : options.inverse(this), // pendiente por validar
+        },
     }),
 );
 app.set('view engine', '.hbs');
@@ -48,7 +65,12 @@ app.use((req, res, next) => {
 
 // Rutas de la aplicación
 app.get('/', (req, res) => {
-    res.render('index');
+    // validar si existe la session del usuario
+    if (req.session.user) {
+        res.render('index', {user: req.session.user});
+    } else {
+        res.render('index');
+    }
 });
 
 // Rutas de los usuarios

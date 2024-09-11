@@ -99,13 +99,23 @@ export class AuthController {
                 maxAge: 3600000, // 1 hora en milisegundos
             });
 
+            // Guardar los datos del usuario en la sesión
+            req.session.user = {
+                id: user.guid,
+                nombre: user.nombre,
+                correo: user.correo,
+                idRol: user.idRol,
+                // Otros datos relevantes del usuario
+            };
+
             console.log('Cookie token en login:', req.cookies.token); // Verificar la cookie
+            console.log('Sesión de usuario en login:', req.session.user); // Verificar la sesión del usuario
 
             // Redirigir a la página correspondiente según el rol del usuario
             if (user.idRol === 1) {
-                return res.redirect('admin/dashboard'); // Redirigir a la página de administrador
+                return res.redirect('/admin/dashboard/'); // Redirigir a la página de administrador
             } else {
-                return res.redirect('/');
+                return res.redirect('/'); // Redirigir a la página de inicio
             }
         } catch (err) {
             console.error('Error durante la autenticación:', err);
@@ -115,6 +125,7 @@ export class AuthController {
 
     // Método para cerrar sesión y eliminar la cookie del token
     static async logout(req, res) {
+        req.session.destroy(); // Destruir la sesión
         res.clearCookie('token'); // Eliminar la cookie del token
         res.redirect('/'); // Redirigir a la página de inicio
     }

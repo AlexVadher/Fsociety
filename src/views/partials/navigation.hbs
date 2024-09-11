@@ -21,7 +21,7 @@
                     <a href="/additionalServices" class="font-bold text-neutral-950 hover:text-slate-100">Servicios Adicionales</a>
                 </li>
             </ul>
-            {{#if isAuthenticated}} 
+            {{#if user}} 
                     {{>profile}}
                     {{user.nombre}}
                 {{else}}
