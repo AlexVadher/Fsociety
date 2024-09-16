@@ -7,7 +7,7 @@ import {fileURLToPath} from 'url';
 import cookieParser from 'cookie-parser'; // Importar cookie-parser
 import dotenv from 'dotenv';
 import userRouter from './routes/user.routes.js'; // Rutas para los usuarios
-
+import routerActivity from './routes/activitites.routes.js';
 dotenv.config(); // Cargar variables de entorno
 
 // Inicializar express
@@ -31,7 +31,7 @@ app.use(
 );
 
 // Configuración del puerto
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 4000);
 app.set('views', join(__dirname, 'views'));
 
 // Configurar el motor de plantillas handlebars
@@ -79,6 +79,7 @@ app.get('/', (req, res) => {
 // Rutas de los usuarios
 app.use(userRouter);
 
+app.use(routerActivity);
 // Iniciar el servidor
 app.listen(app.get('port'), () =>
     console.log('Servidor en el puerto', app.get('port')),
