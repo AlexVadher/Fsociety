@@ -1,0 +1,9 @@
+
+/* Scroll Snap para el carrusel */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
