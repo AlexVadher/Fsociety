@@ -3,7 +3,7 @@ import hotelController from '../controllers/hotel.controller.js';
 
 const hotelRouter = Router();
 
-hotelRouter.post('/register.hotel', hotelController.registerHotel);
+hotelRouter.post('/registerHotel/', hotelController.registerHotel);
 
 hotelRouter.put('/update/:id', hotelController.updateHotel);
 
