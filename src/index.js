@@ -22,8 +22,11 @@ app.use(
     session({
         secret: process.env.JWT_PRIVATE_KEY, // Cambia esto por una clave secreta segura
         resave: false, // No guardar la sesión si no se realiza ningún cambio
-        saveUninitialized: true,
-        cookie: {secure: false}, // Cambia a true si usas HTTPS
+        saveUninitialized: false, // para guardar la sesión en el servidor y no en el cliente (cookie)
+        cookie: {
+            secure: process.env.NODE_ENV === 'production', // Cambia a true si usas HTTPS
+            maxAge: 3600000, // 1 hora en milisegundos
+        },
     }),
 );
 

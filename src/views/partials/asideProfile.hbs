@@ -1,18 +1,12 @@
  <!-- Sidebar -->
-  <aside class="w-64 bg-white shadow-lg p-6">
-    <h2 class="text-xl font-semibold text-gray-700 mb-6">Configuración de Perfil</h2>
-    <nav class="space-y-4">
-      <a href="/profile/profileEdit/{{user.guid}}" class="block px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">
-        <i class="fas fa-user-edit mr-2"></i>
-        Editar Perfil
+<aside class="w-64 bg-white shadow-lg p-6">
+  <h2 class="text-xl font-semibold text-gray-700 mb-6">Configuración de Perfil</h2>
+  <nav class="space-y-4">
+    {{#each menuItems}}
+      <a href="{{this.link}}" class="block px-4 py-2 text-sm text-gray-700 {{#if this.active}}bg-gray-200{{/if}} rounded-md hover:bg-gray-300">
+        <i class="{{this.icon}} mr-2"></i>
+        {{this.name}}
       </a>
-      <a href="/profile/changePassword/{{user.id}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-md">
-        <i class="fas fa-key mr-2"></i>
-        Cambiar Contraseña
-      </a>
-      <a href="/profile/settings/{{user.id}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-md">
-        <i class="fas fa-cog mr-2"></i>
-        Configuración
-      </a>
-    </nav>
-  </aside>
+    {{/each}}
+  </nav>
+</aside>

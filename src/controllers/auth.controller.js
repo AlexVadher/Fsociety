@@ -58,6 +58,7 @@ export class AuthController {
         }
     } */
 
+    // Método para iniciar sesión y generar un token JWT
     static async login(req, res) {
         try {
             const {correo, password} = req.body; // Obtener el correo y la contraseña del cuerpo de la solicitud(formulario de inicio de sesión)
@@ -94,22 +95,25 @@ export class AuthController {
 
             // Guardar el token en una cookie
             res.cookie('token', jwt, {
-                httpOnly: true, // Asegura que la cookie no sea accesible desde JavaScript en el navegador
+                httpOnly: true, // Asegura que la cookie no sea accesible desde JavaScript en el navegador (solo se envía al servidor)
                 secure: process.env.NODE_ENV === 'production', // Asegura que la cookie solo se envíe a través de HTTPS en producción
                 maxAge: 3600000, // 1 hora en milisegundos
             });
 
-            // Guardar los datos del usuario en la sesión
+            // Guardar los datos del usuario en la sesión del usuario (req.session.user) después de la autenticación exitosa
             req.session.user = {
-                id: user.guid,
+                guid: user.guid,
                 nombre: user.nombre,
                 correo: user.correo,
                 idRol: user.idRol,
+                avatarUrl: user.avatarUrl,
                 // Otros datos relevantes del usuario
             };
 
-            console.log('Cookie token en login:', req.cookies.token); // Verificar la cookie
-            console.log('Sesión de usuario en login:', req.session.user); // Verificar la sesión del usuario
+            // Verificar la cookie del token en la solicitud
+            console.log('cookie token en login:', req.cookies.token);
+
+            console.log('Sesión de usuario en login:', req.session.user); // Verificar la sesión del usuario en la solicitud
 
             // Redirigir a la página correspondiente según el rol del usuario
             if (user.idRol === 1) {
@@ -125,9 +129,18 @@ export class AuthController {
 
     // Método para cerrar sesión y eliminar la cookie del token
     static async logout(req, res) {
-        req.session.destroy(); // Destruir la sesión
-        res.clearCookie('token'); // Eliminar la cookie del token
-        res.redirect('/'); // Redirigir a la página de inicio
+        req.session.destroy((err) => {
+            if (err) {
+                console.error('Error al destruir la sesión:', err);
+                return res
+                    .status(500)
+                    .json({message: 'Error al cerrar sesión'});
+            }
+
+            res.clearCookie('connect.sid'); // Eliminar la cookie de sesión
+            res.clearCookie('token'); // Eliminar la cookie del token
+            res.redirect('/'); // Redirigir a la página de inicio
+        });
     }
 }
 

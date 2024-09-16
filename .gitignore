@@ -21,3 +21,6 @@ logs/
 ignorar paquetes de npm
 package-lock.json
 package.json
+
+# Ignorar subida de archivos de avatares
+/public/uploads/avatars

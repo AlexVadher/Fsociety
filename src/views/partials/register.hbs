@@ -13,7 +13,7 @@
             </button>
             <!-- Contenido del modal -->
                 <h2 class="text-2xl font-semibold mb-4 text-center">Registrarse</h2>
-                <form action="/register" method="post" class="space-y-4">
+                <form action="/register" method="post" class="space-y-4" enctype="multipart/form-data">
                         <!-- Campo Nombre -->
                         <div class="flex items-center">
                             <label class="w-32 text-gray-700 font-medium" for="nombre">Nombre</label>
@@ -31,8 +31,8 @@
                         </div>
                         <!-- Campo Contraseña -->
                         <div class="flex items-center">
-                            <label class="w-32 text-gray-700 font-medium" for="contraseña">Contraseña</label>
-                            <input type="password" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="contraseña" id="contraseña" placeholder="Contraseña" required>
+                            <label class="w-32 text-gray-700 font-medium" for="contrasena">Contraseña</label>
+                            <input type="password" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="contrasena" id="contrasena" placeholder="Contraseña" required>
                         </div>
                         <!-- Campo Teléfono -->
                         <div class="flex items-center">
@@ -52,7 +52,11 @@
                         <!-- Campo País -->
                         <div class="flex items-center">
                             <label class="w-32 text-gray-700 font-medium" for="pais">País</label>
-                            <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="pais" id="pais" placeholder="Ejemplo: Colombia">
+                            <select name="pais" id="pais" class="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200">
+                            {{#each countries}}
+                                <option value="{{this.code}}">{{this.name}}</option>
+                            {{/each}}
+                            </select>
                         </div>
                         <!-- campo Rol -->
                         <div class="flex items center">
@@ -62,6 +66,12 @@
                                 <option value="2">Usuario</option>
                             </select>
                         </div>
+                        <!-- Campo Avatar -->
+                        <div class="flex items-center">
+                            <label class="w-32 text-gray-700 font-medium" for="avatar">Avatar</label>
+                            <input type="file" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" name="avatar" id="avatar" accept="image/*" required>
+                        </div>
+                        <!-- Botón de envío -->
                         <div class="mt-6">
                             <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Crear Usuario</button>
                         </div>

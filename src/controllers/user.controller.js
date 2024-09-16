@@ -1,8 +1,6 @@
 import UserModel from '../models/user.model.js';
 
-// Renderizar la vista de registro
-// Renderizar la vista de registro
-
+// Controlador de usuario y sus métodos
 export class userController {
     // Método para registrar un nuevo usuario
     static async registerUser(req, res) {
@@ -12,7 +10,7 @@ export class userController {
                 nombre,
                 apellido,
                 correo,
-                contraseña,
+                contrasena,
                 telefono,
                 genero,
                 orientacionSexual,
@@ -20,19 +18,36 @@ export class userController {
                 idRol,
             } = req.body;
 
-            console.log('Datos recibidos:', req.body);
+            if (!req.file) {
+                return res
+                    .status(400)
+                    .json({message: 'No se ha subido ningún archivo'});
+            }
+
+            // Obtener la URL del avatar
+            const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+
+            // Verificar que avatarUrl se ha definido correctamente
+            if (!avatarUrl) {
+                return res
+                    .status(400)
+                    .json({message: 'Error al obtener la URL del avatar'});
+            }
+
+            console.log('Datos recibidos:', req.body, req.file); // Registro de datos
 
             // Llamar al método createUser de la clase UserModel
             const result = await UserModel.createUser({
                 nombre,
                 apellido,
                 correo,
-                contraseña,
+                contrasena,
                 telefono,
                 genero,
                 orientacionSexual,
                 pais,
                 idRol,
+                avatarUrl, // Pasar la ruta del avatar
             });
 
             console.log('Resultado de la creación del usuario:', result); // Registro de resultado
@@ -51,36 +66,91 @@ export class userController {
             });
         }
     }
-
-    // Método para obtener el perfil del usuario autenticado
-    static async getUserProfile(req, res) {
+    /*  static async registerUser(req, res) {
         try {
-            // Obtener la información del usuario desde req.user
-            const user = req.user;
-
-            // Verificar si el usuario existe
-            if (!user) {
+            // Verificar si se ha subido un archivo
+            if (!req.file) {
                 return res
-                    .status(404)
-                    .json({message: 'Usuario no encontrado.'});
+                    .status(400)
+                    .json({message: 'No se ha subido ningún archivo'});
             }
 
-            // validamos la informacion en consola
-            /* return res.json({
-            guid: user.guid,
-            email: user.email,
-            nombre: user.nombre,
-            apellido: user.apellido,
-            // Añadir otros campos necesarios del perfil del usuario
-        }); */
-            res.render('partials/profile', {user});
+            // Obtener la URL del avatar
+            const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+
+            // Verificar que avatarUrl se ha definido correctamente
+            if (!avatarUrl) {
+                return res
+                    .status(400)
+                    .json({message: 'Error al obtener la URL del avatar'});
+            }
+
+            // Obtener los datos del cuerpo de la solicitud
+            const {
+                nombre,
+                apellido,
+                correo,
+                contraseña,
+                telefono,
+                genero,
+                orientacionSexual,
+                pais,
+                idRol,
+            } = req.body;
+
+            // Registrar los datos para depuración
+            console.log({
+                nombre,
+                apellido,
+                correo,
+                contraseña,
+                telefono,
+                genero,
+                orientacionSexual,
+                pais,
+                idRol,
+                avatarUrl,
+            });
+            // Verificar que todos los campos requeridos estén presentes
+            if (
+                !nombre ||
+                !apellido ||
+                !correo ||
+                !contraseña ||
+                !telefono ||
+                !genero ||
+                !orientacionSexual ||
+                !pais ||
+                !idRol
+            ) {
+                return res
+                    .status(400)
+                    .json({message: 'Todos los campos son obligatorios'});
+            }
+
+            // Crear el usuario en la base de datos
+            const result = await UserModel.createUser({
+                nombre,
+                apellido,
+                correo,
+                contraseña,
+                telefono,
+                genero,
+                orientacionSexual,
+                pais,
+                idRol,
+                avatarUrl,
+            });
+
+            res.status(201).json({
+                message: 'Usuario creado exitosamente',
+                body: result,
+            });
         } catch (err) {
-            console.error('Error al obtener el perfil del usuario:', err);
-            return res
-                .status(500)
-                .json({message: 'Error interno del servidor.'});
+            console.error('Error al crear el usuario:', err);
+            res.status(500).json({message: 'Error al crear el usuario'});
         }
-    }
+    } */
 
     // Controlador para editar el perfil del usuario
     static async getUserData(req, res) {
@@ -92,16 +162,106 @@ export class userController {
             // Obtener la ruta actual del request
             const currentPath = req.path;
 
-            res.render('users/profileEdit', {
+            // Definir elementos del menú dinámicamente
+            const menuItems = [
+                {
+                    name: 'Editar Perfil',
+                    link: `/profile/editProfile/${user.guid}`,
+                    icon: 'fas fa-user-edit',
+                    active: currentPath.includes('/profile/editProfile/'),
+                },
+                {
+                    name: 'Cambiar Contraseña',
+                    link: `/profile/changePassword/${user.guid}`,
+                    icon: 'fas fa-key',
+                    active: currentPath.includes(
+                        '/profile/changePassword/:guid',
+                    ),
+                },
+                {
+                    name: 'Configuración',
+                    link: `/profile/settings/${user.guid}`,
+                    icon: 'fas fa-cog',
+                    active: currentPath.includes('/profile/settings'),
+                },
+                // Puedes añadir más elementos según sea necesario
+            ];
+
+            // Activar dinámicamente el enlace actual
+            menuItems.forEach((item) => {
+                if (item.link === currentPath) {
+                    item.active = true;
+                }
+            });
+
+            // Renderizar la vista de edición de perfil con los datos del usuario y los elementos del menú de navegación
+            res.render('users/editProfile', {
                 user,
-                layout: 'profile',
+                layout: 'main',
+                title: 'Perfil de Usuario',
                 currentPath,
+                menuItems: menuItems,
             });
         } catch (err) {
             console.error('Error al obtener los datos del usuario:', err);
             return res
                 .status(500)
                 .json({message: 'Error interno del servidor.'});
+        }
+    }
+
+    // Método para actualizar el avatar del usuario
+    static async updateUserAvatar(req, res) {
+        try {
+            // Obtener el id del usuario desde req.params
+            const {id} = req.params;
+            console.log('Datos recibidos:', req.file); // Registro de datos
+
+            // Verificar si se ha subido un archivo
+            if (!req.file) {
+                return res
+                    .status(400)
+                    .json({message: 'No se ha subido ningún archivo'});
+            }
+
+            // Obtener la URL del avatar
+            const avatar = `/uploads/avatars/${req.file.filename}`;
+
+            // obtener la url del avatar actual del usuario para eliminarlo
+            const user = await UserModel.getUserById(id);
+
+            // verificar en consola avatar actual
+            console.log('Avatar actual:', user.avatarUrl);
+
+            // Llamar al método updateAvatar de la clase UserModel
+            const result = await UserModel.updateAvatar({id, avatar});
+
+            console.log('Resultado de la actualización del avatar:', result); // Registro de resultado
+
+            // actualizar el avatar en la sesion del usuario para que se muestre en la vista
+            // Actualizar la sesión del usuario
+            req.session.user.avatarUrl = avatar;
+
+            // Verificar si se actualizó alguna fila
+            if (result.affectedRows === 0) {
+                return res.status(404).json({
+                    message: 'Usuario no encontrado o avatar no actualizado',
+                });
+            }
+
+            /* res.status(200).json({
+                message: 'Avatar actualizado exitosamente',
+                body: result,
+            }); */
+
+            // si se actualiza el avatar se elimina el avatar anterior entonces se recarga la pagina
+            res.redirect('/profile/editProfile/:guid');
+        } catch (err) {
+            console.error('Error al actualizar el avatar:', err); // Mejorar el registro de errores
+            res.status(500).json({
+                message: 'Error 500: ' + err.message,
+                body: req.body,
+            });
         }
     }
 
@@ -148,6 +308,102 @@ export class userController {
                 message: 'Error 500:' + err.message,
                 body: req.body,
             });
+        }
+    }
+
+    // Método para la configuración del perfil del usuario
+    static async renderSettings(req, res) {
+        try {
+            const {id} = req.user;
+            const user = await UserModel.getUserById(id);
+
+            // Obtener la ruta actual del request
+            const currentPath = req.path;
+
+            // Definir elementos del menú dinámicamente
+            const menuItems = [
+                {
+                    name: 'Editar Perfil',
+                    link: `/profile/editProfile/${user.guid}`,
+                    icon: 'fas fa-user-edit',
+                    active: currentPath.includes('/profile/editProfile/:guid'),
+                },
+                {
+                    name: 'Cambiar Contraseña',
+                    link: `/profile/changePassword/${user.guid}`,
+                    icon: 'fas fa-key',
+                    active: currentPath.includes(
+                        '/profile/changePassword:guid',
+                    ),
+                },
+                {
+                    name: 'Configuración',
+                    link: `/profile/settings/${user.guid}`,
+                    icon: 'fas fa-cog',
+                    active: currentPath.includes('/profile/settings'),
+                },
+            ];
+
+            // Renderizar la vista de configuración
+            res.render('users/settings', {
+                user,
+                layout: 'main',
+                title: 'Configuración',
+                currentPath,
+                menuItems,
+            });
+        } catch (err) {
+            console.error('Error al obtener los datos del usuario:', err);
+            return res
+                .status(500)
+                .json({message: 'Error interno del servidor.'});
+        }
+    }
+
+    // Método para renderizar la vista de cambio de contraseña
+    static async renderChangePassword(req, res) {
+        try {
+            const {id} = req.user;
+            const user = await UserModel.getUserById(id);
+
+            // Obtener la ruta actual del request
+            const currentPath = req.path;
+
+            // Definir elementos del menú dinámicamente
+            const menuItems = [
+                {
+                    name: 'Editar Perfil',
+                    link: `/profile/editProfile/${user.guid}`,
+                    icon: 'fas fa-user-edit',
+                    active: currentPath.includes('/profile/editProfile/:guid'),
+                },
+                {
+                    name: 'Cambiar Contraseña',
+                    link: `/profile/changePassword/${user.guid}`,
+                    icon: 'fas fa-key',
+                    active: currentPath.includes('/profile/changePassword'),
+                },
+                {
+                    name: 'Configuración',
+                    link: `/profile/settings/${user.guid}`,
+                    icon: 'fas fa-cog',
+                    active: currentPath.includes('/profile/settings'),
+                },
+            ];
+
+            // Renderizar la vista de cambio de contraseña
+            res.render('users/changePassword', {
+                user,
+                layout: 'main',
+                title: 'Cambiar Contraseña',
+                currentPath,
+                menuItems,
+            });
+        } catch (err) {
+            console.error('Error al obtener los datos del usuario:', err);
+            return res
+                .status(500)
+                .json({message: 'Error interno del servidor.'});
         }
     }
 
@@ -209,15 +465,30 @@ export class userController {
     } */
 
     // Método para validar la contraseña actual del usuario y actualizarla si es correcta
-    static async validatePassword(req, res) {
+    static async changePassword(req, res) {
         try {
-            // Obtener el id del usuario desde req.user
-            const {id} = req.user;
+            const {id} = req.params;
+            const {currentPassword, newPassword, confirmNewPassword} = req.body;
 
-            // Obtener la contraseña actual y la nueva contraseña desde req.body
-            const {currentPassword, newPassword} = req.body;
+            console.log('Datos recibidos:', req.body); // Registro de datos
 
-            // Validar la contraseña actual llamando al método validatePassword de la clase UserModel
+            // Validar que todos los campos requeridos estén presentes en la solicitud del cliente
+            if (!currentPassword || !newPassword || !confirmNewPassword) {
+                return res.status(400).json({
+                    message: 'Todos los campos son obligatorios',
+                    req: req.body,
+                    id: id,
+                });
+            }
+
+            // Verificar que la nueva contraseña y la confirmación coincidan
+            if (newPassword !== confirmNewPassword) {
+                return res.status(400).json({
+                    message: 'Las nuevas contraseñas no coinciden',
+                });
+            }
+
+            // Validar la contraseña actual del usuario
             const isValidPassword = await UserModel.validatePassword({
                 id,
                 currentPassword,
@@ -226,7 +497,7 @@ export class userController {
             if (!isValidPassword) {
                 // Si la contraseña no es válida, enviar un mensaje de error
                 return res.status(400).json({
-                    message: 'Contraseña incorrecta',
+                    message: 'Contraseña actual incorrecta',
                 });
             }
 
@@ -236,8 +507,8 @@ export class userController {
                 newPassword,
             });
 
-            // renderizar la vista de cambio de contraseña con un mensaje de exito en la actualizacion
-            res.render('partials/changePassword', {
+            // Renderizar la vista de cambio de contraseña con un mensaje de éxito en la actualización
+            res.render('users/changePassword', {
                 message: 'Contraseña actualizada exitosamente',
             });
 
@@ -259,6 +530,7 @@ export class userController {
             });
         }
     }
+
     // Método para eliminar un usuario
     static async deleteUser(req, res) {
         try {
@@ -276,32 +548,6 @@ export class userController {
             });
         } catch (err) {
             console.error('Error al eliminar el usuario:', err); // Mejorar el registro de errores
-            res.status(500).json({
-                message: 'Error 500:' + err.message,
-                body: req.body,
-            });
-        }
-    }
-
-    /* static async listClientes(req, res) {
-        try {
-            const clientes = await ClienteDAO.getAll();
-            res.render('personas/list', {clientes});
-        } catch (error) {
-            res.status(500).json({message: error.message});
-        }
-    } */
-
-    // Método para obtener la lista de usuarios
-    static async getUsers(req, res) {
-        try {
-            // Llamar al método getUsers de la clase UserModel
-            const users = await UserModel.getUsers();
-
-            console.log('Lista de usuarios:', users); // Registro de resultado
-            res.render('index', {users}); // Asegúrate de pasar la lista de usuarios a la vista
-        } catch (err) {
-            console.error('Error al obtener la lista de usuarios:', err); // Mejorar el registro de errores
             res.status(500).json({
                 message: 'Error 500:' + err.message,
                 body: req.body,

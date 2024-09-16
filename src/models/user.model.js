@@ -4,7 +4,7 @@ import argon2 from 'argon2';
 
 class userModel {
     // Método para crear un nuevo usuario en la base de datos con los datos proporcionados desde el controlador
-    static async createUser(userData) {
+    /* static async createUser(userData) {
         try {
             const {
                 nombre,
@@ -16,6 +16,7 @@ class userModel {
                 orientacionSexual,
                 pais,
                 idRol,
+                avatarUrl,
             } = userData;
 
             // Generar un GUID para el id del usuario
@@ -26,7 +27,7 @@ class userModel {
 
             // Insertando el nuevo usuario en la base de datos y devolviendo el resultado
             const [result] = await pool.query(
-                'INSERT INTO usuarios (nombre, apellido, correo, contraseña, telefono, genero, orientacionSexual, pais, idRol, guid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                'INSERT INTO usuarios (nombre, apellido, correo, contraseña, telefono, genero, orientacionSexual, pais, idRol, guid, avatarUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [
                     nombre,
                     apellido,
@@ -38,16 +39,95 @@ class userModel {
                     pais,
                     idRol,
                     guid,
+                    avatarUrl,
                 ],
             );
             return result; // Devuelve el resultado de la inserción del usuario en la base de datos para su posterior uso
         } catch (error) {
             throw new Error(error);
         }
+    } */
+
+    // Método para crear un nuevo usuario en la base de datos con los datos proporcionados desde el controlador
+    static async createUser(userData) {
+        try {
+            const {
+                nombre,
+                apellido,
+                correo,
+                contrasena,
+                telefono,
+                genero,
+                orientacionSexual,
+                pais,
+                idRol,
+                avatarUrl,
+            } = userData;
+
+            console.log(userData);
+
+            // Verificar que todos los campos requeridos estén presentes
+            if (
+                !nombre ||
+                !apellido ||
+                !correo ||
+                !contrasena ||
+                !telefono ||
+                !genero ||
+                !orientacionSexual ||
+                !pais ||
+                !idRol ||
+                !avatarUrl
+            ) {
+                throw new Error('Todos los campos son obligatorios');
+            }
+
+            // Registrar los datos para depuración
+            console.log({
+                nombre,
+                apellido,
+                correo,
+                contrasena,
+                telefono,
+                genero,
+                orientacionSexual,
+                pais,
+                idRol,
+                avatarUrl,
+            });
+
+            // Generar un GUID para el id del usuario
+            const guid = uuidv4();
+
+            // Generar un hash para la contraseña antes de almacenarla
+            const hashedPassword = await argon2.hash(contrasena);
+
+            // Insertando el nuevo usuario en la base de datos y devolviendo el resultado
+            const [result] = await pool.query(
+                'INSERT INTO usuarios (nombre, apellido, correo, contraseña, telefono, genero, orientacionSexual, pais, idRol, guid, avatarUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [
+                    nombre,
+                    apellido,
+                    correo,
+                    hashedPassword,
+                    telefono,
+                    genero,
+                    orientacionSexual,
+                    pais,
+                    idRol,
+                    guid,
+                    avatarUrl,
+                ],
+            );
+            return result; // Devuelve el resultado de la inserción del usuario en la base de datos para su posterior uso
+        } catch (error) {
+            console.error('Error al crear el usuario en el modelo:', error);
+            throw new Error(error);
+        }
     }
 
     // Método para actualizar la información de un usuario
-    static async updateUser({userId, userData}) {
+    static async updateUser(userId, userData) {
         try {
             const {
                 nombre,
@@ -81,23 +161,61 @@ class userModel {
         }
     }
 
-    // Método para validar las contraseña del usuario antes de actualizar la nueva contraseña
-    static async validatePassword({userId, password}) {
+    // Método para actualizar la img de perfil de un usuario
+    static async updateAvatar({id, avatar}) {
         try {
-            // Obtener la contraseña del usuario desde la base de datos
-            const [rows] = await pool.query(
-                'SELECT contraseña FROM usuarios WHERE id = ?',
-                [userId],
+            console.log('updateAvatar:', id, avatar);
+            // Actualizando la información del usuario en la base de datos
+            const [result] = await pool.query(
+                'UPDATE usuarios SET avatarUrl = ? WHERE id = ?',
+                [avatar, id],
             );
-
-            // Verificar si la contraseña proporcionada coincide con la contraseña almacenada en la base de datos
-            const isPasswordValid = await argon2.verify(
-                rows[0].contraseña,
-                password,
-            );
-            return isPasswordValid; // Devuelve true si la contraseña es válida, de lo contrario, devuelve false
+            return result; // Devuelve el resultado de la actualización del usuario en la base de datos
         } catch (error) {
             throw new Error(error);
+        }
+    }
+
+    // Método para validar las contraseña del usuario antes de actualizar la nueva contraseña
+    static async validatePassword({id, currentPassword}) {
+        try {
+            const [rows] = await pool.execute(
+                'SELECT contraseña FROM usuarios WHERE id = ?',
+                [id],
+            );
+
+            console.log('validatePassword:', rows);
+            if (rows.length === 0) {
+                throw new Error('Usuario no encontrado');
+            }
+
+            const user = rows[0];
+            const isValidPassword = await argon2.verify(
+                user.contraseña,
+                currentPassword,
+            );
+
+            return isValidPassword;
+        } catch (err) {
+            console.error('Error al validar la contraseña:', err);
+            throw err;
+        }
+    }
+
+    // Método para actualizar la contraseña de un usuario
+    static async updatePassword({id, newPassword}) {
+        try {
+            const hashedPassword = await argon2.hash(newPassword);
+
+            const [result] = await pool.execute(
+                'UPDATE usuarios SET contraseña = ? WHERE id = ?',
+                [hashedPassword, id],
+            );
+
+            return result;
+        } catch (err) {
+            console.error('Error al actualizar la contraseña:', err);
+            throw err;
         }
     }
 
@@ -187,6 +305,7 @@ class userModel {
             throw new Error(error);
         }
     }
+
     // Metodo para obtener la lista de usuarios
     static async getUsers() {
         try {

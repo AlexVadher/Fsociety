@@ -1,0 +1,125 @@
+<div class="flex min-h-screen bg-gray-100">
+  <!-- Sidebar -->
+  {{>asideProfile}}
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8">
+    <h1 class="text-2xl font-semibold mb-6">Configuración del perfil</h1>
+    
+    <!-- Contenedor principal -->
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+      <div class="flex items-start">
+    
+    <!-- Columna de la imagen -->
+    <div x-data="imageUpload('{{user.avatarUrl}}')" class="w-1/4 text-center relative">
+      <!-- Imagen de perfil con previsualización -->
+      <img :src="previewUrl" alt="Foto de perfil" class="rounded-full w-32 h-32 object-cover mx-auto mb-4">
+      
+      <!-- Botón para abrir el modal -->
+      <button @click="modal = true" class="focus:outline-none space-x-2 text-blue-500 hover:text-blue-800">
+        Editar foto
+      </button>
+
+      <!-- Modal centrado en pantalla -->
+    <div x-show="modal" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modal" @click.self="modal = false" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
+      <!-- Contenido del modal -->
+      <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg mx-auto relative">
+        <!-- Botón de cerrar modal -->
+        <button @click="modal = false" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+          <i class="fa-solid fa-xmark fa-2xl"></i>
+        </button>
+        <h3 class="text-gray-700 font-semibold mb-4 text-center">Cambiar Foto de Perfil</h3>
+        
+        <!-- Formulario para cargar la imagen -->
+        <form method="post" action="/upload/{{user.id}}" enctype="multipart/form-data">
+          <!-- Contenedor personalizado para el input de archivo -->
+          {{!-- <div class="flex items-center justify-center w-full mb-4" @dragenter.prevent="dragging = true" @dragover.prevent @dragleave.prevent="dragging = false" @drop.prevent="handleDrop($event)" :class="{'border-blue-500': dragging, 'border-gray-300': !dragging}">
+            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <i class="fa-solid fa-upload fa-2xl mb-3 text-gray-400"></i>
+                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><br><span class="font-semibold">Haz clic para subir</span> o arrastra y suelta</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 800x400px)</p>
+              </div>
+              <input id="dropzone-file" type="file" class="hidden" @change="handleFileChange($event)" />
+            </label>
+          </div> --}}
+          <!-- Campo Avatar -->
+            <div class="flex items-center">
+                <img :src="previewUrl" alt="Foto de perfil" class="rounded-lg w-32 h-32 object-cover mx-auto mb-4">
+            </div>
+            <input type="file" class="block w-full text-sm text-slate-500
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-lg file:border-0
+              file:text-sm file:font-semibold
+              file:bg-violet-50 file:text-gray-700
+              hover:file:bg-sky-100" name="avatar" id="avatar" accept="image/*"  required @change="handleFileChange($event)">
+          <!-- Mostrar nombre del archivo seleccionado -->
+          
+          
+          <!-- Botón para guardar cambios -->
+          <div class="text-center">
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+
+
+
+        
+
+        <!-- Columna del formulario -->
+        <div class="w-3/4 ml-8">
+          <h2 class="text-2xl font-semibold mb-6 text-center">Información general</h2>
+          
+          <form action="/profile/update/{{user.id}}" method="post" class="space-y-6">
+            <!-- Fila 1: Nombre y Apellido -->
+            <div class="grid grid-cols-2 gap-6">
+              <div>
+                <label class="block text-gray-700 font-medium" for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.nombre}}" placeholder="Ejemplo: Luis">
+              </div>
+              <div>
+                <label class="block text-gray-700 font-medium" for="apellido">Apellido</label>
+                <input type="text" name="apellido" id="apellido" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.apellido}}" placeholder="Ejemplo: Fernandez">
+              </div>
+            </div>
+
+            <!-- Fila 2: Sexualidad y Género -->
+            <div class="grid grid-cols-2 gap-6">
+              <div>
+                <label class="block text-gray-700 font-medium" for="sexualidad">Sexualidad</label>
+                <input type="text" name="sexualidad" id="sexualidad" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.orientacionSexual}}" placeholder="Ejemplo: Heterosexual">
+              </div>
+              <div>
+                <label class="block text-gray-700 font-medium" for="genero">Género</label>
+                <input type="text" name="genero" id="genero" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.genero}}" placeholder="Ejemplo: Masculino">
+              </div>
+            </div>
+
+            <!-- Información de la cuenta -->
+            <h2 class="text-2xl font-semibold mb-6 text-center mt-8">Información cuenta</h2>
+            
+            <!-- Fila 3: Correo y Contraseña -->
+            <div class="grid grid-cols-2 gap-6">
+              <div>
+                <label class="block text-gray-700 font-medium" for="correo">Correo</label>
+                <input type="email" name="correo" id="correo" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.correo}}" placeholder="Ejemplo: luis@example.com">
+              </div>
+              <div>
+                <label class="block text-gray-700 font-medium" for="contrasena">Contraseña</label>
+                <input type="password" name="contrasena" id="contrasena" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="**********" placeholder="**********">
+              </div>
+            </div>
+
+            <!-- Botón de Actualizar -->
+            <div class="text-center mt-8">
+              <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Actualizar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
