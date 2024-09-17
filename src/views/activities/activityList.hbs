@@ -1,0 +1,26 @@
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Costo</th>
+            <th>Descripción</th>
+            <th>Disponibilidad</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each activities}}
+            <tr>
+                <td>{{nombre}}</td>
+                <td>{{costo}}</td>
+                <td>{{descripcion}}</td>
+                <td>{{disponibilidad}}</td>
+                <td>
+                    <a href="/activities/edit/{{id}}" class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
+                        <i class="fa-solid fa-pencil"></i>
+                    </a>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

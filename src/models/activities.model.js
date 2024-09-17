@@ -3,11 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 class ActivityModel {
     // Obtener todos los elementos desde la base de datos
-    static async getAllItems() {
+    static async getAllActivities() {
         try {
             const query = 'SELECT * FROM actividades';
-            const { rows } = await pool.query(query);
-            return rows;
+            const [result ] = await pool.query(query);
+            return result;
         } catch (error) {
             console.error('Error fetching all items:', error);
             throw error;
@@ -17,10 +17,10 @@ class ActivityModel {
     // Obtener un elemento por ID desde la base de datos
     static async getItemById(id) {
         try {
-            const query = 'SELECT * FROM actividades WHERE id = ';
-            const values = [id];
-            const { rows } = await pool.query(query, values);
-            return rows[0];
+            const query = 'SELECT * FROM actividades WHERE id = ?';
+            const values = id;
+            const [result] = await pool.query(query, values);
+            return result [0];
         } catch (error) {
             console.error(`Error fetching item with ID ${id}:`, error);
             throw error;
@@ -43,16 +43,15 @@ class ActivityModel {
     }
 
     // Actualizar un elemento existente en la base de datos
-    static async updateItem(id, { nombre, costo, descripcion, disponibilidad }) {
+    static async updateActivity( { id, activityData}) {
         try {
             const query = `
                 UPDATE activities
-                SET nombre = $1, costo = $2, descripcion = $3, disponibilidad = $4
-                WHERE id = $5
-                RETURNING *;
+                SET nombre = ?, costo = ?, descripcion = ?, disponibilidad = ?
+                WHERE id = ?
             `;
             const values = [nombre, costo, descripcion, disponibilidad, id];
-            const { rows } = await pool.query(query, values);
+            const [rows] = await pool.query(query, values);
             return rows[0];
         } catch (error) {
             console.error(`Error updating item with ID ${id}:`, error);

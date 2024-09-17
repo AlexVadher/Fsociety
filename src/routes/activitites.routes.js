@@ -12,9 +12,25 @@ router.delete('/items/:id', activitiesController.deleteItem);*/
 routerActivity.post('/createactivity', activitiesController.createActivity);
 // mostrar formulario actividad 
 routerActivity.get(
-    '/profile/activities/',
+    '/admin/activities/',
     (req, res) => {
         res.render('activities/activity');
     },
+
+);
+// mostrar formulario editar actividad
+routerActivity.get(
+    '/activities/edit/:id',
+    activitiesController.ShowActivity,
+);
+// actualizar actividad
+routerActivity.post(
+    '/activities/update/:id',
+    activitiesController.updateActivity,
+);
+// mostrar lista de actividades
+routerActivity.get(
+    '/admin/activities/list',
+    activitiesController.listActivity,
 );
 export default routerActivity;

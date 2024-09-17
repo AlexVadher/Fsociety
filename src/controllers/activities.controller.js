@@ -57,8 +57,34 @@ class activitiesController {
             });
         }
     }
-    
-    static async readActivity(req, res) {
+    //mostrar datos en formulario editar
+    static async ShowActivity(req, res) { 
+        try { 
+            // Obtener el ID de la actividad de los parámetros de la URL
+            const { id } = req.params;
+            // Validar que el ID esté presente
+            if (!id) {
+                return res.status(400).json({ message: 'El ID de la actividad es obligatorio' });
+            }
+            console.log('ID de la actividad a editar:', id); // Registro del ID de la actividad a editar
+            // Llamar al método getItemById de la clase ActivityModel
+            const activity = await ActivityModel.getItemById(id);
+            // Verificar si se encontró la actividad
+            if (!activity) {
+                return res.status(404).json({ message: 'Actividad no encontrada' });
+            }
+            console.log('Actividad encontrada:', activity); // Registro de la actividad encontrada
+            // Responder con la actividad encontrada
+            res.render('activities/updateActivity', {activity});
+        } catch (err) {
+            // Manejo de errores
+            console.error('Error al leer la actividad:', err);
+            res.status(500).json({
+                message: 'Error 500: ' + err.message,
+            });
+        }
+    }
+    static async listActivity(req, res) {
         try {
             // Llamar al método getAllActivities de la clase ActivityModel para obtener las actividades
             const activities = await ActivityModel.getAllActivities();
@@ -72,11 +98,8 @@ class activitiesController {
     
             console.log('Actividades encontradas:', activities); // Registro de las actividades encontradas
     
-            // Devolver la lista de actividades
-            res.status(200).json({
-                message: 'Actividades recuperadas exitosamente',
-                body: activities,
-            });
+            // Devolver la lista de activida
+            res.render('activities/activitylist',  {activities} );
         } catch (err) {
             // Manejo de errores
             console.error('Error al leer las actividades:', err);
@@ -91,7 +114,7 @@ class activitiesController {
             // Obtener los datos del formulario de actualización desde req.body
             const { id } = req.params;  // Obtener el ID de la actividad de los parámetros de la URL
             const { nombre, costo, descripcion, disponibilidad } = req.body;
-    
+            const activityData = {nombre, costo, descripcion, disponibilidad };
             // Validar que el ID esté presente
             if (!id) {
                 return res.status(400).json({ message: 'El ID de la actividad es obligatorio' });
@@ -99,7 +122,7 @@ class activitiesController {
     
             // Validar que todos los campos requeridos estén presentes
             if (!nombre || !costo || !descripcion || disponibilidad === undefined) {
-                return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+                return res.status(400).json({ message: 'Todos los campos son obligatorios', body: req.body });
             }
     
             // Verificar que el costo sea un número válido
@@ -110,7 +133,7 @@ class activitiesController {
             // Verificar que disponibilidad sea un valor booleano
             const isDisponibilidadValid = (disponibilidad === 'true' || disponibilidad === 'false');
             if (!isDisponibilidadValid) {
-                return res.status(400).json({ message: 'La disponibilidad debe ser un valor booleano' });
+                return res.status(400).json({ message: 'La disponibilidad debe ser un valor booleano', body: req.body });
             }
     
             // Convertir disponibilidad a booleano
@@ -121,10 +144,7 @@ class activitiesController {
             // Llamar al método updateActivity de la clase ActivityModel
             const result = await ActivityModel.updateActivity({
                 id,
-                nombre,
-                costo,
-                descripcion,
-                disponibilidad: disponibilidadBoolean,
+                ...activityData,
             });
     
             // Verificar si la actividad fue encontrada y actualizada
@@ -133,12 +153,7 @@ class activitiesController {
             }
     
             console.log('Resultado de la actualización de la actividad:', result); // Registro del resultado
-    
-            // Responder con éxito
-            res.status(200).json({
-                message: 'Actividad actualizada exitosamente',
-                body: result,
-            });
+            res.render('activities/activitylist');
         } catch (err) {
             // Manejo de errores
             console.error('Error al actualizar la actividad:', err);
