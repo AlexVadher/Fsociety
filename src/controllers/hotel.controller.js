@@ -1,6 +1,6 @@
 import hotelModel from "../models/hotel.model.js"; // Importar el modelo de hoteles
 
-export class hotelModel {
+export class hotelController{
   static async registerHotel(req, res) {
     try {
       // Obtener los datos del formulario de registro desde req.body y validarlos

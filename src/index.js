@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser'; // Importar cookie-parser
 import dotenv from 'dotenv';
 import userRouter from './routes/user.routes.js'; // Rutas para los usuarios
 import routerActivity from './routes/activitites.routes.js';
+import routerHotel from './routes/hotel.routes.js';
 dotenv.config(); // Cargar variables de entorno
 
 // Inicializar express

@@ -1,6 +1,6 @@
 import pool from "../config/database.js";
 
-class hotelModel {
+class hotelModel{
 
   static async createHotel(hotelData) {
     try {
