@@ -1,14 +1,15 @@
 import {Router} from 'express';
 import hotelController from '../controllers/hotel.controller.js';
 
-const hotelRouter = Router();
+const routerHotel = Router();
 
-hotelRouter.post('/registerHotel/', hotelController.registerHotel);
+routerHotel.post('/registerHotel', hotelController.registerHotel);
 
-hotelRouter.put('/update/:id', hotelController.updateHotel);
+routerHotel.get(
+    '/admin/hotels/',
+    (req, res) => {
+        res.render('hotels/hotel');
+    },
+);
 
-hotelRouter.delete('/delete/:id', hotelController.deleteHotel);
-
-hotelRouter.get('/list', hotelController.listHotels);
-
-export default hotelRouter;
+export default routerHotel;
