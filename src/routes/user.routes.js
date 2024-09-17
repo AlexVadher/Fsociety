@@ -54,6 +54,11 @@ userRouter.get(
     },
 );
 
+// mostrar formulario actividades
+userRouter.get('/profile/activities/:guid', (req, res) => {
+    res.render('user/activities', {user: req.user});
+});
+
 // Ruta para obtener los datos del perfil del usuario
 userRouter.get(
     '/profile/editProfile/:guid',

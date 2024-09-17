@@ -530,30 +530,6 @@ export class userController {
             });
         }
     }
-
-    // Método para eliminar un usuario
-    static async deleteUser(req, res) {
-        try {
-            // Obtener el id del usuario desde req.params
-            const {id} = req.params;
-
-            // Llamar al método deleteUser de la clase UserModel
-            const result = await UserModel.deleteUser(id);
-
-            console.log('Resultado de la eliminación del usuario:', result); // Registro de resultado
-
-            res.status(200).json({
-                message: 'Usuario eliminado exitosamente',
-                body: result,
-            });
-        } catch (err) {
-            console.error('Error al eliminar el usuario:', err); // Mejorar el registro de errores
-            res.status(500).json({
-                message: 'Error 500:' + err.message,
-                body: req.body,
-            });
-        }
-    }
 }
 
 export default userController;

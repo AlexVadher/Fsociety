@@ -18,7 +18,7 @@ logs/
 *.bak
 *.backup
 
-ignorar paquetes de npm
+# ignorar paquetes de npm
 package-lock.json
 package.json
 
