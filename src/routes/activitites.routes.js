@@ -33,4 +33,9 @@ routerActivity.get(
     '/admin/activities/list',
     activitiesController.listActivity,
 );
+// eliminar actividad
+routerActivity.get(
+    '/activities/deleteActivity/:id',
+    activitiesController.deleteActivity,
+);
 export default routerActivity;

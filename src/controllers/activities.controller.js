@@ -142,10 +142,10 @@ class activitiesController {
             console.log('Datos para actualizar:', req.body); // Registro de datos recibidos
     
             // Llamar al método updateActivity de la clase ActivityModel
-            const result = await ActivityModel.updateActivity({
+            const result = await ActivityModel.updateActivity(
                 id,
-                ...activityData,
-            });
+                {activityData},
+            );
     
             // Verificar si la actividad fue encontrada y actualizada
             if (result.affectedRows === 0) {
@@ -182,7 +182,6 @@ class activitiesController {
             if (result.affectedRows === 0) {
                 return res.status(404).json({ message: 'Actividad no encontrada o no eliminada' });
             }
-    
             console.log('Resultado de la eliminación de la actividad:', result); // Registro del resultado
     
             // Responder con éxito

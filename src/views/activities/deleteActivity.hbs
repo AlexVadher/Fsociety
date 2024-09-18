@@ -1,0 +1,20 @@
+<ul>
+    {{#each activities}}
+        <li>
+            {{this.name}}
+            <button class="delete-button" data-id="{{this.id}}">Delete</button>
+        </li>
+    {{/each}}
+</ul>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.delete-button').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const activityId = this.getAttribute('data-id');
+                // Add your delete logic here, e.g., make an API call to delete the activity
+                console.log(`Delete activity with ID: ${activityId}`);
+            });
+        });
+    });
+</script>

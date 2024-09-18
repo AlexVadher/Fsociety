@@ -60,9 +60,9 @@ class ActivityModel {
     }
 
     // Eliminar un elemento de la base de datos
-    static async deleteItem(id) {
+    static async deleteActivity(id) {
         try {
-            const query = 'DELETE FROM activities WHERE id = $1';
+            const query = 'DELETE FROM actividades WHERE id = ?';
             const values = [id];
             const result = await pool.query(query, values);
             return result.rowCount > 0; // Retorna true si se eliminó alguna fila
