@@ -80,6 +80,8 @@ app.get('/', (req, res) => {
 // Rutas de los usuarios
 app.use(userRouter);
 
+app.use(routerHotel);
+
 app.use(routerActivity);
 // Iniciar el servidor
 app.listen(app.get('port'), () =>

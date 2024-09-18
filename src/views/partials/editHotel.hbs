@@ -1,0 +1,56 @@
+<div x-data="{ modalEdit: false }"></div>
+    <!-- Button to open the modal -->
+    <button type="button" @click="modalEdit = true" class=" font-bold bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Editar Hotel</button>
+ 
+    <!-- Modal Background -->
+    <div x-show="modalEdit" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalEdit" @click.self="modalEdit = false" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
+        <!-- Modal Container -->
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+            <!-- Close Button -->
+            <button @click="modalEdit = false" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+            <!-- Contenido del modal -->
+            <h2 class="text-2xl font-semibold mb-4 text-center">Editar Hotel</h2>
+            <form action="/registerHotel" method="post" class="space-y-4">
+                <!-- Nombre -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="nombre">Nombre del hotel</label>
+                    <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="nombre" name="nombre" required>
+                </div>
+                <!-- Teléfono -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="telefono">Teléfono</label>
+                    <input type="tel" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="telefono" name="telefono" required>
+                </div>
+                <!-- Ubicación -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="ubicacion">Ubicación</label>
+                    <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="ubicacion" name="ubicacion" required>
+                </div>
+                <!-- Estrellas -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="estrellas">Estrellas (1-5)</label>
+                    <input type="number" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="estrellas" name="estrellas" min="1" max="5" required>
+                </div>
+                <!-- Disponibilidad -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="disponibilidad">Disponibilidad </label>
+                    <select id="disponibilidad" name="disponibilidad" class="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" required>
+                        <option value="Disponible">Disponible</option>
+                        <option value="No Disponible">No Disponible</option>
+                    </select>
+                </div>
+                <!-- Descripción -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" rows="4" class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" required></textarea>
+                </div>
+                <!-- Botón de envío -->
+                <div class="mt-6">
+                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Actualizar Hotel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
