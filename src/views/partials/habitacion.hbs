@@ -1,0 +1,28 @@
+<div class="bg-white shadow-md rounded-lg overflow-x-auto"></div>
+<button type='button' @click='modalIsOpen = true' class='font-bold bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-200'>Ver Habitaciones</button>
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-800 text-white">
+                    <tr>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Código</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Tipo</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Costo</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Hotel</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {{#each habitaciones}} <!-- Iteración sobre el array de habitaciones -->
+                        <tr>
+                          <td class="px-6 py-4 whitespace-nowrap">{{codigo}}</td>
+                          <td class="px-6 py-4 whitespace-nowrap">{{tipo}}</td>
+                          <td class="px-6 py-4 whitespace-nowrap">{{costo}}</td>
+                          <td class="px-6 py-4 whitespace-nowrap">{{nombreHotel}}</td> <!-- Mostrar el nombre del hotel -->
+                          <td class="px-6 py-4 whitespace-nowrap">
+                              <button class="text-blue-500 hover:text-blue-700">Editar</button>
+                              <button class="text-red-500 hover:text-red-700 ml-4">Eliminar</button>
+                          </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>

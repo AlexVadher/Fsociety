@@ -29,7 +29,7 @@ class hotelModel {
         }
     }
 
-    static async updateUser(hotelId, hotelData) {
+    static async updateHotel(hotelId, hotelData) {
         try {
             const {
                 nombre,
