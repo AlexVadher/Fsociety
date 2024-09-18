@@ -171,14 +171,6 @@ export class userController {
                     active: currentPath.includes('/profile/editProfile/'),
                 },
                 {
-                    name: 'Cambiar Contraseña',
-                    link: `/profile/changePassword/${user.guid}`,
-                    icon: 'fas fa-key',
-                    active: currentPath.includes(
-                        '/profile/changePassword/:guid',
-                    ),
-                },
-                {
                     name: 'Configuración',
                     link: `/profile/settings/${user.guid}`,
                     icon: 'fas fa-cog',
@@ -280,12 +272,28 @@ export class userController {
                 genero,
                 orientacionSexual,
                 pais,
-                idRol,
             } = req.body;
 
-            // Llamar al método updateUser de la clase UserModel
-            const result = await UserModel.updateUser({
-                id,
+            console.log('Datos recibidos para editar:', req.body); // Registro de datos
+
+            // Verificar que todos los campos requeridos estén presentes
+            if (
+                !id ||
+                !nombre ||
+                !apellido ||
+                !correo ||
+                !telefono ||
+                !genero ||
+                !orientacionSexual ||
+                !pais
+            ) {
+                return res.status(400).json({
+                    message: 'Todos los campos son obligatorios',
+                    req: req.body,
+                });
+            }
+
+            const userData = {
                 nombre,
                 apellido,
                 correo,
@@ -293,8 +301,9 @@ export class userController {
                 genero,
                 orientacionSexual,
                 pais,
-                idRol,
-            });
+            };
+            // Llamar al método updateUser de la clase UserModel
+            const result = await UserModel.updateUser(id, userData);
 
             console.log('Resultado de la actualización del usuario:', result); // Registro de resultado
 
@@ -329,14 +338,6 @@ export class userController {
                     active: currentPath.includes('/profile/editProfile/:guid'),
                 },
                 {
-                    name: 'Cambiar Contraseña',
-                    link: `/profile/changePassword/${user.guid}`,
-                    icon: 'fas fa-key',
-                    active: currentPath.includes(
-                        '/profile/changePassword:guid',
-                    ),
-                },
-                {
                     name: 'Configuración',
                     link: `/profile/settings/${user.guid}`,
                     icon: 'fas fa-cog',
@@ -361,7 +362,7 @@ export class userController {
     }
 
     // Método para renderizar la vista de cambio de contraseña
-    static async renderChangePassword(req, res) {
+    /* static async renderChangePassword(req, res) {
         try {
             const {id} = req.user;
             const user = await UserModel.getUserById(id);
@@ -405,7 +406,7 @@ export class userController {
                 .status(500)
                 .json({message: 'Error interno del servidor.'});
         }
-    }
+    } */
 
     // Método para validar la contraseña actual del usuario y actualizarla si es correcta
     /* static async validatePassword(req, res) {
@@ -518,10 +519,15 @@ export class userController {
             ); // Registro de resultado
 
             // Enviar una respuesta exitosa
-            return res.status(200).json({
+            /* return res.status(200).json({
                 message: 'Contraseña actualizada exitosamente',
                 body: updateResult,
-            });
+            }); */
+
+            // Cerrar la sesion y redirigir a la página de inicio de sesión
+            res.clearCookie('connect.sid'); // Eliminar la cookie de sesión
+            res.clearCookie('token'); // Eliminar la cookie del token
+            res.redirect('/'); // Redirigir a la página de inicio
         } catch (err) {
             console.error('Error al validar la contraseña:', err); // Mejorar el registro de errores
             return res.status(500).json({

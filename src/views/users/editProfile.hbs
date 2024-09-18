@@ -64,11 +64,6 @@
       </div>
     </div>
     </div>
-
-
-
-        
-
         <!-- Columna del formulario -->
         <div class="w-3/4 ml-8">
           <h2 class="text-2xl font-semibold mb-6 text-center">Información general</h2>
@@ -89,12 +84,16 @@
             <!-- Fila 2: Sexualidad y Género -->
             <div class="grid grid-cols-2 gap-6">
               <div>
-                <label class="block text-gray-700 font-medium" for="sexualidad">Sexualidad</label>
-                <input type="text" name="sexualidad" id="sexualidad" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.orientacionSexual}}" placeholder="Ejemplo: Heterosexual">
+                <label class="block text-gray-700 font-medium" for="sexualidad">orientacionSexual</label>
+                <input type="text" name="orientacionSexual" id="orientacionSexual" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.orientacionSexual}}" placeholder="Ejemplo: Heterosexual">
               </div>
               <div>
                 <label class="block text-gray-700 font-medium" for="genero">Género</label>
                 <input type="text" name="genero" id="genero" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.genero}}" placeholder="Ejemplo: Masculino">
+              </div>
+              <div>
+                <label class="block text-gray-700 font-medium" for="correo">Telefono</label>
+                <input type="text" name="pais" id="pais" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.pais}}" placeholder="Ejemplo: Colombia">
               </div>
             </div>
 
@@ -108,18 +107,22 @@
                 <input type="email" name="correo" id="correo" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.correo}}" placeholder="Ejemplo: luis@example.com">
               </div>
               <div>
-                <label class="block text-gray-700 font-medium" for="contrasena">Contraseña</label>
-                <input type="password" name="contrasena" id="contrasena" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="**********" placeholder="**********">
+                <label class="block text-gray-700 font-medium" for="correo">Telefono</label>
+                <input type="number" name="telefono" id="telefono" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" value="{{user.telefono}}" placeholder="Ejemplo: +57 320865123">
               </div>
             </div>
 
             <!-- Botón de Actualizar -->
             <div class="text-center mt-8">
-              <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Actualizar</button>
+              <button type="submit" class="w-64 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Actualizar</button>
             </div>
           </form>
+          <h2 class="text-2xl font-semibold mb-6 ml-2 mt-6 text-center">Cambio de Contraseña</h2>
+          {{> changePassword}}
+          </div>
         </div>
       </div>
     </div>
+    
   </main>
 </div>

@@ -1,152 +1,214 @@
- <!-- busqueda-->
-<div class="bg-white shadow-lg rounded-full mx-8 mt-8 p-4 flex justify-between items-center space-x-4">
-    <div class="flex flex-col items-center w-full">
-      <span class="font-bold">Dónde</span>
-      <input type="text" placeholder="Busca tu proximo destino" class="border-0 p-2 rounded-full w-full text-center focus:outline-none">
+<!-- Buscador Compacto -->
+<!-- Buscador Mejorado -->
+<div class="bg-white shadow-lg rounded-full mx-4 mt-6 p-2 max-w-4xl mx-auto">
+  <form action="/search" method="GET" class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-3 sm:space-y-0">
+    <!-- Dónde -->
+    <div class="flex-grow flex flex-col">
+      <label for="where" class="font-medium text-sm text-gray-600 mb-1">Dónde</label>
+      <input type="text" id="where" name="where" placeholder="Destino" class="border border-gray-300 rounded-full p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
     </div>
-    <div class="flex flex-col items-center w-full">
-      <span class="font-bold">Llegada</span>
-      <input type="text" placeholder="Agrega Fecha" class="border-0 p-2 rounded-full w-full text-center focus:outline-none">
+    <!-- Llegada -->
+    <div class="flex-grow flex flex-col">
+      <label for="checkin" class="font-medium text-sm text-gray-600 mb-1">Llegada</label>
+      <input type="date" id="checkin" name="checkin" class="border border-gray-300 rounded-full p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
     </div>
-    <div class="flex flex-col items-center w-full">
-      <span class="font-bold">Salida</span>
-      <input type="text" placeholder="Agrega Fecha" class="border-0 p-2 rounded-full w-full text-center focus:outline-none">
+    <!-- Salida -->
+    <div class="flex-grow flex flex-col">
+      <label for="checkout" class="font-medium text-sm text-gray-600 mb-1">Salida</label>
+      <input type="date" id="checkout" name="checkout" class="border border-gray-300 rounded-full p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
     </div>
-    <div class="flex flex-col items-center w-full">
-      <span class="font-bold">Quién</span>
-      <input type="text" placeholder="¿Cuántos?" class="border-0 p-2 rounded-full w-full text-center focus:outline-none">
+    <!-- Quién -->
+    <div class="flex-grow flex flex-col">
+      <label for="guests" class="font-medium text-sm text-gray-600 mb-1">Quién</label>
+      <input type="number" id="guests" name="guests" placeholder="Personas" class="border border-gray-300 rounded-full p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
     </div>
-    <button class="bg-blue-800 text-white px-6 py-3 rounded-full">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+    <!-- Botón de Búsqueda -->
+    <button class="bg-blue-500  text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-blue-700 transition-all duration-200 flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5 mr-2">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5a7 7 0 100 14 7 7 0 000-14zM21 21l-4.35-4.35" />
       </svg>
+      Buscar
     </button>
+  </form>
+</div>
+
+<!-- carousel con tailwind -->
+<section>
+  <div class="">preview</div>
+  <div class="">Slider</div>
+  <div class="">Next</div>
+</section>
+
+<div x-data="{ modalIsOpen: false }">
+    <!-- Button to open the modal -->
+    <button type="button" @click="modalIsOpen = true" class=" font-bold bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Registrar Hotel</button>
+
+    <!-- Modal Background -->
+    <div x-show="modalIsOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalIsOpen" @click.self="modalIsOpen = false" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
+        <!-- Modal Container -->
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+            <!-- Close Button -->
+            <button @click="modalIsOpen = false" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+            <!-- Contenido del modal -->
+            <h2 class="text-2xl font-semibold mb-4 text-center">Registrar Hotel</h2>
+            <form action="/registerHotel" method="post" class="space-y-4">
+                <!-- Nombre -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="nombre">Nombre del hotel</label>
+                    <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="nombre" name="nombre" required>
+                </div>
+                <!-- Teléfono -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="telefono">Teléfono</label>
+                    <input type="tel" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="telefono" name="telefono" required>
+                </div>
+                <!-- Ubicación -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="ubicacion">Ubicación</label>
+                    <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="ubicacion" name="ubicacion" required>
+                </div>
+                <!-- Estrellas -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="estrellas">Estrellas (1-5)</label>
+                    <input type="number" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="estrellas" name="estrellas" min="1" max="5" required>
+                </div>
+                <!-- Disponibilidad -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="disponibilidad">Disponibilidad </label>
+                    <select id="disponibilidad" name="disponibilidad" class="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" required>
+                        <option value="Disponible">Disponible</option>
+                        <option value="No Disponible">No Disponible</option>
+                    </select>
+                </div>
+                <!-- Descripción -->
+                <div class="flex items-center">
+                    <label class="w-32 text-gray-700 font-medium" for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" rows="4" class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" required></textarea>
+                </div>
+                <!-- Botón de envío -->
+                <div class="mt-6">
+                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Registrar Hotel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+<section class="my-12">
+  <h2 class="text-center text-blue-800 text-3xl font-bold">¡Explora y disfruta!</h2>
+  <div class="relative">
+    <div class="overflow-hidden relative">
+      <ul class="flex space-x-4 transition-transform duration-300 ease-in-out carousel-wrapper">
+        <!-- Foto1 -->
+        <li class="flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto1.jpg');"></li>
+        <!-- Foto2 -->
+        <li class="flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto2.jpg');"></li>
+        <!-- Foto3 -->
+        <li class="flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto3.jpg');"></li>
+        <!-- Foto4 -->
+        <li class="flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto4.jpg');"></li>
+        <!-- Foto5 -->
+        <li class="flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto5.jpg');"></li>
+      </ul>
+      
+      <!-- Botones de Navegación -->
+      <button id="prev-slide" class="absolute top-1/2 left-4 transform -translate-y-1/2 p-2 bg-indigo-600 text-white rounded-full shadow-md hover:bg-indigo-700 focus:outline-none">
+        &lt;
+      </button>
+      <button id="next-slide" class="absolute top-1/2 right-4 transform -translate-y-1/2 p-2 bg-indigo-600 text-white rounded-full shadow-md hover:bg-indigo-700 focus:outline-none">
+        &gt;
+      </button>
+    </div>
   </div>
-  
-  <!--hoteles -->
-  <section class="my-12">
-    <h2 class="text-center text-blue-800 text-3xl font-bold">¡Experimenta y diviértete!</h2>
-    <div class="snap-x overflow-x-auto flex space-x-4 p-8">
-      
-      <!-- foto1 -->
-      <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto1.jpg');">
-        <div class="flex justify-end p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
-          </svg>
-        </div>
-      </div>
-      
-      <!-- foto2-->
-      <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto2.jpg');">
-        <div class="flex justify-end p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
-          </svg>
-        </div>
-      </div>
-      
-      <!-- foto3 -->
-      <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto3.jpg');">
-        <div class="flex justify-end p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
-          </svg>
-        </div>
-      </div>
-      <!-- foto4 -->
-      <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto4.jpg');">
-        <div class="flex justify-end p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
-          </svg>
-        </div>
-      </div>
-      <!-- foto5 -->
-      <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto5.jpg');">
-        <div class="flex justify-end p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
-          </svg>
-        </div>
-      </div>
-      <!-- añadir mas  -->
-    </div>
-  </section>
+</section>
 
 
-<!-- actividades -->
-  <section class="my-12">
-    <h2 class="text-center text-blue-800 text-3xl font-bold">¡Experimenta y diviértete!</h2>
-    <div class="snap-x overflow-x-auto flex space-x-4 p-8">
-      
-      <!-- foto1 -->
-      <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto1.jpg');">
-        <div class="flex justify-end p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
-          </svg>
-        </div>
+<!-- Hoteles -->
+<section class="my-12">
+  <h2 class="text-center text-blue-800 text-3xl font-bold">¡Explora y disfruta!</h2>
+  <div class="snap-x overflow-x-auto flex space-x-4 p-8">
+    
+    <!-- Foto1 -->
+    <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto1.jpg');">
+      <div class="flex justify-end p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
+        </svg>
       </div>
-      
-      <!-- foto2-->
-      <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto2.jpg');">
-        <div class="flex justify-end p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
-          </svg>
-        </div>
-      </div>
-      
-      <!-- foto3 -->
-      <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto3.jpg');">
-        <div class="flex justify-end p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
-          </svg>
-        </div>
-      </div>
-      <!-- foto4 -->
-      <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto4.jpg');">
-        <div class="flex justify-end p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
-          </svg>
-        </div>
-      </div>
-      <!-- foto5 -->
-      <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto5.jpg');">
-        <div class="flex justify-end p-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
-          </svg>
-        </div>
-      </div>
-      <!-- añadir mas  -->
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-200 p-8">
-    <div class="grid grid-cols-3 gap-4 text-center">
-      <div>
-        <h3 class="font-bold">datos footer</h3>
-        <p>datos footer</p>
-        <p>datos footer</p>
-        <p>datos footer</p>
-      </div>
-      <div>
-        <h3 class="font-bold">datos footer</h3>
-        <p>datos footer</p>
-        <p>datos footer</p>
-        <p>datos footer</p>
-      </div>
-      <div>
-        <h3 class="font-bold">datos footer</h3>
-        <p>datos footer</p>
-        <p>datos footer</p>
-        <p>datos footer</p>
+    <!-- Foto2 -->
+    <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto2.jpg');">
+      <div class="flex justify-end p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
+        </svg>
       </div>
     </div>
-    <p class="text-center mt-4 text-blue-600">Datos footer</p>
-  </footer>
+
+    <!-- Foto3 -->
+    <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto3.jpg');">
+      <div class="flex justify-end p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Foto4 -->
+    <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto4.jpg');">
+      <div class="flex justify-end p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Foto5 -->
+    <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto5.jpg');">
+      <div class="flex justify-end p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Actividades -->
+<section class="my-12">
+  <h2 class="text-center text-blue-800 text-3xl font-bold">¡Vive nuevas experiencias!</h2>
+  <div class="snap-x overflow-x-auto flex space-x-4 p-8">
+    
+    <!-- Foto1 -->
+    <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto1.jpg');">
+      <div class="flex justify-end p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Foto2 -->
+    <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto2.jpg');">
+      <div class="flex justify-end p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Foto3 -->
+    <div class="snap-start flex-shrink-0 w-64 h-64 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('./img/foto3.jpg');">
+      <div class="flex justify-end p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.232l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.25l-7.682-7.568a4.5 4.5 0 010-6.364z" />
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</section>

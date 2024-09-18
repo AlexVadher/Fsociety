@@ -137,12 +137,11 @@ class userModel {
                 genero,
                 orientacionSexual,
                 pais,
-                idRol,
             } = userData;
 
             // Actualizando la información del usuario en la base de datos
             const [result] = await pool.query(
-                'UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, telefono = ?, genero = ?, orientacionSexual = ?, pais = ?, idRol = ? WHERE id = ?',
+                'UPDATE usuarios SET nombre = ?, apellido = ?, correo = ?, telefono = ?, genero = ?, orientacionSexual = ?, pais = ? WHERE id = ?',
                 [
                     nombre,
                     apellido,
@@ -151,12 +150,15 @@ class userModel {
                     genero,
                     orientacionSexual,
                     pais,
-                    idRol,
                     userId,
                 ],
             );
-            return result; // Devuelve el resultado de la actualización del usuario en la base de datos
+            return result[0]; // Devuelve el resultado de la actualización del usuario en la base de datos
         } catch (error) {
+            console.error(
+                'Error al actualizar el usuario en el modelo:',
+                userData,
+            );
             throw new Error(error);
         }
     }
@@ -220,7 +222,7 @@ class userModel {
     }
 
     // Método para actualizar la información de un usuario
-    static async updateUser({userId, userData}) {
+    /* static async updateUser(id, {userData}) {
         try {
             const {
                 nombre,
@@ -230,7 +232,6 @@ class userModel {
                 genero,
                 orientacionSexual,
                 pais,
-                idRol,
             } = userData;
 
             // Actualizando la información del usuario en la base de datos
@@ -244,15 +245,14 @@ class userModel {
                     genero,
                     orientacionSexual,
                     pais,
-                    idRol,
-                    userId,
+                    id,
                 ],
             );
-            return result; // Devuelve el resultado de la actualización del usuario en la base de datos
+            return result[0]; // Devuelve el resultado de la actualización del usuario en la base de datos
         } catch (error) {
             throw new Error(error);
         }
-    }
+    } */
 
     // Método para obtener un usuario por su ID
     static async getUserById(userId) {

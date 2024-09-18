@@ -1,5 +1,5 @@
 {
-  "name": "@sistema-de-gestion-de-hoteles",
+  "name": "sistema-de-gestion-de-hoteles",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",

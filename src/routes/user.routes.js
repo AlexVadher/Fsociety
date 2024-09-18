@@ -68,17 +68,17 @@ userRouter.get(
 
 // Ruta para actualizar datos del perfil del usuario
 userRouter.post(
-    '/profile/update/:guid',
+    '/profile/update/:id',
     authMiddleware,
     userController.editUserProfile,
 );
 
 // Ruta para cambiar la contraseña del usuario
-userRouter.get(
+/* userRouter.get(
     '/profile/changePassword/:guid',
     authMiddleware,
     userController.renderChangePassword,
-);
+); */
 
 // Ruta para actualizar la contraseña del usuario
 userRouter.post(
@@ -96,11 +96,8 @@ userRouter.get(
 
 // userRouter.get('/profile/settings', authMiddleware, userController.settings);
 
-// Ruta para actualizar el perfil del usuario
-userRouter.post(
-    '/profile/update/:guid',
-    authMiddleware,
-    userController.editUserProfile,
-);
-
+// ruta para lista de hoteles
+userRouter.get('/amdmin/hotels', (req, res) => {
+    res.render('hotels/hotels');
+});
 export default userRouter;
