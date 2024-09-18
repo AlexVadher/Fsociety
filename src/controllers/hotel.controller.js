@@ -87,10 +87,40 @@ export class hotelController {
 
             const menuItems = [
                 {
+                    name: 'Usuarios',
+                    link: `/admin/usuarios`,
+                    icon: 'fas fa-users',
+                    active: currentPath.includes('/admin/usuarios'),
+                },
+                {
                     name: 'Hoteles',
-                    link: `/admin/hotels/`,
-                    icon: 'fas fa-user-edit',
-                    active: currentPath.includes('/admin/hotels/'),
+                    link: `/admin/hotels`,
+                    icon: 'fas fa-hotel',
+                    active: currentPath.includes('/admin/hotels'),
+                },
+                {
+                    name: 'Actividades',
+                    link: `/admin/actividades`,
+                    icon: 'fas fa-calendar-alt',
+                    active: currentPath.includes('/admin/actividades'),
+                },
+                {
+                    name: 'Reservas',
+                    link: `/admin/reservas`,
+                    icon: 'fas fa-book',
+                    active: currentPath.includes('/admin/reservas'),
+                },
+                {
+                    name: 'Dashboard',
+                    link: `/admin/estadisticas`,
+                    icon: 'fas fa-chart-bar',
+                    active: currentPath.includes('/admin/Dashboard'),
+                },
+                {
+                    name: 'Configuración',
+                    link: `/admin/configuracion`,
+                    icon: 'fas fa-cogs',
+                    active: currentPath.includes('/admin/configuracion'),
                 },
                 // Puedes añadir más elementos según sea necesario
             ];
