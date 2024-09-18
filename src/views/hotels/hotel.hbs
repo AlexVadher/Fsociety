@@ -1,39 +1,55 @@
-<form action="/registerHotel" method="POST">
-    <!-- Nombre -->
-    <div>
-      <label for="nombre">Nombre del hotel:</label>
-      <input type="text" id="nombre" name="nombre" required>
+<div class="flex min-h-screen bg-gray-100">
+  <!-- Sidebar -->
+  {{>asideAdmin}}
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8">
+    <h1 class="text-2xl font-semibold mb-6">Lista de Hoteles registrados</h1>
+    
+    <!-- Contenedor principal -->
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+      <div class="flex items-start">
+        <div class="container mx-auto my-8">
+    <!-- Tabla -->
+        <div class="bg-white shadow-md rounded-lg overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-800 text-white">
+                    <tr>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Teléfono</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Ubicación</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Estrellas</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Disponibilidad</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Descripción</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {{#each hotels}} <!-- Iteración sobre el array de hoteles -->
+                        <tr>
+                          <td class="px-6 py-4 whitespace-nowrap">{{nombre}}</td>
+                          <td class="px-6 py-4 whitespace-nowrap">{{telefono}}</td>
+                          <td class="px-6 py-4 whitespace-nowrap">{{ubicacion}}</td>
+                          <td class="px-6 py-4 whitespace-nowrap">{{estrellas}}</td>
+                          <td class="px-6 py-4 whitespace-nowrap">{{disponibilidad}}</td>
+                          <td class="px-6 py-4 whitespace-nowrap">{{descripcion}}</td>
+                          <td class="px-6 py-4 whitespace-nowrap">
+                              <button class="text-blue-500 hover:text-blue-700">Editar</button>
+                              <button class="text-red-500 hover:text-red-700 ml-4">Eliminar</button>
+                          </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <!-- Componente parcial para registrar un hotel -->
+      {{> registerHotel}}
     </div>
-    <!-- Teléfono -->
-    <div>
-      <label for="telefono">Teléfono:</label>
-      <input type="tel" id="telefono" name="telefono" required>
+        
+      </div>
     </div>
-    <!-- Ubicación -->
-    <div>
-      <label for="ubicacion">Ubicación:</label>
-      <input type="text" id="ubicacion" name="ubicacion" required>
-    </div>
-    <!-- Estrellas -->
-    <div>
-      <label for="estrellas">Estrellas (1-5):</label>
-      <input type="number" id="estrellas" name="estrellas" min="1" max="5" required>
-    </div>
-    <!-- Disponibilidad -->
-    <div>
-      <label for="disponibilidad">Disponibilidad:</label>
-      <select id="disponibilidad" name="disponibilidad" required>
-        <option value="Disponible">Disponible</option>
-        <option value="No Disponible">No Disponible</option>
-      </select>
-    </div>
-    <!-- Descripción -->
-    <div>
-      <label for="descripcion">Descripción:</label>
-      <textarea id="descripcion" name="descripcion" rows="4" cols="50" required></textarea>
-    </div>
-    <!-- Botón de envío -->
-    <div>
-      <button type="submit">Registrar Hotel</button>
-    </div>
-  </form>
+  </main>
+</div>
+
+    
