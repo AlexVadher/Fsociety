@@ -7,6 +7,42 @@
     <h1 class="text-2xl font-semibold mb-6">configuración del perfil</h1>
     <!-- Aquí se puede incluir el formulario de edición de perfil o la configuración seleccionada -->
     <h1>aqui es settings</h1>
+    <div class="container mx-auto table-container">
+        <!-- Tabla -->
+        <div class="bg-white shadow-md rounded-lg overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-800 text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Edad</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Ciudad</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Juan Pérez</td>
+                        <td class="px-6 py-4 whitespace-nowrap">30</td>
+                        <td class="px-6 py-4 whitespace-nowrap">Madrid</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <button class="text-blue-500 hover:text-blue-700">Editar</button>
+                            <button class="text-red-500 hover:text-red-700 ml-4">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Ana Gómez</td>
+                        <td class="px-6 py-4 whitespace-nowrap">25</td>
+                        <td class="px-6 py-4 whitespace-nowrap">Barcelona</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {{> test}}
+                            <button class="text-red-500 hover:text-red-700 ml-4">Eliminar</button>
+                        </td>
+                    </tr>
+                    <!-- Añadir más filas aquí -->
+                </tbody>
+            </table>
+        </div>
+    </div>
   </main>
 </div>
 
