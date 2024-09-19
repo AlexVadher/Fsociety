@@ -1,34 +1,35 @@
-import pool from '../config/database.js';  
-import { v4 as uuidv4 } from 'uuid';
+import pool from '../config/database.js';
+import {v4 as uuidv4} from 'uuid';
 
 class ActivityModel {
-    // Obtener todos los elementos desde la base de datos
-    static async getAllItems() {
+    // Método para obtener todas las actividades
+    static async getAllActivities() {
         try {
+            // variables con la consulta SQL
             const query = 'SELECT * FROM actividades';
-            const { rows } = await pool.query(query);
-            return rows;
+
+            // Ejecutar la consulta SQL
+            const [rows] = await pool.query(query);
+            return rows; // Retorna todas las filas de la tabla
         } catch (error) {
             console.error('Error fetching all items:', error);
             throw error;
         }
     }
-
-    // Obtener un elemento por ID desde la base de datos
+    // Metodo para obtener una actividad por ID
     static async getItemById(id) {
         try {
             const query = 'SELECT * FROM actividades WHERE id = ';
             const values = [id];
-            const { rows } = await pool.query(query, values);
+            const {rows} = await pool.query(query, values);
             return rows[0];
         } catch (error) {
             console.error(`Error fetching item with ID ${id}:`, error);
             throw error;
         }
     }
-
-    // Crear un nuevo elemento en la base de datos
-    static async createActivity({ nombre, costo, descripcion, disponibilidad }) {
+    // Método para crear una nueva actividad
+    static async createActivity({nombre, costo, descripcion, disponibilidad}) {
         try {
             const query = `
                 INSERT INTO actividades (nombre, costo, descripcion, disponibilidad)
@@ -41,26 +42,23 @@ class ActivityModel {
             throw error;
         }
     }
-
-    // Actualizar un elemento existente en la base de datos
-    static async updateItem(id, { nombre, costo, descripcion, disponibilidad }) {
+    // Metodo para actualizar una actividad
+    static async updateActivity(id, activityData) {
         try {
-            const query = `
-                UPDATE activities
-                SET nombre = $1, costo = $2, descripcion = $3, disponibilidad = $4
-                WHERE id = $5
-                RETURNING *;
-            `;
+            const {nombre, costo, descripcion, disponibilidad} = activityData;
+
+            // Variables con la consulta SQL y los valores a actualizar
+            const query = `UPDATE actividades SET nombre = ?, costo = ?, descripcion = ?, disponibilidad = ? WHERE id = ?`;
             const values = [nombre, costo, descripcion, disponibilidad, id];
-            const { rows } = await pool.query(query, values);
-            return rows[0];
+
+            // Ejecutar la consulta SQL
+            const result = await pool.query(query, values);
         } catch (error) {
             console.error(`Error updating item with ID ${id}:`, error);
             throw error;
         }
     }
-
-    // Eliminar un elemento de la base de datos
+    // Método para eliminar una actividad por ID
     static async deleteItem(id) {
         try {
             const query = 'DELETE FROM activities WHERE id = $1';

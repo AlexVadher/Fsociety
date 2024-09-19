@@ -44,6 +44,7 @@ app.engine(
         partialsDir: join(app.get('views'), 'partials'),
         extname: '.hbs',
         helpers: {
+            eq: (a, b) => a === b,
             ifEquals: (arg1, arg2, options) =>
                 arg1 === arg2 ? options.fn(this) : options.inverse(this), // pendiente por validar
         },

@@ -1,0 +1,52 @@
+<div x-data="{ modalOpen: false }">
+    <!-- Button to open the modal -->
+    <button type="button" @click="modalOpen = true" class="font-bold bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
+        Registrar Actividad
+    </button>
+
+    <!-- Modal Background -->
+    <div x-show="modalOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalOpen" @click.self="modalOpen = false" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
+        <!-- Modal Container -->
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+            <!-- Close Button -->
+            <button @click="modalOpen = false" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+            <!-- Modal Content -->
+            <h2 class="text-2xl font-semibold mb-4 text-center">Registrar Actividad</h2>
+            <form action="/createactivity" method="post" class="space-y-4">
+                <!-- Nombre -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-medium" for="nombre">Nombre de la actividad:</label>
+                    <input type="text" id="nombre" name="nombre" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" required>
+                </div>
+                <!-- Costo -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-medium" for="costo">Costo:</label>
+                    <input type="number" step="0.01" id="costo" name="costo" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" required>
+                </div>
+                <!-- Descripción -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-medium" for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" rows="4" class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" required></textarea>
+                </div>
+                <!-- Disponibilidad -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-medium">Disponibilidad:</label>
+                    <div class="flex items-center">
+                        <input type="radio" id="disponible" name="disponibilidad" value="true" required>
+                        <label for="disponible" class="ml-2">Disponible</label>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <input type="radio" id="no-disponible" name="disponibilidad" value="false" required>
+                        <label for="no-disponible" class="ml-2">No disponible</label>
+                    </div>
+                </div>
+                <!-- Submit Button -->
+                <div class="mt-6">
+                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Registrar Actividad</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
