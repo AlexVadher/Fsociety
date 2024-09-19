@@ -6,8 +6,8 @@
       {{#each activities}}
       <!-- Tarjeta de actividad -->
       <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-        <!-- Imágenes de la actividad -->
-        <div class="h-48 bg-cover bg-center" style="background-image: url('{{this.imgs.[0].image_name}}');"></div>
+        <!-- Imagen principal de la actividad -->
+        <img class="h-48 w-full object-cover" src="{{this.imagen}}" alt="Imagen de actividad">
 
         <!-- Detalles de la actividad -->
         <div class="p-6">
@@ -36,17 +36,18 @@
       {{/each}}
     </div>
   </div>
-<div class="container mx-auto px-4 mt-12">
+
+  <div class="container mx-auto px-4 mt-12">
     <h3 class="text-center text-blue-800 text-2xl font-bold mb-8">Galería de Imágenes</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {{#each activities}}
-            {{#each this.imgs}}
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <img class="h-48 w-full object-cover" src="/public/uploads/activities/test-4/images-1726709818512-521920256-Captura de pantalla 2024-09-17 192420.png" alt="Imagen de actividad">
-            </div>
-            {{/each}}
+      {{#each activities}}
+        {{#each this.imgs}}
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+          <!-- Mostrar cada imagen de la galería -->
+          <img class="h-48 w-full object-cover" src="/uploads/activities/{{../this.nombre}}-{{../this.id}}/{{this.image_name}}" alt="Imagen de actividad">
+        </div>
         {{/each}}
+      {{/each}}
     </div>
-</div>
+  </div>
 </section>
-
