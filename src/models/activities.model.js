@@ -36,6 +36,37 @@ class ActivityModel {
             throw error;
         }
     }
+    // Método para contar el número total de actividades
+    static async countActivities() {
+        try {
+            // variables con la consulta SQL
+            const query = 'SELECT COUNT(*) as count FROM actividades';
+
+            // Ejecutar la consulta SQL
+            const [rows] = await pool.query(query);
+            return rows[0].count; // Retorna el número total de actividades
+        } catch (error) {
+            console.error('Error counting items:', error);
+            throw error;
+        }
+    }
+    // Método para obtener actividades con limite y desplazamiento (paginación)
+    static async getActivityPage(limit, offset) {
+        try {
+            console.log('limit:', limit, 'offset:', offset);
+
+            // variables con la consulta SQL
+            const query = 'SELECT * FROM actividades LIMIT ? OFFSET ?';
+            const values = [limit, offset];
+
+            // Ejecutar la consulta SQL
+            const [rows] = await pool.query(query, values);
+            return rows; // Retorna todas las filas de la tabla
+        } catch (error) {
+            console.error('Error fetching items:', error);
+            throw error;
+        }
+    }
     // Metodo para obtener una actividad por ID
     static async getActivityId(id) {
         try {

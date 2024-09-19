@@ -1,4 +1,3 @@
-<!-- Buscador Compacto -->
 <!-- Buscador Mejorado -->
 <div class="bg-white shadow-lg rounded-full mx-4 mt-6 p-2 max-w-4xl mx-auto">
   <form action="/search" method="GET" class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-3 sm:space-y-0">
@@ -29,13 +28,13 @@
       Buscar
     </button>
     </div>
-
   </form>
 </div>
-<div class="my-8"></div>
+<div class="my-8">
 <h2 class="text-center text-blue-800 text-3xl font-bold">¡Explora y disfruta!</h2>
+
 <!-- Carrusel 1 -->
-<section></section>
+<section>
 <div class="flex">
     <div class="w-2/12 flex items-center">
         <div class="w-full text-right">
@@ -48,7 +47,7 @@
     </div>
     <div id="sliderContainer1" class="w-10/12 overflow-hidden">
         <ul id="slider1" class="flex w-full duration-700">
-                               <li class="w-96 p-5">
+                            <li class="w-96 p-5">
                         <div class="border rounded-lg p-5 h-full">
                             <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt="" class="w-full h-48 object-cover rounded-lg">
                             <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
@@ -103,9 +102,9 @@
 </section>
 
 <!-- Carrusel 2 -->
-<div class="my-8"></div>
+<div class="my-8">
 <h2 class="text-center text-blue-800 text-3xl font-bold">¡Explora y disfruta!</h2>
-<section></section>
+<section>
 <div class="flex">
     <div class="w-2/12 flex items-center">
         <div class="w-full text-right">
@@ -118,7 +117,7 @@
     </div>
     <div id="sliderContainer2" class="w-10/12 overflow-hidden">
         <ul id="slider2" class="flex w-full duration-700">
-                               <li class="w-96 p-5">
+                            <li class="w-96 p-5">
                         <div class="border rounded-lg p-5 h-full">
                             <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt="" class="w-full h-48 object-cover rounded-lg">
                             <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
@@ -170,81 +169,5 @@
         </div>
     </div>
 </div>
+</div>
 </section>
-
-<script>
-  // Carrusel 1
-let slider1 = document.getElementById('slider1');
-let sliderContainer1 = document.getElementById('sliderContainer1');
-let cards1 = slider1.getElementsByTagName('li');
-
-let elementsToShow1 = 3;
-if (document.body.clientWidth < 1000) {
-    elementsToShow1 = 2;
-} else if (document.body.clientWidth < 1500) {
-    elementsToShow1 = 3;
-}
-
-let sliderContainerWidth1 = sliderContainer1.clientWidth;
-let cardWidth1 = sliderContainerWidth1 / elementsToShow1;
-
-slider1.style.width = cards1.length * cardWidth1 + 'px';
-slider1.style.transition = 'margin';
-slider1.style.transitionDuration = '1s';
-
-for (let i = 0; i < cards1.length; i++) {
-    cards1[i].style.width = cardWidth1 + 'px';
-}
-
-function prev1() {
-    let marginLeft = +slider1.style.marginLeft.slice(0, -2) || 0;
-    if (marginLeft !== 0) {
-        slider1.style.marginLeft = marginLeft + cardWidth1 + 'px';
-    }
-}
-
-function next1() {
-    let marginLeft = +slider1.style.marginLeft.slice(0, -2) || 0;
-    if (marginLeft !== -(cards1.length - elementsToShow1) * cardWidth1) {
-        slider1.style.marginLeft = marginLeft - cardWidth1 + 'px';
-    }
-}
-
-// Carrusel 2
-let slider2 = document.getElementById('slider2');
-let sliderContainer2 = document.getElementById('sliderContainer2');
-let cards2 = slider2.getElementsByTagName('li');
-
-let elementsToShow2 = 3;
-if (document.body.clientWidth < 1000) {
-    elementsToShow2 = 2;
-} else if (document.body.clientWidth < 1500) {
-    elementsToShow2 = 3;
-}
-
-let sliderContainerWidth2 = sliderContainer2.clientWidth;
-let cardWidth2 = sliderContainerWidth2 / elementsToShow2;
-
-slider2.style.width = cards2.length * cardWidth2 + 'px';
-slider2.style.transition = 'margin';
-slider2.style.transitionDuration = '1s';
-
-for (let i = 0; i < cards2.length; i++) {
-    cards2[i].style.width = cardWidth2 + 'px';
-}
-
-function prev2() {
-    let marginLeft = +slider2.style.marginLeft.slice(0, -2) || 0;
-    if (marginLeft !== 0) {
-        slider2.style.marginLeft = marginLeft + cardWidth2 + 'px';
-    }
-}
-
-function next2() {
-    let marginLeft = +slider2.style.marginLeft.slice(0, -2) || 0;
-    if (marginLeft !== -(cards2.length - elementsToShow2) * cardWidth2) {
-        slider2.style.marginLeft = marginLeft - cardWidth2 + 'px';
-    }
-}
-
-</script>

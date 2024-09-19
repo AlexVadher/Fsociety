@@ -27,3 +27,6 @@ package.json
 
 #Ignorar subida de archivos de Hoteles
 /public/uploads/hotels
+
+#Ignorar subida de archivos de Actividades
+/public/uploads/activities

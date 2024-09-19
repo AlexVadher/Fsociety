@@ -83,6 +83,36 @@ class activitiesController {
                 body: activities,
             }); */
 
+            // Obtener el número total de actividades
+            const totalActivities = await ActivityModel.countActivities();
+
+            // Definir el número de actividades por página
+            const itemsPerPage = 2;
+
+            // Calcular el número total de páginas
+            const totalPages = Math.ceil(totalActivities / itemsPerPage);
+
+            // Obtener el número de página actual
+            const currentPage = parseInt(req.query.page) || 1;
+
+            // Calcular el desplazamiento
+            const offset = (currentPage - 1) * itemsPerPage;
+
+            // Llamar al método getActivityPage de la clase ActivityModel
+            const activitiespage = await ActivityModel.getActivityPage(
+                itemsPerPage,
+                offset,
+            );
+
+            console.log('Actividades encontradas:', activitiespage); // Registro de las actividades encontradas
+
+            // Verificar si se encontraron actividades
+            if (!activitiespage || activitiespage.length === 0) {
+                return res.status(404).json({
+                    message: 'No se encontraron actividades',
+                });
+            }
+
             const currentPath = req.path;
 
             const menuItems = [
@@ -134,6 +164,9 @@ class activitiesController {
 
             res.render('activities/activity', {
                 activities,
+                activitiespage,
+                totalPages,
+                currentPage,
                 layout: 'main',
                 title: 'Actividades',
                 currentPath,
@@ -187,6 +220,54 @@ class activitiesController {
             // Renderizar la vista de actividades con imágenes
             res.render('activities/homeActivities', {
                 activities,
+            });
+        } catch (err) {
+            // Manejo de errores
+            console.error('Error al leer las actividades:', err);
+            res.status(500).json({
+                message: 'Error 500: ' + err.message,
+            });
+        }
+    }
+
+    // Método para renderizar la paginación de actividades
+    static async listActivityPage(req, res) {
+        try {
+            // Obtener el número total de actividades
+            const totalActivities = await ActivityModel.countActivities();
+
+            // Definir el número de actividades por página
+            const itemsPerPage = 5;
+
+            // Calcular el número total de páginas
+            const totalPages = Math.ceil(totalActivities / itemsPerPage);
+
+            // Obtener el número de página actual
+            const currentPage = parseInt(req.query.page) || 1;
+
+            // Calcular el desplazamiento
+            const offset = (currentPage - 1) * itemsPerPage;
+
+            // Llamar al método getActivityPage de la clase ActivityModel
+            const activities = await ActivityModel.getActivityPage(
+                itemsPerPage,
+                offset,
+            );
+
+            // Verificar si se encontraron actividades
+            if (!activities || activities.length === 0) {
+                return res.status(404).json({
+                    message: 'No se encontraron actividades',
+                });
+            }
+
+            console.log('Sctividades encontradas:', activities); // Registro de las actividades encontradas
+            console.log(activities, totalPages, currentPage);
+            // Renderizar la vista de actividades con paginación
+            res.render('activities/activity', {
+                activities,
+                totalPages,
+                currentPage,
             });
         } catch (err) {
             // Manejo de errores

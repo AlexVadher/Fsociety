@@ -47,7 +47,28 @@ app.engine(
         helpers: {
             eq: (a, b) => a === b,
             ifEquals: (arg1, arg2, options) =>
-                arg1 === arg2 ? options.fn(this) : options.inverse(this), // pendiente por validar
+                arg1 === arg2 ? options.fn(this) : options.inverse(this),
+
+            // Helper para comparar si un número es mayor
+            gt: (a, b) => a > b,
+
+            // Helper para comparar si un número es menor
+            lt: (a, b) => a < b,
+
+            // Helper para sumar dos números
+            add: (a, b) => a + b,
+
+            // Helper para restar dos números
+            subtract: (a, b) => a - b,
+
+            // Helper para generar un rango de números
+            range: (start, end) => {
+                const range = [];
+                for (let i = start; i <= end; i++) {
+                    range.push(i);
+                }
+                return range;
+            },
         },
     }),
 );
