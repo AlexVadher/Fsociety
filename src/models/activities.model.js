@@ -52,10 +52,31 @@ class ActivityModel {
             const values = [nombre, costo, descripcion, disponibilidad, id];
 
             // Ejecutar la consulta SQL
-            const result = await pool.query(query, values);
+            const [result] = await pool.query(query, values);
         } catch (error) {
             console.error(`Error updating item with ID ${id}:`, error);
             throw error;
+        }
+    }
+    // Método para cargar múltiples imágenes de una actividad
+    static async uploadImages(activityData) {
+        try {
+            const {id, imgs} = activityData;
+
+            // Crear un array de promesas para insertar cada imagen en la tabla 'imagenesActividades'
+            const promises = imgs.map(async (img) => {
+                return await pool.query(
+                    'INSERT INTO imagenesActividades (urlImg, idActividad) VALUES (?, ?)',
+                    [img, id],
+                );
+            });
+
+            // Ejecutar todas las inserciones de imágenes en paralelo
+            const results = await Promise.all(promises);
+
+            return results;
+        } catch (error) {
+            throw new Error(error);
         }
     }
     // Método para eliminar una actividad por ID
