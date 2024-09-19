@@ -229,25 +229,7 @@ export class hotelController {
     }
     static async listHotelImages(req, res) {
         try {
-            // Llamar al método getAllActivities de la clase ActivityModel para obtener las actividades
-            const hotels = await hotelModel.getAllHotels();
-
-            // Verificar si se encontraron actividades
-            if (!hotels || hotels.length === 0) {
-                return res.status(404).json({
-                    message: 'No se encontraron actividades',
-                });
-            }
-
-            console.log('Hoteles encontradas:', hotels); // Registro de las actividades encontradas
-
-            // Devolver la lista de actividades
-            /* res.status(200).json({
-                message: 'Actividades recuperadas exitosamente',
-                body: hotels,
-            }); */
-
-            // llamar al método getAllImages de la clase ActivityModel para obtener las imágenes de las actividades encontradas
+            // Llamar al método getAllImages de la clase HotelModel para obtener las imágenes
             const images = await hotelModel.getAllImages();
 
             // Verificar si se encontraron imágenes
@@ -259,28 +241,45 @@ export class hotelController {
 
             console.log('Imágenes encontradas:', images); // Registro de las imágenes encontradas
 
-            // Devolver la lista de imágenes
-            /* res.status(200).json({
-                message: 'Imágenes recuperadas exitosamente',
-                body: images,
-            }); */
+            // Organizar las imágenes por actividad
+            const imagesByHotel = images.reduce((acc, item) => {
+                const {
+                    id,
+                    nombre,
+                    telefono,
+                    ubicacion,
+                    estrellas,
+                    descripcion,
+                    disponibilidad,
+                    urlImg,
+                } = item;
 
-            // organizar las imágenes por actividad y mostrarlas en la vista
-            const imagesByhotel = hotels.map((hotel) => {
-                const imgs = images.filter((img) => img.id_hotel === hotel.id);
-                return {
-                    ...hotel,
-                    imgs,
-                };
-            });
+                if (!acc[id]) {
+                    acc[id] = {
+                        id,
+                        nombre,
+                        telefono,
+                        ubicacion,
+                        estrellas,
+                        descripcion,
+                        disponibilidad,
+                        imagen: urlImg, // Asignar la primera imagen
+                    };
+                }
+
+                return acc;
+            }, {});
+
+            // Convertir el objeto en un array
+            const hotels = Object.values(imagesByHotel);
 
             // Renderizar la vista de actividades con imágenes
             res.render('hotels/homeHotel', {
-                hotels: imagesByhotel,
+                hotels,
             });
         } catch (err) {
             // Manejo de errores
-            console.error('Error al leer los hoteles:', err);
+            console.error('Error al leer os Hoteles:', err);
             res.status(500).json({
                 message: 'Error 500: ' + err.message,
             });
