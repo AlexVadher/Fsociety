@@ -29,7 +29,6 @@ class hotelModel {
         }
     }
 
-    static async updateHotel(hotelId, hotelData) {
     // Método para cargar múltiples imágenes de un hotel
     static async uploadImages(hotelData) {
         try {

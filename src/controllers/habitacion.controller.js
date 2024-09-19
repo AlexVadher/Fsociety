@@ -81,6 +81,18 @@ export class habitacionController {
             });
         }
     }
+
+    static async getHabitacionesByHotel(req, res) {
+        const {hotelId} = req.params;
+        try {
+            const habitaciones = await habitacionModel.getHabitacionesByHotel(
+                hotelId,
+            );
+            res.status(200).json({habitaciones});
+        } catch (error) {
+            res.status(500).json({message: 'Error al obtener habitaciones'});
+        }
+    }
 }
 
 export default habitacionController;

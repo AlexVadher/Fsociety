@@ -42,6 +42,18 @@ class habitacionModel {
             throw new Error(error);
         }
     }
+
+    static async getHabitacionesByHotel(hotelId) {
+        try {
+            const [rows] = await pool.query(
+                'SELECT * FROM habitaciones WHERE idhotel = ?',
+                [hotelId],
+            );
+            return rows;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }
 
 export default habitacionModel;
