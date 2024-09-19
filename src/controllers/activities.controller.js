@@ -147,7 +147,7 @@ class activitiesController {
             });
         }
     }
-    // Método para listar todas ñas actividades y sus imágenes (Get)
+    // Método para listar todas las actividades y sus imágenes (Get)
     static async listActivityImages(req, res) {
         try {
             // Llamar al método getAllActivities de la clase ActivityModel para obtener las actividades

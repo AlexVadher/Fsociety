@@ -107,6 +107,21 @@ class hotelModel {
             throw new Error(error);
         }
     }
+
+    static async getAllImages() {
+        try {
+            // variables con la consulta SQL
+            const query = `SELECT a.*, i.urlImg FROM hoteles a
+                LEFT JOIN imagenesHoteles i ON a.id = i.idHotel`;
+
+            // Ejecutar la consulta SQL
+            const [rows] = await pool.query(query);
+            return rows; // Retorna todas las filas de la tabla
+        } catch (error) {
+            console.error('Error fetching all items:', error);
+            throw error;
+        }
+    }
 }
 
 export default hotelModel;
