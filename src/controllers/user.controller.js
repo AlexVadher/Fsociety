@@ -293,6 +293,7 @@ export class userController {
                 });
             }
 
+            // Crear un objeto con los datos del usuario
             const userData = {
                 nombre,
                 apellido,

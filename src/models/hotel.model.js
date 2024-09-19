@@ -30,6 +30,29 @@ class hotelModel {
     }
 
     static async updateHotel(hotelId, hotelData) {
+    // Método para cargar múltiples imágenes de un hotel
+    static async uploadImages(hotelData) {
+        try {
+            const {id, imgs} = hotelData;
+
+            // Crear un array de promesas para insertar cada imagen en la tabla 'imagenesHoteles'
+            const promises = imgs.map(async (img) => {
+                return await pool.query(
+                    'INSERT INTO imagenesHoteles (urlImg, idHotel) VALUES (?, ?)',
+                    [img, id],
+                );
+            });
+
+            // Ejecutar todas las inserciones de imágenes en paralelo
+            const results = await Promise.all(promises);
+
+            return results;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    static async updateHotel(hotelId, hotelData) {
         try {
             const {
                 nombre,
@@ -62,7 +85,7 @@ class hotelModel {
     static async getAllHotels() {
         try {
             const [rows] = await pool.query(`
-              SELECT 
+              SELECT id,
                   nombre,
                   telefono,
                   ubicacion,
