@@ -21,7 +21,7 @@ export class habitacionController {
             });
             console.log('Resultado de la creación de la habitación:', result);
 
-            res.redirect('/');
+            res.redirect('/partials/habitacionModal'); // Redirigir a la vista de habitaciones
         } catch (err) {
             console.error('Error al registrar la habitación:', err);
             res.status(500).json({

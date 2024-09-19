@@ -1,5 +1,4 @@
 import pool from '../config/database.js';
-import {v4 as uuidv4} from 'uuid';
 
 class ActivityModel {
     // Método para obtener todas las actividades
