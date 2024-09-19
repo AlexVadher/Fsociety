@@ -150,25 +150,7 @@ class activitiesController {
     // Método para listar todas las actividades y sus imágenes (Get)
     static async listActivityImages(req, res) {
         try {
-            // Llamar al método getAllActivities de la clase ActivityModel para obtener las actividades
-            const activities = await ActivityModel.getAllActivities();
-
-            // Verificar si se encontraron actividades
-            if (!activities || activities.length === 0) {
-                return res.status(404).json({
-                    message: 'No se encontraron actividades',
-                });
-            }
-
-            console.log('Actividades encontradas:', activities); // Registro de las actividades encontradas
-
-            // Devolver la lista de actividades
-            /* res.status(200).json({
-                message: 'Actividades recuperadas exitosamente',
-                body: activities,
-            }); */
-
-            // llamar al método getAllImages de la clase ActivityModel para obtener las imágenes de las actividades encontradas
+            // Llamar al método getAllImages de la clase ActivityModel para obtener las imágenes
             const images = await ActivityModel.getAllImages();
 
             // Verificar si se encontraron imágenes
@@ -180,26 +162,31 @@ class activitiesController {
 
             console.log('Imágenes encontradas:', images); // Registro de las imágenes encontradas
 
-            // Devolver la lista de imágenes
-            /* res.status(200).json({
-                message: 'Imágenes recuperadas exitosamente',
-                body: images,
-            }); */
+            // Organizar las imágenes por actividad
+            const imagesByActivity = images.reduce((acc, item) => {
+                const {id, nombre, costo, descripcion, disponibilidad, urlImg} =
+                    item;
 
-            // organizar las imágenes por actividad y mostrarlas en la vista
-            const imagesByActivity = activities.map((activity) => {
-                const imgs = images.filter(
-                    (img) => img.id_actividad === activity.id,
-                );
-                return {
-                    ...activity,
-                    imgs,
-                };
-            });
+                if (!acc[id]) {
+                    acc[id] = {
+                        id,
+                        nombre,
+                        costo,
+                        descripcion,
+                        disponibilidad,
+                        imagen: urlImg, // Asignar la primera imagen
+                    };
+                }
+
+                return acc;
+            }, {});
+
+            // Convertir el objeto en un array
+            const activities = Object.values(imagesByActivity);
 
             // Renderizar la vista de actividades con imágenes
             res.render('activities/homeActivities', {
-                activities: imagesByActivity,
+                activities,
             });
         } catch (err) {
             // Manejo de errores
@@ -209,6 +196,7 @@ class activitiesController {
             });
         }
     }
+
     // Métoodo para obtener una actividad por ID (Get)
     static async updateActivity(req, res) {
         try {
