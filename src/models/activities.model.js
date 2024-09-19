@@ -16,8 +16,23 @@ class ActivityModel {
             throw error;
         }
     }
+    // Método para obtener todas las actividades con sus imágenes
+    static async getAllImages() {
+        try {
+            // variables con la consulta SQL
+            const query = `SELECT a.*, i.urlImg FROM actividades a
+                LEFT JOIN imagenesActividades i ON a.id = i.idActividad`;
+
+            // Ejecutar la consulta SQL
+            const [rows] = await pool.query(query);
+            return rows; // Retorna todas las filas de la tabla
+        } catch (error) {
+            console.error('Error fetching all items:', error);
+            throw error;
+        }
+    }
     // Metodo para obtener una actividad por ID
-    static async getItemById(id) {
+    static async getActivityId(id) {
         try {
             const query = 'SELECT * FROM actividades WHERE id = ';
             const values = [id];

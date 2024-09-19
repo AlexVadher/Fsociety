@@ -1,4 +1,3 @@
-import express from 'express';
 import ActivityModel from '../models/activities.model.js';
 
 class activitiesController {
@@ -101,9 +100,9 @@ class activitiesController {
                 },
                 {
                     name: 'Actividades',
-                    link: `/admin/actividades`,
+                    link: `/admin/ListActivities`,
                     icon: 'fas fa-calendar-alt',
-                    active: currentPath.includes('/activities'),
+                    active: currentPath.includes('/admin/ListActivities'),
                 },
                 {
                     name: 'Reservas',
@@ -139,6 +138,68 @@ class activitiesController {
                 title: 'Actividades',
                 currentPath,
                 menuItems: menuItems,
+            });
+        } catch (err) {
+            // Manejo de errores
+            console.error('Error al leer las actividades:', err);
+            res.status(500).json({
+                message: 'Error 500: ' + err.message,
+            });
+        }
+    }
+    // Método para listar todas ñas actividades y sus imágenes (Get)
+    static async listActivityImages(req, res) {
+        try {
+            // Llamar al método getAllActivities de la clase ActivityModel para obtener las actividades
+            const activities = await ActivityModel.getAllActivities();
+
+            // Verificar si se encontraron actividades
+            if (!activities || activities.length === 0) {
+                return res.status(404).json({
+                    message: 'No se encontraron actividades',
+                });
+            }
+
+            console.log('Actividades encontradas:', activities); // Registro de las actividades encontradas
+
+            // Devolver la lista de actividades
+            /* res.status(200).json({
+                message: 'Actividades recuperadas exitosamente',
+                body: activities,
+            }); */
+
+            // llamar al método getAllImages de la clase ActivityModel para obtener las imágenes de las actividades encontradas
+            const images = await ActivityModel.getAllImages();
+
+            // Verificar si se encontraron imágenes
+            if (!images || images.length === 0) {
+                return res.status(404).json({
+                    message: 'No se encontraron imágenes',
+                });
+            }
+
+            console.log('Imágenes encontradas:', images); // Registro de las imágenes encontradas
+
+            // Devolver la lista de imágenes
+            /* res.status(200).json({
+                message: 'Imágenes recuperadas exitosamente',
+                body: images,
+            }); */
+
+            // organizar las imágenes por actividad y mostrarlas en la vista
+            const imagesByActivity = activities.map((activity) => {
+                const imgs = images.filter(
+                    (img) => img.id_actividad === activity.id,
+                );
+                return {
+                    ...activity,
+                    imgs,
+                };
+            });
+
+            // Renderizar la vista de actividades con imágenes
+            res.render('activities/homeActivities', {
+                activities: imagesByActivity,
             });
         } catch (err) {
             // Manejo de errores
@@ -217,7 +278,7 @@ class activitiesController {
                 message: 'Actividad actualizada exitosamente',
                 body: result,
             }); */
-            res.redirect('/activities');
+            res.redirect('/Listactivities');
         } catch (err) {
             // Manejo de errores
             console.error('Error al actualizar la actividad:', err);

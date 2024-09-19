@@ -12,8 +12,6 @@ const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         // Obtener el id del hotel desde los parámetros de la solicitud
         const activityId = req.params.id;
-        // obtener el nombre del hotel desde la base de datos de acuerdo al id
-        const activityName = req.body.nombre;
 
         // Definir la ruta de la carpeta dinámica basada en el id del hotel
         const activityDir = join(
@@ -23,7 +21,7 @@ const storage = multer.diskStorage({
             'public',
             'uploads',
             'activities',
-            activityName + '-' + activityId,
+            activityId,
         );
 
         // Crear la carpeta si no existe
@@ -34,6 +32,7 @@ const storage = multer.diskStorage({
         // Establecer la carpeta de destino
         cb(null, activityDir);
     },
+    // Establecer el nombre del archivo de imagen subido (con nombre único)
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
         cb(null, file.fieldname + '-' + uniqueSuffix + '-' + file.originalname);
