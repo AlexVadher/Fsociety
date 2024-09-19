@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import userRouter from './routes/user.routes.js'; // Rutas para los usuarios
 import routerActivity from './routes/activitites.routes.js';
 import routerHotel from './routes/hotel.routes.js';
+import routerHabitacion from './routes/habitacion.routes.js';
 dotenv.config(); // Cargar variables de entorno
 
 // Inicializar express
@@ -82,6 +83,8 @@ app.get('/', (req, res) => {
 app.use(userRouter);
 
 app.use(routerHotel);
+
+app.use(routerHabitacion);
 
 app.use(routerActivity);
 // Iniciar el servidor

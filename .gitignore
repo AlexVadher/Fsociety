@@ -24,3 +24,6 @@ package.json
 
 # Ignorar subida de archivos de avatares
 /public/uploads/avatars
+
+#Ignorar subida de archivos de Hoteles
+/public/uploads/hotels
