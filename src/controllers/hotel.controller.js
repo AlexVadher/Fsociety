@@ -136,7 +136,7 @@ export class hotelController {
                 nombre,
                 telefono,
                 ubicacion,
-                estrellas: parseInt(estrellas, 10),
+                estrellas: parseInt(estrellas, 10), // Convertir a número entero base 10 (decimal) para evitar errores
                 disponibilidad: disponibilidadBoolean,
                 descripcion,
             };
