@@ -1,6 +1,7 @@
 import pool from '../config/database.js';
 
 class hotelModel {
+    // Método para registrar un hotel
     static async createHotel(hotelData) {
         try {
             const {
@@ -28,7 +29,6 @@ class hotelModel {
             throw new Error(error);
         }
     }
-
     // Método para cargar múltiples imágenes de un hotel
     static async uploadImages(hotelData) {
         try {
@@ -50,11 +50,11 @@ class hotelModel {
             throw new Error(error);
         }
     }
-
-    static async updateHotel(hotelData) {
+    // Método para actualizar la información de un hotel
+    static async updateHotel(id, hotelData) {
         try {
+            // Desestructuración de los datos del hotel
             const {
-                id, // ID del hotel
                 nombre,
                 telefono,
                 ubicacion,
@@ -66,6 +66,7 @@ class hotelModel {
             // Actualizando la información del hotel en la base de datos
             const [result] = await pool.query(
                 'UPDATE hoteles SET nombre = ?, telefono = ?, ubicacion = ?, estrellas = ?, disponibilidad = ?, descripcion = ? WHERE id = ?', // Cambiar `idHotel` a `id`
+                // estos son los valores que se van a actualizar en la base de datos (es un array)
                 [
                     nombre,
                     telefono,
@@ -81,7 +82,7 @@ class hotelModel {
             throw new Error(error);
         }
     }
-
+    // Método para obtener todos los hoteles
     static async getAllHotels() {
         try {
             // variables con la consulta SQL
@@ -95,7 +96,7 @@ class hotelModel {
             throw error;
         }
     }
-
+    // Método para obtener un hotel por su ID
     static async getHotelById(hotelId) {
         try {
             const [rows] = await pool.query(
