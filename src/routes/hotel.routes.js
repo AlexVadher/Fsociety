@@ -14,5 +14,8 @@ routerHotel.post(
     uploadImages,
     hotelController.uploadImages,
 );
+routerHotel.post('/updateHotel/:id', hotelController.updateHotel);
+
+routerHotel.get('/ListHotelHome', hotelController.listHotelImages);
 
 export default routerHotel;
