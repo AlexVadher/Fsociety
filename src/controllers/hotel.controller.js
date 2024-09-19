@@ -80,13 +80,15 @@ export class hotelController {
             });
         }
     }
-    // Método para eliminar un hotel (DELETE)
     static async updateHotel(req, res) {
         try {
-            // Obtener el id del usuario desde req.params
             const {id} = req.params;
+            if (!id) {
+                return res
+                    .status(400)
+                    .json({message: 'ID del hotel no proporcionado'});
+            }
 
-            // Obtener los datos del formulario de actualización desde req.body
             const {
                 nombre,
                 telefono,
@@ -96,31 +98,67 @@ export class hotelController {
                 descripcion,
             } = req.body;
 
-            // Llamar al método updateUser de la clase UserModel
-            const result = await hotelModel.updateHotel({
-                id,
+            // Validar que todos los campos requeridos estén presentes
+            if (
+                !nombre ||
+                !telefono ||
+                !ubicacion ||
+                estrellas === undefined ||
+                disponibilidad === undefined ||
+                !descripcion
+            ) {
+                return res
+                    .status(400)
+                    .json({message: 'Todos los campos son obligatorios'});
+            }
+
+            // Verificar que estrellas sea un número válido
+            if (isNaN(estrellas) || estrellas < 1 || estrellas > 5) {
+                return res.status(400).json({
+                    message: 'Las estrellas deben ser un número entre 1 y 5',
+                });
+            }
+
+            // Verificar que disponibilidad sea un valor booleano
+            const isDisponibilidadValid =
+                disponibilidad === '1' || disponibilidad === '0';
+            if (!isDisponibilidadValid) {
+                return res.status(400).json({
+                    message: 'La disponibilidad debe ser un valor booleano',
+                });
+            }
+
+            // Convertir disponibilidad a booleano
+            const disponibilidadBoolean = disponibilidad === '1';
+
+            // Crear objeto con los datos actualizados
+            const hotelData = {
                 nombre,
                 telefono,
                 ubicacion,
-                estrellas,
-                disponibilidad,
+                estrellas: parseInt(estrellas, 10),
+                disponibilidad: disponibilidadBoolean,
                 descripcion,
-            });
+            };
 
-            console.log('Resultado de la actualización del hotel:', result); // Registro de resultado
+            // Llamar al método updateHotel de la clase HotelModel
+            const result = await hotelModel.updateHotel(id, hotelData);
 
+            // Responder con éxito
             res.status(200).json({
-                message: 'hotel actualizado exitosamente',
+                message: 'Hotel actualizado exitosamente',
                 body: result,
             });
         } catch (err) {
-            console.error('Error al actualizar el hotel:', err); // Mejorar el registro de errores
+            // Manejo de errores
+            console.error('Error al actualizar el hotel:', err);
             res.status(500).json({
-                message: 'Error 500:' + err.message,
+                message: 'Error 500: ' + err.message,
                 body: req.body,
             });
         }
     }
+
     // Método para Listar los hoteles (GET)
     static async listHotels(req, res) {
         try {
@@ -143,9 +181,9 @@ export class hotelController {
                 },
                 {
                     name: 'Actividades',
-                    link: `/admin/actividades`,
+                    link: `/admin/ListActivities`,
                     icon: 'fas fa-calendar-alt',
-                    active: currentPath.includes('/admin/actividades'),
+                    active: currentPath.includes('/admin/ListActivities'),
                 },
                 {
                     name: 'Reservas',

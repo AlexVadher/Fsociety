@@ -14,5 +14,6 @@ routerHotel.post(
     uploadImages,
     hotelController.uploadImages,
 );
+routerHotel.post('/updateHotel/:id', hotelController.updateHotel);
 
 export default routerHotel;
