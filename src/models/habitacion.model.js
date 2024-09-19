@@ -15,13 +15,13 @@ class habitacionModel {
         }
     }
 
-    static async updateHabitacion(habitacionId, habitacionData) {
+    static async updateHabitacion(id, habitacionData) {
         try {
-            const {codigo, tipo, costo, idhotel} = habitacionData;
+            const {codigo, tipo, costo} = habitacionData;
 
             const [result] = await pool.query(
-                'UPDATE habitaciones SET codigo = ?, tipo = ?, costo = ?, idhotel = ? WHERE idHabitacion = ?',
-                [codigo, tipo, costo, idhotel, habitacionId],
+                'UPDATE habitaciones SET codigo = ?, tipo = ?, costo = ? WHERE id = ?',
+                [codigo, tipo, costo, id],
             );
             return result;
         } catch (error) {

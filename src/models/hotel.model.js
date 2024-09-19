@@ -112,8 +112,14 @@ class hotelModel {
     static async getAllImages() {
         try {
             // variables con la consulta SQL
-            const query = `SELECT a.*, i.urlImg FROM hoteles a
-                LEFT JOIN imagenesHoteles i ON a.id = i.idHotel`;
+            const query = `SELECT a.id, a.nombre, a.telefono, a.ubicacion, a.estrellas, a.descripcion, a.disponibilidad, i.urlImg
+                            FROM hoteles a
+                            LEFT JOIN imagenesHoteles i ON a.id = i.idHotel
+                            WHERE i.id = (
+                                SELECT MIN(i2.id) 
+                                FROM imagenesHoteles i2 
+                                WHERE i2.idHotel = a.id
+                            );`;
 
             // Ejecutar la consulta SQL
             const [rows] = await pool.query(query);

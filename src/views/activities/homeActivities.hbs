@@ -1,5 +1,6 @@
-<section class="my-12">
-  <h2 class="text-center text-blue-800 text-3xl font-bold mb-8">¡Vive nuevas experiencias!</h2>
+<section class='my-12'>
+    <h2 class='text-center text-blue-800 text-3xl font-bold mb-8'>¡Vive nuevas
+        experiencias!</h2>
 
   <div class="container mx-auto px-4">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -9,22 +10,24 @@
         <!-- Imagen principal de la actividad -->
         <img class="h-48 w-full object-cover" src="{{this.imagen}}" alt="Imagen de actividad">
 
-        <!-- Detalles de la actividad -->
-        <div class="p-6">
-          <!-- Nombre de la actividad -->
-          <h2 class="text-xl font-bold mb-2">{{this.nombre}}</h2>
+                    <!-- Detalles de la actividad -->
+                    <div class='p-6'>
+                        <!-- Nombre de la actividad -->
+                        <h2 class='text-xl font-bold mb-2'>{{this.nombre}}</h2>
 
-          <!-- Descripción de la actividad -->
-          <p class="text-gray-700 mb-4">{{this.descripcion}}</p>
+                        <!-- Descripción de la actividad -->
+                        <p class='text-gray-700 mb-4'>{{this.descripcion}}</p>
 
-          <!-- Costo de la actividad -->
-          <p class="text-green-600 font-semibold mb-4">Costo: ${{this.costo}}</p>
+                        <!-- Costo de la actividad -->
+                        <p class='text-green-600 font-semibold mb-4'>Costo: ${{this.costo}}</p>
 
-          <!-- Disponibilidad de la actividad -->
-          <p class="text-blue-600 font-medium mb-4">
-            Disponibilidad: 
-            {{#if (eq this.disponibilidad 1)}}Disponible{{else}}No disponible{{/if}}
-          </p>
+                        <!-- Disponibilidad de la actividad -->
+                        <p class='text-blue-600 font-medium mb-4'>
+                            Disponibilidad:
+                            {{#if
+                                (eq this.disponibilidad 1)
+                            }}Disponible{{else}}No disponible{{/if}}
+                        </p>
 
           <!-- Botones de acción -->
           <div class="flex justify-between items-center">
