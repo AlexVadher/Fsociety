@@ -1,6 +1,7 @@
 import express from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
+import cors from 'cors';
 import {engine} from 'express-handlebars';
 import {join, dirname} from 'path';
 import {fileURLToPath} from 'url';
@@ -16,8 +17,20 @@ dotenv.config(); // Cargar variables de entorno
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Configurar cookie-parser
-app.use(cookieParser());
+// Configurar cabeceras y cors
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method',
+    );
+    res.header(
+        'Access-Control-Allow-Methods',
+        'GET, POST, OPTIONS, PUT, DELETE',
+    );
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+    next();
+});
 
 // Middleware para verificar la autenticación del usuario
 app.use(
@@ -75,10 +88,11 @@ app.engine(
 app.set('view engine', '.hbs');
 
 // Middlewares
-app.use(morgan('dev'));
-app.use(express.urlencoded({extended: true}));
-app.use(express.json());
+app.use(morgan('dev')); // Mostrar las peticiones HTTP en consola para desarrollo
+app.use(express.urlencoded({extended: true})); // Habilitamos el uso de formularios HTML en la API para poder recibir y enviar datos en este formato
 app.use(cookieParser()); // Configurar cookie-parser
+app.use(express.json()); // Habilitamos el uso de JSON en la API para poder recibir y enviar datos en este formato
+app.use(cors()); //Habilitamos CORS para que la API pueda ser consumida desde cualquier origen o dominio sin restricciones
 
 // Archivos estáticos (CSS, JS, imágenes)
 // Mover esto antes de las rutas de la aplicación
@@ -102,12 +116,13 @@ app.get('/', (req, res) => {
 
 // Rutas de los usuarios
 app.use(userRouter);
-
+// Rutas de los hoteles
 app.use(routerHotel);
-
+// Rutas de las habitaciones
 app.use(routerHabitacion);
-
+// Rutas de las actividades
 app.use(routerActivity);
+
 // Iniciar el servidor
 app.listen(app.get('port'), () =>
     console.log('Servidor en el puerto', app.get('port')),

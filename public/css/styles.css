@@ -1,9 +1,75 @@
-
 /* Scroll Snap para el carrusel */
 .snap-x {
-  scroll-snap-type: x mandatory;
+	scroll-snap-type: x mandatory;
 }
 
 .snap-start {
-  scroll-snap-align: start;
+	scroll-snap-align: start;
+}
+
+/*Form fields*/
+.dataTables_wrapper select,
+.dataTables_wrapper .dataTables_filter input {
+	color: #1a1b1b;
+	padding-left: 1rem;
+	text-align: center;
+	padding-right: 1rem;
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	line-height: 1.25;
+	border-width: 2px;
+	border-radius: .25rem;
+	border-color: #edf2f7;
+}
+
+/*Pagination Buttons*/
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+	font-weight: 800;
+	font-size: small;
+	/*font-bold*/
+	border-radius: .25rem;
+	/*rounded*/
+	border: 1px solid transparent;
+	/*border border-transparent*/
+}
+
+/*Add padding to bottom border */
+table.dataTable.no-footer {
+	border-bottom: 1px solid #e2e8f0;
+	margin-top: 0.75em;
+	margin-bottom: 0.75em;
+}
+
+/* Hover de la paginacion */
+.dataTables_wrapper:hover .dataTables_paginate .paginate_button {
+	font-weight: 800;
+	font-size: small;
+	color: #535353 !important;
+	border-radius: .25rem;
+	/* rounded */
+}
+
+/* Botón de paginación activo */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+	font-weight: 800;
+	font-size: small;
+	/* font-bold */
+	color: #ffffff !important;
+	/* Cambiar a color rojo */
+	background: #2c53ff !important;
+	/* bg-indigo-500 */
+	border-radius: .25rem;
+	/* rounded */
+}
+
+/* Botón de paginación al hacer hover */
+.dataTables_wrapper:hover .dataTables_paginate:hover .paginate_button:hover {
+	font-weight: 800;
+	font-size: small;
+	color: #ffffff !important;
+	background: #2c53ff !important;
+	/* Cambiar a color verde al hacer hover */
+	/* bg-indigo-500 */
+	border-radius: .25rem;
+	/* rounded */
 }

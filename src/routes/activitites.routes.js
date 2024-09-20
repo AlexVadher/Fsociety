@@ -28,9 +28,4 @@ routerActivity.get(
     '/ListActivitiesHome',
     activitiesController.listActivityImages,
 );
-// lista con páginación
-routerActivity.get(
-    '/ListActivitiesHome',
-    activitiesController.listActivityImages,
-);
 export default routerActivity;

@@ -23,7 +23,6 @@ function imageUpload(initialUrl) {
         },
     };
 }
-
 // Carrusel 1
 let slider1 = document.getElementById('slider1');
 let sliderContainer1 = document.getElementById('sliderContainer1');
@@ -79,27 +78,22 @@ let cardWidth2 = sliderContainerWidth2 / elementsToShow2;
 slider2.style.width = cards2.length * cardWidth2 + 'px';
 slider2.style.transition = 'margin';
 slider2.style.transitionDuration = '1s';
-
 for (let i = 0; i < cards2.length; i++) {
     cards2[i].style.width = cardWidth2 + 'px';
 }
-
 function prev2() {
     let marginLeft = +slider2.style.marginLeft.slice(0, -2) || 0;
     if (marginLeft !== 0) {
         slider2.style.marginLeft = marginLeft + cardWidth2 + 'px';
     }
 }
-
 function next2() {
     let marginLeft = +slider2.style.marginLeft.slice(0, -2) || 0;
     if (marginLeft !== -(cards2.length - elementsToShow2) * cardWidth2) {
         slider2.style.marginLeft = marginLeft - cardWidth2 + 'px';
     }
 }
-
-// mantener iniciado alpine.js
-
+// DataTable
 $(document).ready(function () {
     $('#example').DataTable({
         responsive: true,

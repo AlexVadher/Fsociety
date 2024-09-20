@@ -1,133 +1,60 @@
 <div class="flex min-h-screen bg-gray-100">
-  <!-- Sidebar -->
-  {{>asideAdmin}}
+    <!-- Sidebar -->
+    {{>asideAdmin}}
 
-  <!-- Main Content -->
-  <main class="flex-1 p-8">
-    <h1 class="text-2xl font-semibold mb-6">Lista de Hoteles registrados</h1>
-    
-    <!-- Contenedor principal -->
-    <div class="max-w-full mx-auto bg-white rounded-lg shadow-lg p-8">
-       <!-- Componente parcial para registrar un hotel -->
-      {{> addActivity}}
-      <div class="flex items-start">
-        <div class="container mx-auto my-8">
-    <!-- Tabla -->
-    <div class="bg-white shadow-md rounded-lg overflow-x-auto">
-        <table id="example" class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-800 text-white">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Costo</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Descripción</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Disponibilidad</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                {{#each activities}} <!-- Iteración sobre el array de actividades -->
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{nombre}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{costo}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{descripcion}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            {{#if disponibilidad}}
-                                <span class="text-green-500">Disponible</span>
-                            {{else}}
-                                <span class="text-red-500">No Disponible</span>
-                            {{/if}}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div x-data="{ modalEdit: false }" class="flex items-center space-x-4">
-                                <!-- Botón para abrir el modal -->
-                                <button type="button" @click="selectedAcityId = {{id}}; modalEdit = true" class="font-medium text-blue-500 hover:text-blue-700">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-
-                                <!-- Modal Background -->
-                                <div x-show="modalEdit" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalEdit" @click.self="modalEdit = false" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
-                                    <!-- Modal Container -->
-                                    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-                                        <!-- Close Button -->
-                                        <button @click="modalEdit = false" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-                                            <i class="fa-solid fa-xmark fa-2xl"></i>
-                                        </button>
-                                        <!-- Contenido del modal -->
-                                        <h2 class="text-2xl font-semibold mb-4 text-center">Actualizar Actividad</h2>
-                                        <form action="/admin/updateactivity/{{id}}" method="post" class="space-y-4">
-                                            <!-- Nombre -->
-                                            <div class="flex items-center">
-                                                <label class="w-32 text-gray-700 font-medium" for="nombre">Nombre de la actividad</label>
-                                                <input type="text" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="nombre" name="nombre" value="{{nombre}}" required>
-                                            </div>
-                                            <!-- Costo -->
-                                            <div class="flex items-center">
-                                                <label class="w-32 text-gray-700 font-medium" for="costo">Costo</label>
-                                                <input type="number" step="0.01" class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="costo" name="costo" value="{{costo}}" required>
-                                            </div>
-                                            <!-- Descripción -->
-                                            <div class="flex items-center">
-                                                <label class="w-32 text-gray-700 font-medium" for="descripcion">Descripción</label>
-                                                <textarea id="descripcion" name="descripcion" rows="4" class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" required>{{descripcion}}</textarea>
-                                            </div>
-                                            <!-- Disponibilidad -->
-                                            <div class="flex items-center">
-                                                <label class="w-32 text-gray-700 font-medium">Disponibilidad</label>
-                                                <div class="flex items-center">
-                                                    <input type="radio" id="disponible" name="disponibilidad" value="1" {{#if (eq disponibilidad 1)}}checked{{/if}} required>
-                                                    <label for="disponible" class="ml-2">Disponible</label>
-                                                </div>
-                                                <div class="flex items-center mt-2">
-                                                    <input type="radio" id="no-disponible" name="disponibilidad" value="0" {{#if (eq disponibilidad 0)}}checked{{/if}} required>
-                                                    <label for="no-disponible" class="ml-2">No disponible</label>
-                                                </div>
-                                            </div>
-                                            <!-- Botón de envío -->
-                                            <div class="mt-6">
-                                                <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Actualizar Actividad</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
-    </div>
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <h1 class="text-2xl font-semibold mb-6">Lista de Actividades registradas</h1>
+        <!-- Contenedor principal -->
+        <div class="max-w-full mx-auto bg-white rounded-lg shadow-lg p-8">
+            <!-- Componente parcial para registrar un hotel -->
+            {{> addActivity}}
+            <div class="flex items-start">
+                <div class="container mx-auto my-8">
+                    <!-- Tabla -->
+                    <div class="bg-white shadow-md rounded-lg overflow-x-auto">
+                        <table id="example" class="min-w-full divide-y divide-gray-200"
+                            style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+                            <thead class="bg-gray-800 text-white">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Costo
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                        Descripción</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                        Disponibilidad</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                        Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {{#each activities}}
+                                <tr class="hover:bg-gray-300"> <!-- Clase de hover de Tailwind directamente aquí -->
+                                    <td class="px-6 py-4 whitespace-nowrap">{{nombre}}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{costo}}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{descripcion}}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{#if disponibilidad}}
+                                        <span class="text-green-500">Disponible</span>
+                                        {{else}}
+                                        <span class="text-red-500">No Disponible</span>
+                                        {{/if}}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center space-x-4">
+                                            {{> editActivity}}
+                                            {{> imgUploadActivities}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
     </main>
-    
 </div>
-
-        <!-- Include jQuery and DataTables JS and CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
-    {{!-- script datatable --}}
-    <script>
-        $(document).ready(function() {
-        $('#example').DataTable({
-            responsive: true,
-            paging: true,
-            searching: true,
-            ordering: true,
-            pageLength: 5, // Número de filas por página (5 por defecto)
-            lengthChange: true,
-            preDrawCallback: function(settings) {
-                // Código para ejecutar antes de que la tabla se dibuje
-               Alpine.initTree(document.body);
-            },
-            drawCallback: function() {
-                // Código para ejecutar después de que la tabla se dibuje
-                Alpine.initTree(document.body);
-            },
-        });
-    });
-
-
-    </script>
-    

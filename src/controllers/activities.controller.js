@@ -229,7 +229,6 @@ class activitiesController {
             });
         }
     }
-
     // Método para renderizar la paginación de actividades
     static async listActivityPage(req, res) {
         try {
@@ -277,7 +276,6 @@ class activitiesController {
             });
         }
     }
-
     // Métoodo para obtener una actividad por ID (Get)
     static async updateActivity(req, res) {
         try {
@@ -347,7 +345,7 @@ class activitiesController {
                 message: 'Actividad actualizada exitosamente',
                 body: result,
             }); */
-            res.redirect('/Listactivities');
+            res.redirect('/admin/ListActivities');
         } catch (err) {
             // Manejo de errores
             console.error('Error al actualizar la actividad:', err);
