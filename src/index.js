@@ -15,6 +15,7 @@ dotenv.config(); // Cargar variables de entorno
 
 // Inicializar express
 const app = express();
+// Definir la ruta base de la aplicación para construir rutas relativas a ella en otros archivos de la aplicación
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Configurar cabeceras y cors

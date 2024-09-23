@@ -2,8 +2,10 @@
     <div class="bg-white p-5 rounded">
         <h2 class="text-xl font-bold">Iniciar Sesión</h2>
         <form id="loginForm">
-            <input type="email" name="email" placeholder="Correo electrónico" required class="mb-2 p-2 border rounded w-full">
-            <input type="password" name="password" placeholder="Contraseña" required class="mb-4 p-2 border rounded w-full">
+            <input type="email" name="email" placeholder="Correo electrónico" required
+                class="mb-2 p-2 border rounded w-full">
+            <input type="password" name="password" placeholder="Contraseña" required
+                class="mb-4 p-2 border rounded w-full">
             <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Iniciar Sesión</button>
         </form>
         <button id="closeLoginModalBtn" class="mt-4 text-red-500">Cerrar</button>
@@ -14,20 +16,24 @@
 
 
 
-<div x-data="{ modalIsOpen: false }" class="ml-4 -mb-1">
+<div x-data="{ loginModalOpen: false }" class="ml-4 -mb-1">
     <!-- Button to open the modal -->
-    <button type="button" @click="modalIsOpen = true" class=" font-bold bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Login</button>
+    <button type="button" @click="loginModalOpen = true"
+        class=" font-bold bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Login</button>
 
     <!-- Modal Background -->
-    <div x-show="modalIsOpen"  x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalIsOpen"  @click.self="modalIsOpen = false" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
+    <div x-show="loginModalOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="loginModalOpen"
+        @click.self="loginModalOpen = false"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
         <!-- Modal Container -->
-        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative"> 
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
             <!-- Close Button -->
-            <button @click="modalIsOpen = false" class="absolute hover:rounded-lg top-4 right-4 text-gray-500 hover:text-gray-800">
+            <button @click="loginModalOpen = false"
+                class="absolute hover:rounded-lg top-4 right-4 text-gray-500 hover:text-gray-800">
                 <i class="fa-solid fa-xmark fa-xl"></i>
             </button>
             <!-- Contenido del modal -->
-                <h2 class="text-2xl font-semibold mb-4 text-center">Iniciar Sesión</h2>
+            <h2 class="text-2xl font-semibold mb-4 text-center">Iniciar Sesión</h2>
             <form id="loginForm" action="/login" method="post">
                 <div class="mb-4">
                     <label for="correo" class="block text-gray-700">Email:</label>
@@ -35,13 +41,16 @@
                 </div>
                 <div class="mb-4">
                     <label for="password" class="block text-gray-700">Password:</label>
-                    <input type="password" id="password" name="password" class="w-full px-3 py-2 border rounded" required>
+                    <input type="password" id="password" name="password" class="w-full px-3 py-2 border rounded"
+                        required>
                 </div>
-                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200 ">Login</button>
+                <button type="submit"
+                    class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200 ">Login</button>
             </form>
             <div class="mt-4 text-center">
                 <p>¿No tienes una cuenta? {{>register}}</p>
-                <p>Al registrarte, aceptas nuestras <a href="/politicas" class="text-blue-500">políticas de privacidad</a></p>
+                <p>Al registrarte, aceptas nuestras <a href="/politicas" class="text-blue-500">políticas de
+                        privacidad</a></p>
             </div>
         </div>
     </div>

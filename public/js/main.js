@@ -23,42 +23,26 @@ function imageUpload(initialUrl) {
         },
     };
 }
-// Carrusel 1
-let slider1 = document.getElementById('slider1');
-let sliderContainer1 = document.getElementById('sliderContainer1');
-let cards1 = slider1.getElementsByTagName('li');
+// carrusel 1 (slider1)
+const slider1 = document.getElementById('slider1');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
 
-let elementsToShow1 = 3;
-if (document.body.clientWidth < 1000) {
-    elementsToShow1 = 2;
-} else if (document.body.clientWidth < 1500) {
-    elementsToShow1 = 3;
-}
+const cardWidth = slider1.querySelector('li').clientWidth; // Tamaño de una tarjeta (li) en el carrusel (slider1) en píxeles
 
-let sliderContainerWidth1 = sliderContainer1.clientWidth;
-let cardWidth1 = sliderContainerWidth1 / elementsToShow1;
+prevBtn.addEventListener('click', () => {
+    slider1.scrollBy({
+        left: -cardWidth, // Desplazar hacia atrás
+        behavior: 'smooth',
+    });
+});
 
-slider1.style.width = cards1.length * cardWidth1 + 'px';
-slider1.style.transition = 'margin';
-slider1.style.transitionDuration = '1s';
-
-for (let i = 0; i < cards1.length; i++) {
-    cards1[i].style.width = cardWidth1 + 'px';
-}
-
-function prev1() {
-    let marginLeft = +slider1.style.marginLeft.slice(0, -2) || 0;
-    if (marginLeft !== 0) {
-        slider1.style.marginLeft = marginLeft + cardWidth1 + 'px';
-    }
-}
-
-function next1() {
-    let marginLeft = +slider1.style.marginLeft.slice(0, -2) || 0;
-    if (marginLeft !== -(cards1.length - elementsToShow1) * cardWidth1) {
-        slider1.style.marginLeft = marginLeft - cardWidth1 + 'px';
-    }
-}
+nextBtn.addEventListener('click', () => {
+    slider1.scrollBy({
+        left: cardWidth, // Desplazar hacia adelante
+        behavior: 'smooth',
+    });
+});
 
 // Carrusel 2
 let slider2 = document.getElementById('slider2');
@@ -87,28 +71,60 @@ function prev2() {
         slider2.style.marginLeft = marginLeft + cardWidth2 + 'px';
     }
 }
+// Función para avanzar en el carrusel 2 (slider2) de 3 en 3 elementos (cards2) a la vez (siempre y cuando haya más elementos por mostrar)
 function next2() {
     let marginLeft = +slider2.style.marginLeft.slice(0, -2) || 0;
     if (marginLeft !== -(cards2.length - elementsToShow2) * cardWidth2) {
         slider2.style.marginLeft = marginLeft - cardWidth2 + 'px';
     }
-}
-// DataTable
-$(document).ready(function () {
-    $('#example').DataTable({
-        responsive: true,
-        paging: true,
-        searching: true,
-        ordering: true,
-        pageLength: 5, // Número de filas por página (5 por defecto)
-        lengthChange: true,
-        preDrawCallback: function (settings) {
-            // Código para ejecutar antes de que la tabla se dibuje
-            Alpine.initTree(document.body);
-        },
-        drawCallback: function () {
-            // Código para ejecutar después de que la tabla se dibuje
-            Alpine.initTree(document.body);
-        },
-    });
-});
+} /* 
+// Mensajes de alerta con SweetAlert2 para el formulario de registro
+document.addEventListener('DOMContentLoaded', function () {
+    // Manejar el envío del formulario de registro
+    document
+        .getElementById('registerForm')
+        .addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevenir el envío del formulario
+
+            // Obtener los datos del formulario para enviarlos al servidor
+            const formData = new FormData(this);
+
+            try {
+                // Enviar los datos del formulario al servidor
+                const response = await fetch('http://localhost:4000/register', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: data.message,
+                    }).then(() => {
+                        // Cerrar el modal de registro
+                        document
+                            .getElementById('registerModal')
+                            .classList.remove('show');
+
+                        // Limpiar el formulario
+                        document.getElementById('registerForm').reset();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message,
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un problema al registrar el usuario.',
+                });
+            }
+        });
+}); */

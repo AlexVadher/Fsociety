@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import activitiesController from '../controllers/activities.controller.js';
 import uploadImages from '../middlewares/imgsActivities.middleware.js';
+import deleteActivityImages from '../middlewares/deleteImgsActivities.middleware.js';
 
 // Crear una instancia de Router para gestionar las rutas de actividades
 const routerActivity = Router();
@@ -28,4 +29,11 @@ routerActivity.get(
     '/ListActivitiesHome',
     activitiesController.listActivityImages,
 );
+// Ruta para eliminar una actividad por ID
+routerActivity.get(
+    '/admin/deleteActivity/:id',
+    deleteActivityImages,
+    activitiesController.deleteActivity,
+);
+
 export default routerActivity;

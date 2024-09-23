@@ -36,6 +36,18 @@ class ActivityModel {
             throw error;
         }
     }
+    // Método para obtener imágenes relacionadas a una actividad
+    static async getImagesByActivityId(activityId) {
+        try {
+            const query =
+                'SELECT urlImg FROM imagenesActividades WHERE idActividad = ?';
+            const [rows] = await pool.query(query, [activityId]);
+            return rows; // Retorna las URLs de las imágenes
+        } catch (error) {
+            console.error('Error al obtener las imágenes:', error);
+            throw error;
+        }
+    }
     // Método para contar el número total de actividades
     static async countActivities() {
         try {
@@ -131,14 +143,28 @@ class ActivityModel {
         }
     }
     // Método para eliminar una actividad por ID
-    static async deleteItem(id) {
+    static async deleteActivity(id) {
         try {
-            const query = 'DELETE FROM activities WHERE id = $1';
-            const values = [id];
-            const result = await pool.query(query, values);
-            return result.rowCount > 0; // Retorna true si se eliminó alguna fila
+            const query = 'DELETE FROM actividades WHERE id = ?';
+            const [result] = await pool.query(query, [id]);
+            return result;
         } catch (error) {
-            console.error(`Error deleting item with ID ${id}:`, error);
+            console.error(`Error eliminando actividad con ID ${id}:`, error);
+            throw error;
+        }
+    }
+    // Método para eliminar una actividad y sus imágenes en la base de datos
+    static async deleteImagesByActivityId(activityId) {
+        try {
+            const query =
+                'DELETE FROM imagenesActividades WHERE idActividad = ?';
+            const [result] = await pool.query(query, [activityId]);
+            return result;
+        } catch (error) {
+            console.error(
+                `Error eliminando imágenes para la actividad con ID ${activityId}:`,
+                error,
+            );
             throw error;
         }
     }

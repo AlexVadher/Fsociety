@@ -1,4 +1,6 @@
 import ActivityModel from '../models/activities.model.js';
+import fs from 'fs';
+import {join} from 'path';
 
 class activitiesController {
     // Método para crear una actividad (Post)
@@ -53,7 +55,7 @@ class activitiesController {
                 message: 'Actividad registrada exitosamente',
                 body: result,
             });*/
-            res.render('activities/activity');
+            res.redirect('/admin/ListActivities');
         } catch (err) {
             console.error('Error al registrar la actividad:', err); // Mejorar el registro de errores
             res.status(500).json({
@@ -69,11 +71,11 @@ class activitiesController {
             const activities = await ActivityModel.getAllActivities();
 
             // Verificar si se encontraron actividades
-            if (!activities || activities.length === 0) {
+            /* if (!activities || activities.length === 0) {
                 return res.status(404).json({
                     message: 'No se encontraron actividades',
                 });
-            }
+            } */
 
             console.log('Actividades encontradas:', activities); // Registro de las actividades encontradas
 
@@ -107,11 +109,11 @@ class activitiesController {
             console.log('Actividades encontradas:', activitiespage); // Registro de las actividades encontradas
 
             // Verificar si se encontraron actividades
-            if (!activitiespage || activitiespage.length === 0) {
+            /* if (!activitiespage || activitiespage.length === 0) {
                 return res.status(404).json({
                     message: 'No se encontraron actividades',
                 });
-            }
+            } */
 
             const currentPath = req.path;
 
@@ -132,7 +134,7 @@ class activitiesController {
                     name: 'Actividades',
                     link: `/admin/ListActivities`,
                     icon: 'fas fa-calendar-alt',
-                    active: currentPath.includes('/admin/ListActivities'),
+                    active: currentPath.includes('/admin/listActivities'),
                 },
                 {
                     name: 'Reservas',
@@ -162,7 +164,7 @@ class activitiesController {
                 }
             });
 
-            res.render('activities/activity', {
+            res.render('activities/listActivities', {
                 activities,
                 activitiespage,
                 totalPages,
@@ -400,42 +402,46 @@ class activitiesController {
             });
         }
     }
-    // Método para eliminar una actividad por ID (Delete)
+    // Método para eliminar una actividad por ID
     static async deleteActivity(req, res) {
         try {
-            // Obtener el ID de la actividad de los parámetros de la URL
             const {id} = req.params;
 
             // Validar que el ID esté presente
             if (!id) {
-                return res
-                    .status(400)
-                    .json({message: 'El ID de la actividad es obligatorio'});
+                return res.status(400).json({
+                    message: 'El ID de la actividad es obligatorio',
+                });
             }
 
-            console.log('ID de la actividad a eliminar:', id); // Registro del ID de la actividad a eliminar
+            // 1. Obtener las imágenes relacionadas a la actividad
+            const images = await ActivityModel.getImagesByActivityId(id);
 
-            // Llamar al método deleteActivity de la clase ActivityModel
+            // 2. Eliminar las imágenes de la base de datos si existen
+            if (images && images.length > 0) {
+                await ActivityModel.deleteImagesByActivityId(id);
+            }
+
+            // 3. Eliminar la actividad de la base de datos
             const result = await ActivityModel.deleteActivity(id);
 
-            // Verificar si la actividad fue encontrada y eliminada
+            // Verificar si la actividad fue eliminada
             if (result.affectedRows === 0) {
-                return res
-                    .status(404)
-                    .json({message: 'Actividad no encontrada o no eliminada'});
+                return res.status(404).json({
+                    success: false,
+                    message: 'Actividad no encontrada o no eliminada',
+                });
             }
 
-            console.log('Resultado de la eliminación de la actividad:', result); // Registro del resultado
-
-            // Responder con éxito
             res.status(200).json({
-                message: 'Actividad eliminada exitosamente',
+                success: true,
+                message: 'Actividad y sus imágenes eliminadas exitosamente',
                 body: result,
             });
         } catch (err) {
-            // Manejo de errores
             console.error('Error al eliminar la actividad:', err);
             res.status(500).json({
+                success: false,
                 message: 'Error 500: ' + err.message,
             });
         }

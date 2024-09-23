@@ -59,7 +59,7 @@ export class AuthController {
     } */
 
     // Método para iniciar sesión y generar un token JWT
-    static async login(req, res) {
+    /* static async login(req, res) {
         try {
             const {correo, password} = req.body; // Obtener el correo y la contraseña del cuerpo de la solicitud(formulario de inicio de sesión)
             const user = await UserModel.getUserByEmail(correo); // Obtener el usuario por correo electrónico del metodo en el userModel
@@ -73,6 +73,7 @@ export class AuthController {
             // Validamos si el usuario no existe o la contraseña es incorrecta
             if (!passwordMatch) {
                 return res.status(401).json({
+                    success: false,
                     message: 'Usuario no encontrado o contraseña incorrecta.',
                 });
             }
@@ -124,6 +125,78 @@ export class AuthController {
         } catch (err) {
             console.error('Error durante la autenticación:', err);
             return res.sendStatus(500);
+        }
+    } */
+
+    static async login(req, res) {
+        try {
+            const {correo, password} = req.body;
+
+            // Obtener el usuario por correo electrónico
+            const user = await UserModel.getUserByEmail(correo);
+            // Validar si el correo es incorrecto
+            if (!user) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'Correo no registrado.',
+                    user,
+                });
+            }
+            // Verificar si la contraseña proporcionada coincide con la almacenada
+            const passwordMatch = await argon2.verify(
+                user.contraseña,
+                password,
+            );
+
+            // Validar si la contraseña es incorrecta
+            if (!passwordMatch) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'Contraseña incorrecta.',
+                });
+            }
+            console.log('datos del usuario:', user);
+
+            // Crear el token JWT
+            const jwtConstructor = new SignJWT({
+                guid: user.guid,
+                username: user.nombre,
+            });
+
+            const encoder = new TextEncoder();
+            const jwt = await jwtConstructor
+                .setProtectedHeader({alg: 'HS256', typ: 'JWT'})
+                .setIssuedAt()
+                .setExpirationTime('1h')
+                .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
+
+            res.cookie('token', jwt, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 3600000, // 1 hora
+            });
+
+            // Guardar información en la sesión del usuario
+            req.session.user = {
+                guid: user.guid,
+                nombre: user.nombre,
+                correo: user.correo,
+                idRol: user.idRol,
+                avatarUrl: user.avatarUrl,
+            };
+
+            // Enviar respuesta JSON
+            return res.status(200).json({
+                success: true,
+                message: 'Inicio de sesión exitoso',
+                redirectUrl: user.idRol === 1 ? '/admin/dashboard/' : '/',
+            });
+        } catch (err) {
+            console.error('Error durante la autenticación:', err);
+            return res.status(500).json({
+                success: false,
+                message: 'Error en el servidor. Por favor, intenta de nuevo.',
+            });
         }
     }
 

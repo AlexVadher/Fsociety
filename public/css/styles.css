@@ -1,12 +1,121 @@
-/* Scroll Snap para el carrusel */
-.snap-x {
-	scroll-snap-type: x mandatory;
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+	/* Para navegadores WebKit */
 }
 
-.snap-start {
-	scroll-snap-align: start;
+.no-scrollbar {
+	-ms-overflow-style: none;
+	/* Para IE y Edge */
+	scrollbar-width: none;
+	/* Para Firefox */
 }
 
+/* Evitar cualquier tipo de visualización del scroll en móviles */
+.no-scrollbar {
+	touch-action: pan-y;
+	/* Solo permitir scroll vertical en pantallas táctiles */
+}
+
+/* ############################################################### */
+/* diseño para carrusel de imgs para etiqueta de clase especifica */
+.carro .slick-arrow {
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	line-height: 30px;
+	cursor: pointer;
+	font: 1px;
+	color: transparent;
+}
+
+.carro .slick-arrow:hover {
+	background-color: #dbdbdb;
+}
+
+/* boton anterior */
+.carro .slick-prev {
+	position: absolute;
+	left: -20px;
+	transform: translate(-50%, -50%);
+	background: url('/img/prev.svg') no-repeat center;
+	background-size: 30%;
+	background-color: #f0f0f0;
+}
+
+/* boton siguiente */
+.carro .slick-next {
+	position: absolute;
+	right: -60px;
+	transform: translate(-50%, -50%);
+	background: url('/img/next.svg') no-repeat center;
+	background-size: 30%;
+	background-color: #f0f0f0;
+}
+
+/* ######################################################### */
+/* Diseño para el slide principal del index */
+.slide .slick-arrow {
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+	text-align: center;
+	line-height: 30px;
+	cursor: pointer;
+	font: 1px;
+	color: transparent;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.slide .slick-dots {
+	position: absolute;
+	bottom: -15px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1;
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	font: 1px;
+	color: transparent;
+
+}
+
+.slide .slick-dots li {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background-color: #c7c5c5;
+}
+
+.slide .slick-dots li.slick-active {
+	background-color: #7a7a7a;
+}
+
+
+
+/* ######################################################### */
+/* Para Chrome, Safari, Edge y Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* ######################################################### */
+/* Para Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
+	appearance: textfield;
+}
+
+/* ######################################################### */
+/* Estilos para los dataTables */
 /*Form fields*/
 .dataTables_wrapper select,
 .dataTables_wrapper .dataTables_filter input {
@@ -22,6 +131,7 @@
 	border-color: #edf2f7;
 }
 
+/* ######################################################### */
 /*Pagination Buttons*/
 .dataTables_wrapper .dataTables_paginate .paginate_button {
 	font-weight: 800;
@@ -33,6 +143,7 @@
 	/*border border-transparent*/
 }
 
+/* ######################################################### */
 /*Add padding to bottom border */
 table.dataTable.no-footer {
 	border-bottom: 1px solid #e2e8f0;
@@ -40,6 +151,7 @@ table.dataTable.no-footer {
 	margin-bottom: 0.75em;
 }
 
+/* ######################################################### */
 /* Hover de la paginacion */
 .dataTables_wrapper:hover .dataTables_paginate .paginate_button {
 	font-weight: 800;
@@ -49,6 +161,7 @@ table.dataTable.no-footer {
 	/* rounded */
 }
 
+/* ######################################################### */
 /* Botón de paginación activo */
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
 	font-weight: 800;
@@ -62,6 +175,7 @@ table.dataTable.no-footer {
 	/* rounded */
 }
 
+/* ######################################################### */
 /* Botón de paginación al hacer hover */
 .dataTables_wrapper:hover .dataTables_paginate:hover .paginate_button:hover {
 	font-weight: 800;

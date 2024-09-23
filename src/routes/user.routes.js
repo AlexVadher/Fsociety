@@ -19,21 +19,9 @@ userRouter.get('/logout', authMiddleware, AuthController.logout);
 // registrar un nuevo usuario
 userRouter.post('/register', uploadAvatar, userController.registerUser);
 
-userRouter.get('/', async (req, res) => {
-    try {
-        // Llama a la API de restcountries y obtiene los países en formato JSON
-        const response = await axios.get('https://restcountries.com/v3.1/all');
-        const countries = response.data.map((country) => ({
-            name: country.name.common,
-            code: country.cca2,
-        }));
-
-        // Renderiza la vista principal con los datos de los países
-        res.render('index', countries);
-    } catch (error) {
-        console.error('Error fetching countries:', error);
-        res.status(500).send('Error fetching countries');
-    }
+// Ruta para listar los países
+userRouter.get('/countries', fetchCountries, (req, res) => {
+    res.json(req.countries);
 });
 
 // Ruta para actualizar el avatar del usuario

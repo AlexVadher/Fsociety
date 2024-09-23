@@ -37,174 +37,178 @@
         </div>
     </form>
 </div>
-<div class="my-8">
-    <h2 class="text-center text-blue-800 text-3xl font-bold">¡Explora y disfruta!</h2>
-
-    <!-- Carrusel 1 -->
-    <section>
-        <div class="flex">
-            <div class="w-2/12 flex items-center">
-                <div class="w-full text-right">
-                    <button onclick="prev1()" class="p-3 rounded-full bg-white border border-gray-100 shadow-lg mr-5">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M6.75 8.25 3 12m0 0 3.75 3.75M3 12h18" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div id="sliderContainer1" class="w-10/12 overflow-hidden">
-                <ul id="slider1" class="flex w-full duration-700">
-                    <li class="w-96 p-5">
-                        <div class="border rounded-lg p-5 h-full">
-                            <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
-                                class="w-full h-48 object-cover rounded-lg">
-                            <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
-                            <p class="mt-2 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Quisquam, voluptate.</p>
-                            <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
-                        </div>
-                    </li>
-                    <li class="w-96 p-5">
-                        <div class="border rounded-lg p-5 h-full">
-                            <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/100/300" alt=""
-                                class="w-full h-48 object-cover rounded-lg">
-                            <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
-                            <p class="mt-2 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Quisquam, voluptate.</p>
-                            <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
-                        </div>
-                    </li>
-                    <li class="w-96 p-5">
-                        <div class="border rounded-lg p-5 h-full">
-                            <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/500" alt=""
-                                class="w-full h-48 object-cover rounded-lg">
-                            <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
-                            <p class="mt-2 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Quisquam, voluptate.</p>
-                            <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
-                        </div>
-                    </li>
-                    <li class="w-96 p-5">
-                        <div class="border rounded-lg p-5 h-full">
-                            <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/200" alt=""
-                                class="w-full h-48 object-cover rounded-lg">
-                            <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
-                            <p class="mt-2 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Quisquam, voluptate.</p>
-                            <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
-                        </div>
-                    </li>
-                    <li class="w-96 p-5">
-                        <div class="border rounded-lg p-5 h-full">
-                            <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/600" alt=""
-                                class="w-full h-48 object-cover rounded-lg">
-                            <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
-                            <p class="mt-2 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Quisquam, voluptate.</p>
-                            <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="w-2/12 flex items-center">
-                <div class="w-full">
-                    <button onclick="next1()" class="p-3 rounded-full bg-white border border-gray-100 shadow-lg ml-5">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Carrusel 2 -->
+<!-- Actividades -->
+<div class="container mx-auto">
+    {{!-- Slide principal --}}
     <div class="my-8">
-        <h2 class="text-center text-blue-800 text-3xl font-bold">¡Explora y disfruta!</h2>
+        <h1 class="text-center text-blue-800 text-3xl font-bold">¡Bienvenidos!</h1>
         <section>
-            <div class="flex">
-                <div class="w-2/12 flex items-center">
-                    <div class="w-full text-right">
-                        <button onclick="prev2()"
-                            class="p-3 rounded-full bg-white border border-gray-100 shadow-lg mr-5">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M6.75 8.25 3 12m0 0 3.75 3.75M3 12h18" />
-                            </svg>
-                        </button>
+            <div class="slide mt-8 my-36">
+                <div class="p-2">
+                    <div class="relative">
+                        <img class="h-96 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt="">
+                        <p
+                            class="absolute inset-0 flex items-center justify-center text-white p-2 rounded-md text-center">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptate.
+                        </p>
+                        <button class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 text-white">Ver
+                            más</button>
                     </div>
                 </div>
-                <div id="sliderContainer2" class="w-10/12 overflow-hidden">
-                    <ul id="slider2" class="flex w-full duration-700">
-                        <li class="w-96 p-5">
-                            <div class="border rounded-lg p-5 h-full">
-                                <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400"
-                                    alt="" class="w-full h-48 object-cover rounded-lg">
-                                <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
-                                <p class="mt-2 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Quisquam, voluptate.</p>
-                                <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
-                            </div>
-                        </li>
-                        <li class="w-96 p-5">
-                            <div class="border rounded-lg p-5 h-full">
-                                <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/100/300"
-                                    alt="" class="w-full h-48 object-cover rounded-lg">
-                                <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
-                                <p class="mt-2 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Quisquam, voluptate.</p>
-                                <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
-                            </div>
-                        </li>
-                        <li class="w-96 p-5">
-                            <div class="border rounded-lg p-5 h-full">
-                                <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/500"
-                                    alt="" class="w-full h-48 object-cover rounded-lg">
-                                <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
-                                <p class="mt-2 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Quisquam, voluptate.</p>
-                                <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
-                            </div>
-                        </li>
-                        <li class="w-96 p-5">
-                            <div class="border rounded-lg p-5 h-full">
-                                <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/200"
-                                    alt="" class="w-full h-48 object-cover rounded-lg">
-                                <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
-                                <p class="mt-2 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Quisquam, voluptate.</p>
-                                <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
-                            </div>
-                        </li>
-                        <li class="w-96 p-5">
-                            <div class="border rounded-lg p-5 h-full">
-                                <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/600"
-                                    alt="" class="w-full h-48 object-cover rounded-lg">
-                                <h2 class="mt-2 text-2xl font-bold text-gray-700">Actividad 1</h2>
-                                <p class="mt-2 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Quisquam, voluptate.</p>
-                                <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="p-2">
+                    <div class="relative">
+                        <img class="h-96 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt="">
+                        <p
+                            class="absolute inset-0 flex items-center justify-center text-white p-2 rounded-md text-center">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptate.
+                        </p>
+                        <button class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 text-white">Ver
+                            más</button>
+                    </div>
                 </div>
-                <div class="w-2/12 flex items-center">
-                    <div class="w-full">
-                        <button onclick="next2()"
-                            class="p-3 rounded-full bg-white border border-gray-100 shadow-lg ml-5">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                            </svg>
-                        </button>
+                <div class="p-2">
+                    <div class="relative">
+                        <img class="h-96 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt="">
+                        <p
+                            class="absolute inset-0 flex items-center justify-center text-white p-2 rounded-md text-center">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptate.
+                        </p>
+                        <button class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 text-white">Ver
+                            más</button>
                     </div>
                 </div>
             </div>
+        </section>
     </div>
-    </section>
+    {{!-- Los mejores Hoteles --}}
+    <div class="my-8 py-8">
+        <h2 class="text-center text-blue-800 text-3xl font-bold">¡Los Mejores Hoteles!</h2>
+        <section>
+            <div class="carro relative mt-8">
+                <div class="relative m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <div class="absolute top-4 right-4 p-1 bg-gray-300 hover:bg-red-400 rounded-full bg-opacity-65">
+                        <i class="fa-regular fa-heart fa-xl text-red-500 cursor-pointer"></i>
+                    </div>
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="relative m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <div class="absolute top-4 right-4 p-1 bg-gray-300 hover:bg-red-400 rounded-full bg-opacity-65">
+                        <i class="fa-regular fa-heart fa-xl text-red-500 cursor-pointer"></i>
+                    </div>
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="relative m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <div class="absolute top-4 right-4 p-1 bg-gray-300 hover:bg-red-400 rounded-full bg-opacity-65">
+                        <i class="fa-regular fa-heart fa-xl text-red-500 cursor-pointer"></i>
+                    </div>
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="relative m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <div class="absolute top-4 right-4 p-1 bg-gray-300 hover:bg-red-400 rounded-full bg-opacity-65">
+                        <i class="fa-regular fa-heart fa-xl text-red-500 cursor-pointer"></i>
+                    </div>
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="relative m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <div class="absolute top-4 right-4 p-1 bg-gray-300 hover:bg-red-400 rounded-full bg-opacity-65">
+                        <i class="fa-regular fa-heart fa-xl text-red-500 cursor-pointer"></i>
+                    </div>
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{!-- Recomendación de actividades --}}
+    <div class="my-8 py-8">
+        <h2 class="text-center text-blue-800 text-3xl font-bold mt-10">¡Explora y disfruta!</h2>
+        <section class="space-y-8">
+            <div class="carro mt-8">
+                <div class="m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
