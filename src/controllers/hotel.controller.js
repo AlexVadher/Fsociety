@@ -276,7 +276,7 @@ export class hotelController {
             });
         } catch (err) {
             // Manejo de errores
-            console.error('Error al leer os Hoteles:', err);
+            console.error('Error al leer los Hoteles:', err);
             res.status(500).json({
                 message: 'Error 500: ' + err.message,
             });
