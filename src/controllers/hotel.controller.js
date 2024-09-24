@@ -30,7 +30,7 @@ export class hotelController {
 
             console.log('Resultado de la creación del hotel:', result); // Registro de resultado
 
-            res.redirect('/');
+            res.redirect('/admin/hotels');
         } catch (err) {
             console.error('Error al registrar el hotel:', err); // Mejorar el registro de errores
             res.status(500).json({
@@ -145,10 +145,7 @@ export class hotelController {
             const result = await hotelModel.updateHotel(id, hotelData);
 
             // Responder con éxito
-            res.status(200).json({
-                message: 'Hotel actualizado exitosamente',
-                body: result,
-            });
+            res.redirect('/admin/hotels');
         } catch (err) {
             // Manejo de errores
             console.error('Error al actualizar el hotel:', err);
@@ -281,6 +278,47 @@ export class hotelController {
             // Manejo de errores
             console.error('Error al leer os Hoteles:', err);
             res.status(500).json({
+                message: 'Error 500: ' + err.message,
+            });
+        }
+    }
+    static async deleteHotel(req, res) {
+        try {
+            const {id} = req.params;
+
+            // Validar que el ID esté presente
+            if (!id) {
+                return res.status(400).json({
+                    message: 'El ID del Hotel es obligatorio',
+                });
+            }
+
+            // 1. Eliminar las imágenes relacionadas al hotel
+            const images = await hotelModel.getImagesByHotelId(id);
+            if (images && images.length > 0) {
+                await hotelModel.deleteImagesByHotelId(id);
+            }
+
+            // 3. Eliminar el hotel de la base de datos
+            const result = await hotelModel.deleteHotel(id);
+
+            // Verificar si el hotel fue eliminado
+            if (result.affectedRows === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Hotel no encontrado o no eliminado',
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message:
+                    'Hotel, habitaciones y sus imágenes eliminados exitosamente',
+            });
+        } catch (err) {
+            console.error('Error al eliminar la Hotel:', err);
+            res.status(500).json({
+                success: false,
                 message: 'Error 500: ' + err.message,
             });
         }

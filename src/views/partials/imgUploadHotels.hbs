@@ -1,59 +1,46 @@
 <div x-data='{ modalIsOpen: false }'>
     <!-- Botón para abrir el modal -->
-    <button
-        type="button" @click="selectedHotelId = {{id}}; modalIsOpen = true" class="text-green-500 hover:text-green-700 ml-4">
-        <i class="fas fa-upload"></i> Subir Imagen
+    <button type="button" @click="selectedHotelId = {{id}}; modalIsOpen = true"
+        class="text-green-500 hover:text-green-700 ml-4">
+        <i class="fas fa-upload"></i>
     </button>
 
     <!-- Fondo del Modal -->
-    <div
-        x-show='modalIsOpen'
-        x-transition.opacity.duration.200ms
-        x-trap.inert.noscroll='modalIsOpen'
+    <div x-show='modalIsOpen' x-transition.opacity.duration.200ms x-trap.inert.noscroll='modalIsOpen'
         @click.self='modalIsOpen = false'
-        class='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm'
-    >
+        class='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm'>
         <!-- Contenedor del Modal -->
         <div class='bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative'>
             <!-- Botón de Cerrar -->
-            <button
-                @click='modalIsOpen = false'
-                class='absolute top-2 right-2 text-gray-500 hover:text-gray-700'
-            >
+            <button @click='modalIsOpen = false' class='absolute top-2 right-2 text-gray-500 hover:text-gray-700'>
                 <i class='fa-solid fa-xmark fa-2xl'></i>
             </button>
 
             <!-- Contenido del Modal -->
             <h2 class='text-2xl font-semibold mb-4 text-center'>Subir Imágenes del Hotel</h2>
-            
+
             <!-- Formulario de Subida de Imágenes -->
             <form action="/hotel/subidaIMG/{{id}}/upload" method="POST" enctype="multipart/form-data" class='space-y-4'>
                 <!-- Campo de selección de archivos -->
                 <div>
-                    <label for="nombre" class="block text-gray-700 font-medium text-center">Nombre de Hotel: {{nombre}}</label>
-                    <input type="text" name="nombre" value="{{nombre}}" class='text-gray-700 font-medium text-center hidden'><br>
+                    <label for="nombre" class="block text-gray-700 font-medium text-center">Nombre de Hotel:
+                        {{nombre}}</label>
+                    <input type="text" name="nombre" value="{{nombre}}"
+                        class='text-gray-700 font-medium text-center hidden'><br>
                     <label for="images" class='block text-gray-700 font-medium text-center'>Selecciona Imágenes</label>
-                    <input
-                        type="file"
-                        name="images"
-                        id="images"
-                        multiple
-                        class="block w-full text-sm text-slate-500
+                    <input type="file" name="images" id="images" multiple class="block w-full text-sm text-slate-500
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-lg file:border-0
                         file:text-sm file:font-semibold
                         file:bg-violet-50 file:text-gray-700
-                        hover:file:bg-sky-100"
-                                    required
-                    />
+                        hover:file:bg-sky-100" required />
                 </div>
 
                 <!-- Botón de Subir -->
                 <div class='mt-6'>
-                    <button
-                        type="submit"
-                        class='w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700'
-                    >Subir Imágenes</button>
+                    <button type="submit"
+                        class='w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700'>Subir
+                        Imágenes</button>
                 </div>
             </form>
         </div>
