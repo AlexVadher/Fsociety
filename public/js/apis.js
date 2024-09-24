@@ -1,29 +1,33 @@
+// Propósito: Contiene las funciones de JavaScript que se utilizan para consumir las APIs de la aplicación.
+
+// Función para usar la api de listar paises en el select
 $(document).ready(function () {
     // URL de la API que devuelve los países
     const url = 'http://localhost:4000/countries';
 
-    // Realizar una solicitud AJAX para obtener los países
-    $.ajax({
-        url: url,
-        method: 'GET',
-        success: function (data) {
+    // Realizar una solicitud fetch para obtener los países
+    fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Error al obtener los países');
+            }
+            return response.json();
+        })
+        .then((data) => {
             // Ordenar los países alfabéticamente por nombre (de la A a la Z)
-            data.sort(function (a, b) {
-                return a.name.localeCompare(b.name);
-            });
+            data.sort((a, b) => a.name.localeCompare(b.name));
 
             // Recorrer los países ordenados y agregarlos al select
-            data.forEach(function (country) {
+            data.forEach((country) => {
                 // Establecer el nombre del país como valor de la opción
                 $('#country-select').append(
                     `<option value="${country.name}">${country.name}</option>`,
                 );
             });
-        },
-        error: function (err) {
+        })
+        .catch((err) => {
             console.error('Error al obtener los países:', err);
-        },
-    });
+        });
 });
 // dataTable para las tablas en los diferentes módulos
 $(document).ready(function () {
