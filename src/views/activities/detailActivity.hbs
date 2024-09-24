@@ -1,0 +1,84 @@
+<main class="container mx-36">
+    <div class="grid grid-rows-3 grid-flow-col gap-4 py-8">
+        <section class="row-span-3 ... rounded overflow-hidden shadow-lg bg-white">
+            <div class="py-4 max-w-4xl mx-auto">
+                <div class="slider-for py-8">
+                    {{#each images}}
+                    <div class="relative">
+                        <img class="h-64 w-full object-cover rounded-md" src="{{this.urlImg}}" alt="imgActividad">
+                    </div>
+                    {{/each}}
+                </div>
+                <div class="slider-nav">
+                    {{#each images}}
+                    <div class="relative mx-2">
+                        <img class="h-36 w-72 object-cover rounded-md" src="{{this.urlImg}}" alt="imgActividad">
+                    </div>
+                    {{/each}}
+                </div>
+                {{#each activity}}
+                <article class="px-6 py-6 text-center">
+                    <h1 class="font-bold text-xl m-2">{{this.nombre}}</h1>
+                    <p class="text-gray-700 text-base">
+                        {{this.descripcion}}
+                    </p>
+                    <section class="mt-4 mt-4 flex justify-between">
+                        <div class="w-1/2">
+                            <h2 class="font-semibold block mb-2">Incluido:</h2>
+                            <ul class="list-disc list-inside inline-block text-left">
+                                {{#each this.included}}
+                                <li>{{this}}</li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <div class="w-1/2">
+                            <span class="font-semibold block mb-2">No Incluido:</span>
+                            <ul class="list-disc list-inside inline-block text-left">
+                                {{#each this.notIncluded}}
+                                <li>{{this}}</li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </section>
+                </article>
+                {{/each}}
+            </div>
+        </section>
+        <section class="col-span-4 ... rounded-ld">
+            {{#each activity}}
+            <article class="h-full bg-white rounded h-full w-full shadow-lg mr-2">
+                <article class="flex justify-between p-4">
+                    <div class="w-1/2">
+                        <h2 class="text-2xl font-bold mb-4">Detalles Principales</h2>
+                        <ul class="list-disc list-inside">
+                            {{#each this.detalles}}
+                            <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="w-1/2">
+                        <h2 class="text-2xl font-bold mb-4">Requisitos</h2>
+                        <ul class="list-disc list-inside">
+                            {{#each this.requisitos}}
+                            <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </article>
+                <div class="flex justify-center m-2">
+                    <a href="/details/activity/reserve/{{this.nombre}}/{{this.id}}"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                        Reservar Ahora
+                    </a>
+                </div>
+            </article>
+            {{/each}}
+        </section>
+        <section class="row-span-2 col-span-4 ... ">
+            <article class="p-4 bg-white rounded shadow-lg h-full">
+                <h2 class="text-2xl font-bold mb-4">Mapa de Ubicación</h2>
+                <div id="map" class="w-full h-96 bg-gray-200"></div>
+            </article>
+        </section>
+    </div>
+</main>

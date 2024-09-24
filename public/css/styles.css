@@ -18,6 +18,15 @@
 
 /* ############################################################### */
 /* diseño para carrusel de imgs para etiqueta de clase especifica */
+
+/* Estlios para el tamaño carrusel de imagenes */
+.slick-slide {
+	/* Establece un ancho mínimo para los slides */
+	min-width: 200px;
+}
+
+
+/* carrusel index */
 .carro .slick-arrow {
 	position: absolute;
 	top: 50%;
@@ -134,6 +143,7 @@
 
 }
 
+/* slide detalles */
 .slide .slick-dots li {
 	width: 15px;
 	height: 15px;
@@ -145,7 +155,45 @@
 	background-color: #7a7a7a;
 }
 
+/* ######################################################### */
+/* Diseño para el slide de detalles  */
+.slider-nav .slick-arrow {
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+	text-align: center;
+	line-height: 30px;
+	cursor: pointer;
+	font: 1px;
+	color: transparent;
+	opacity: 0;
+	pointer-events: none;
+}
 
+.slider-nav .slick-dots {
+	position: absolute;
+	bottom: -20px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1;
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	font: 1px;
+	color: transparent;
+
+}
+
+.slider-nav .slick-dots li {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background-color: #c7c5c5;
+}
+
+.slider-nav .slick-dots li.slick-active {
+	background-color: #7a7a7a;
+}
 
 /* ######################################################### */
 /* Para Chrome, Safari, Edge y Opera */

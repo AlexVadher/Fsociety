@@ -18,37 +18,68 @@
             <!-- Modal Content -->
             <h2 class="text-2xl font-semibold mb-4 text-center">Registrar Actividad</h2>
             <form action="/admin/createActivity" method="post" class="space-y-4">
-                <!-- Nombre -->
-                <div class="flex flex-col">
-                    <label class="text-gray-700 font-medium" for="nombre">Nombre de la actividad:</label>
-                    <input type="text" id="nombre" name="nombre"
-                        class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
-                        required>
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Nombre -->
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 font-medium" for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre"
+                            class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                            required>
+                    </div>
+                    <!-- Costo -->
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 font-medium" for="costo">Costo</label>
+                        <input type="number" step="0.01" id="costo" name="costo"
+                            class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                            required>
+                    </div>
                 </div>
-                <!-- Costo -->
-                <div class="flex flex-col">
-                    <label class="text-gray-700 font-medium" for="costo">Costo:</label>
-                    <input type="number" step="0.01" id="costo" name="costo"
-                        class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
-                        required>
+                <!-- Descripción (Incluido, No Incluido, Detalles Principales, Requisitos) -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 font-medium">Incluido:</label>
+                        <textarea id="incluido" name="incluido" rows="2"
+                            class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                            required></textarea>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 font-medium">No Incluido:</label>
+                        <textarea id="noIncluido" name="noIncluido" rows="2"
+                            class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                            required></textarea>
+                    </div>
                 </div>
-                <!-- Descripción -->
                 <div class="flex flex-col">
-                    <label class="text-gray-700 font-medium" for="descripcion">Descripción:</label>
-                    <textarea id="descripcion" name="descripcion" rows="4"
+                    <label class="text-gray-700 font-medium">Detalles Principales:</label>
+                    <textarea id="detallesPrincipales" name="detallesPrincipales" rows="3"
                         class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
                         required></textarea>
                 </div>
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-medium">Requisitos:</label>
+                    <textarea id="requisitos" name="requisitos" rows="3"
+                        class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                        required></textarea>
+                </div>
+                <!-- Campo Ubicación (Coordenadas) -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-medium">Coordenadas de Ubicación</label>
+                    <input type="text"
+                        class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed"
+                        name="ubicacion" id="ubicacion" placeholder="Latitud, Longitud" required readonly>
+                </div>
+                {{> mapActivity}}
                 <!-- Disponibilidad -->
                 <div class="flex flex-col">
-                    <label class="text-gray-700 font-medium">Disponibilidad:</label>
-                    <div class="flex items-center">
-                        <input type="radio" id="disponible" name="disponibilidad" value="true" required>
-                        <label for="disponible" class="ml-2">Disponible</label>
-                    </div>
-                    <div class="flex items-center mt-2">
-                        <input type="radio" id="no-disponible" name="disponibilidad" value="false" required>
-                        <label for="no-disponible" class="ml-2">No disponible</label>
+                    <div class="flex justify-center space-x-4 mt-2">
+                        <div class="flex items-center">
+                            <input type="radio" id="disponible" name="disponibilidad" value="true" required>
+                            <label for="disponible" class="ml-2">Disponible</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="no-disponible" name="disponibilidad" value="false" required>
+                            <label for="no-disponible" class="ml-2">No disponible</label>
+                        </div>
                     </div>
                 </div>
                 <!-- Submit Button -->
@@ -58,6 +89,7 @@
                         Actividad</button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>

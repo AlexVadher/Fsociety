@@ -19,7 +19,7 @@ class ActivityModel {
     static async getAllImages() {
         try {
             // variables con la consulta SQL
-            const query = `SELECT a.id, a.nombre, a.costo, a.descripcion, a.disponibilidad, i.urlImg
+            const query = `SELECT a.id, a.nombre, a.costo, a.descripcion, a.disponibilidad, a.ubicacion, i.urlImg
                             FROM actividades a
                             LEFT JOIN imagenesActividades i ON a.id = i.idActividad
                             WHERE i.id = (
@@ -82,22 +82,36 @@ class ActivityModel {
     // Metodo para obtener una actividad por ID
     static async getActivityId(id) {
         try {
-            const query = 'SELECT * FROM actividades WHERE id = ';
+            const query = 'SELECT * FROM actividades WHERE id = ?';
             const values = [id];
-            const {rows} = await pool.query(query, values);
-            return rows[0];
+            const [rows] = await pool.query(query, values);
+            return rows;
         } catch (error) {
             console.error(`Error fetching item with ID ${id}:`, error);
             throw error;
         }
     }
     // Método para crear una nueva actividad
-    static async createActivity({nombre, costo, descripcion, disponibilidad}) {
+    static async createActivity({
+        nombre,
+        costo,
+        descripcion,
+        disponibilidad,
+        ubicacion,
+    }) {
         try {
             const query = `
-                INSERT INTO actividades (nombre, costo, descripcion, disponibilidad)
-                VALUES (?, ?, ?, ?)`;
-            const values = [nombre, costo, descripcion, disponibilidad];
+            INSERT INTO actividades (nombre, costo, descripcion, disponibilidad, ubicacion)
+            VALUES (?, ?, ?, ?, ?)`;
+            // Convertir la descripción en JSON
+            const descripcionJson = JSON.stringify(descripcion);
+            const values = [
+                nombre,
+                costo,
+                descripcionJson,
+                disponibilidad,
+                ubicacion,
+            ];
             const [result] = await pool.query(query, values);
             return result;
         } catch (error) {
