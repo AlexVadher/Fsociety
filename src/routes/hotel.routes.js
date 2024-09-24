@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import hotelController from '../controllers/hotel.controller.js';
 import uploadImages from '../middlewares/imgsHotels.middleware.js';
+import deleteHotelImages from '../middlewares/deleteImgsHotel.middleware.js';
 
 const routerHotel = Router();
 
@@ -17,5 +18,11 @@ routerHotel.post(
 routerHotel.post('/updateHotel/:id', hotelController.updateHotel);
 
 routerHotel.get('/ListHotelHome', hotelController.listHotelImages);
+
+routerHotel.get(
+    '/admin/deleteHotel/:id',
+    deleteHotelImages,
+    hotelController.deleteHotel,
+);
 
 export default routerHotel;

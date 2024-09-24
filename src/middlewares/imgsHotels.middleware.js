@@ -13,7 +13,6 @@ const storage = multer.diskStorage({
         // Obtener el id del hotel desde los parámetros de la solicitud
         const hotelId = req.params.id;
         // obtener el nombre del hotel desde la base de datos de acuerdo al id
-        const hotelName = req.body.nombre;
 
         // Definir la ruta de la carpeta dinámica basada en el id del hotel
         const hotelDir = join(
@@ -23,7 +22,7 @@ const storage = multer.diskStorage({
             'public',
             'uploads',
             'hotels',
-            hotelName + '-' + hotelId,
+            hotelId,
         );
 
         // Crear la carpeta si no existe

@@ -54,6 +54,18 @@ class habitacionModel {
             throw new Error(error);
         }
     }
+
+    static async deleteHabitacion(id) {
+        try {
+            const [result] = await pool.query(
+                'DELETE FROM habitaciones WHERE id = ?',
+                [id],
+            );
+            return result;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }
 
 export default habitacionModel;
