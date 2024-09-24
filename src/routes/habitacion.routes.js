@@ -23,4 +23,6 @@ routerHabitacion.get('/getHabitacionesByHotel/:hotelId', async (req, res) => {
     }
 });
 
+routerHabitacion.delete('/deleteHabitacion/:id', habitacionController.deleteHabitacion);
+
 export default routerHabitacion;

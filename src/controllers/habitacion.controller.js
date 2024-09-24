@@ -73,7 +73,7 @@ export class habitacionController {
     static async listHabitacion(req, res) {
         try {
             const habitaciones = await habitacionModel.getAllHabitaciones(); // Obtener las habitaciones
-            res.render('partials/habitacion', {habitaciones}); // Enviar las habitaciones a la vista
+            res.render('partials/habitacionModal', {habitaciones}); // Enviar las habitaciones a la vista
         } catch (err) {
             console.error('Error al listar las habitaciones:', err);
             res.status(500).json({
@@ -91,6 +91,24 @@ export class habitacionController {
             res.status(200).json({habitaciones});
         } catch (error) {
             res.status(500).json({message: 'Error al obtener habitaciones'});
+        }
+    }
+
+    static async deleteHabitacion(req, res) {
+        const {id} = req.params; // Obtener el id de la habitación desde req.params
+        try {
+            const result = await habitacionModel.deleteHabitacion(id);
+            if (result.affectedRows === 0) {
+                return res
+                    .status(404)
+                    .json({message: 'Habitación no encontrada'});
+            }
+            res.status(200).json({
+                message: 'Habitación eliminada exitosamente',
+            });
+        } catch (error) {
+            console.error('Error al eliminar la habitación:', error);
+            res.status(500).json({message: 'Error al eliminar la habitación'});
         }
     }
 }

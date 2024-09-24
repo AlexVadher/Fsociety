@@ -129,6 +129,67 @@ class hotelModel {
             throw error;
         }
     }
+    static async getImagesByHotelId(hotelId) {
+        try {
+            const query =
+                'SELECT urlImg FROM imagenesHoteles WHERE idHotel = ?';
+            const [rows] = await pool.query(query, [hotelId]);
+            return rows; // Retorna las URLs de las imágenes
+        } catch (error) {
+            console.error('Error al obtener las imágenes:', error);
+            throw error;
+        }
+    }
+
+    static async getHabitacioneslById(hotelId) {
+        try {
+            const [rows] = await pool.query(
+                'SELECT id, codigo, tipo, costo FROM habitaciones WHERE idHotel = ?',
+                [hotelId],
+            );
+            return rows[0]; // Devuelve el primer hotel encontrado con el ID proporcionado
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    static async deleteHotel(id) {
+        try {
+            const query = 'DELETE FROM hoteles WHERE id = ?';
+            const [result] = await pool.query(query, [id]);
+            return result;
+        } catch (error) {
+            console.error(`Error eliminando hotel con ID ${id}:`, error);
+            throw error;
+        }
+    }
+    // Método para eliminar un hotel y sus imágenes en la base de datos
+    static async deleteImagesByHotelId(hotelId) {
+        try {
+            const query = 'DELETE FROM imagenesHoteles WHERE idHotel = ?';
+            const [result] = await pool.query(query, [hotelId]);
+            return result;
+        } catch (error) {
+            console.error(
+                `Error eliminando imágenes para los hoteles con ID ${hotelId}:`,
+                error,
+            );
+            throw error;
+        }
+    }
+    static async deleteHabitacionesByHotelId(hotelId) {
+        try {
+            const query = 'DELETE FROM habitaciones WHERE idHotel = ?';
+            const [result] = await pool.query(query, [hotelId]);
+            return result;
+        } catch (error) {
+            console.error(
+                `Error eliminando habitaciones para los hoteles con ID ${hotelId}:`,
+                error,
+            );
+            throw error;
+        }
+    }
 }
 
 export default hotelModel;

@@ -1,11 +1,13 @@
 <div x-data="{ modalEdit: false }">
     <!-- Button to open the modal -->
     <button type="button" @click="modalEdit = true" class="font-medium text-blue-500 hover:text-blue-700">
-        <i class="fas fa-edit"></i> Editar
+        <i class="fas fa-edit"></i>
     </button>
 
     <!-- Modal Background -->
-    <div x-show="modalEdit" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalEdit" @click.self="modalEdit = false" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
+    <div x-show="modalEdit" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalEdit"
+        @click.self="modalEdit = false"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
         <!-- Modal Container -->
         <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
             <!-- Close Button -->
@@ -18,27 +20,37 @@
                 <!-- Nombre -->
                 <div class="flex flex-col">
                     <label class="text-gray-700 font-medium mb-1" for="nombre">Nombre Hotel</label>
-                    <input type="text" class="form-input block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="nombre" name="nombre" value="{{nombre}}" required>
+                    <input type="text"
+                        class="form-input block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                        id="nombre" name="nombre" value="{{nombre}}" required>
                 </div>
                 <!-- Teléfono -->
                 <div class="flex flex-col">
                     <label class="text-gray-700 font-medium mb-1" for="telefono">Teléfono</label>
-                    <input type="tel" class="form-input block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="telefono" name="telefono" value="{{telefono}}" required>
+                    <input type="tel"
+                        class="form-input block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                        id="telefono" name="telefono" value="{{telefono}}" required>
                 </div>
                 <!-- Ubicación -->
                 <div class="flex flex-col">
                     <label class="text-gray-700 font-medium mb-1" for="ubicacion">Ubicación</label>
-                    <textarea id="ubicacion" name="ubicacion" rows="4" class="form-textarea block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" required>{{ubicacion}}</textarea>
+                    <textarea id="ubicacion" name="ubicacion" rows="4"
+                        class="form-textarea block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                        required>{{ubicacion}}</textarea>
                 </div>
                 <!-- Estrellas -->
                 <div class="flex flex-col">
                     <label class="text-gray-700 font-medium mb-1" for="estrellas">Estrellas</label>
-                    <input type="number" class="form-input block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="estrellas" name="estrellas" value="{{estrellas}}" min="1" max="5" required>
+                    <input type="number"
+                        class="form-input block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                        id="estrellas" name="estrellas" value="{{estrellas}}" min="1" max="5" required>
                 </div>
                 <!-- Descripción -->
                 <div class="flex flex-col">
                     <label class="text-gray-700 font-medium mb-1" for="descripcion">Descripción</label>
-                    <input type="text" class="form-input block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200" id="descripcion" name="descripcion" value="{{descripcion}}" required>
+                    <input type="text"
+                        class="form-input block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                        id="descripcion" name="descripcion" value="{{descripcion}}" required>
                 </div>
                 <!-- Disponibilidad -->
 
@@ -47,17 +59,21 @@
                 <div class="flex flex-col">
                     <span class="text-gray-700 font-medium mb-1">Disponibilidad</span>
                     <div class="flex items-center">
-                        <input type="radio" id="disponible" name="disponibilidad" value="1" {{#if (eq disponibilidad 1)}}checked{{/if}} required>
+                        <input type="radio" id="disponible" name="disponibilidad" value="1" {{#if (eq disponibilidad
+                            1)}}checked{{/if}} required>
                         <label for="disponible" class="ml-2">Disponible</label>
                     </div>
                     <div class="flex items-center mt-2">
-                        <input type="radio" id="no-disponible" name="disponibilidad" value="0" {{#if (eq disponibilidad 0)}}checked{{/if}} required>
+                        <input type="radio" id="no-disponible" name="disponibilidad" value="0" {{#if (eq disponibilidad
+                            0)}}checked{{/if}} required>
                         <label for="no-disponible" class="ml-2">No disponible</label>
                     </div>
                 </div>
                 <!-- Botón de envío -->
                 <div class="mt-6">
-                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Actualizar Hotel</button>
+                    <button type="submit"
+                        class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Actualizar
+                        Hotel</button>
                 </div>
             </form>
         </div>
