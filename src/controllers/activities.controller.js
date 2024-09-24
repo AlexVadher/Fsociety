@@ -6,13 +6,27 @@ class activitiesController {
     // Método para crear una actividad (Post)
     static async createActivity(req, res) {
         try {
-            // Obtener los datos del formulario de registro de actividad desde req.body y validarlos
-            const {nombre, costo, descripcion, disponibilidad} = req.body;
+            // Obtener los datos del formulario de registro de actividad desde req.body
+            const {
+                nombre,
+                costo,
+                incluido,
+                noIncluido,
+                detallesPrincipales,
+                requisitos,
+                disponibilidad,
+                ubicacion,
+            } = req.body;
 
+            // Validar que todos los campos requeridos estén presentes
             if (
                 !nombre ||
                 !costo ||
-                !descripcion ||
+                !incluido ||
+                !noIncluido ||
+                !detallesPrincipales ||
+                !requisitos ||
+                !ubicacion ||
                 disponibilidad === undefined
             ) {
                 return res
@@ -20,7 +34,7 @@ class activitiesController {
                     .json({message: 'Todos los campos son obligatorios'});
             }
 
-            // Verificar que los datos numéricos sean válidos
+            // Verificar que el costo sea un número válido
             if (isNaN(costo)) {
                 return res
                     .status(400)
@@ -39,28 +53,111 @@ class activitiesController {
             // Convertir disponibilidad a booleano
             const disponibilidadBoolean = disponibilidad === 'true';
 
-            console.log('Datos recibidos:', req.body); // Registro de datos
+            // Construir el objeto `descripcion` con los campos individuales
+            const descripcion = {
+                incluido,
+                noIncluido,
+                detallesPrincipales,
+                requisitos,
+            };
 
-            // Llamar al método createActivity de la clase ActivityModel
+            // Llamar al método createActivity del modelo
             const result = await ActivityModel.createActivity({
                 nombre,
                 costo,
-                descripcion,
+                descripcion, // Enviamos el objeto `descripcion` al modelo
                 disponibilidad: disponibilidadBoolean,
+                ubicacion,
             });
 
-            console.log('Resultado de la creación de la actividad:', result); // Registro de resultado
+            console.log('Resultado de la creación de la actividad:', result);
 
-            /*res.status(201).json({
-                message: 'Actividad registrada exitosamente',
-                body: result,
-            });*/
+            // Redireccionar a la lista de actividades
             res.redirect('/admin/ListActivities');
         } catch (err) {
-            console.error('Error al registrar la actividad:', err); // Mejorar el registro de errores
+            console.error('Error al registrar la actividad:', err);
             res.status(500).json({
                 message: 'Error 500: ' + err.message,
                 body: req.body,
+            });
+        }
+    }
+
+    // Método para Reservar una actividad (Post)
+    static async reserveActivity(req, res) {
+        try {
+            // Obtener el ID de la actividad de los parámetros de la URL
+            const {id} = req.params;
+
+            // Validar que el ID esté presente
+            if (!id) {
+                return res.status(400).json({
+                    message: 'El ID de la actividad es obligatorio',
+                });
+            }
+
+            // Llamar al método getActivityById de la clase ActivityModel
+            const activity = await ActivityModel.getActivityId(id);
+
+            // Verificar si se encontró la actividad
+            if (!activity) {
+                return res.status(404).json({
+                    message: 'Actividad no encontrada',
+                });
+            }
+
+            // Responder con la actividad
+            res.render('activities/reserveActivity', {
+                activity,
+            });
+
+            console.log('Actividad encontrada:', activity);
+        } catch (err) {
+            // Manejo de errores
+            console.error('Error al leer la actividad:', err);
+            res.status(500).json({
+                message: 'Error 500: ' + err.message,
+            });
+        }
+    }
+    // Método para obtener una actividad por ID (Get)
+    static async listActivityById(req, res) {
+        try {
+            // Obtener el ID de la actividad de los parámetros de la URL
+            const {id} = req.params;
+
+            // Validar que el ID esté presente
+            if (!id) {
+                return res.status(400).json({
+                    message: 'El ID de la actividad es obligatorio',
+                });
+            }
+
+            // Llamar al método getActivityById de la clase ActivityModel
+            const activity = await ActivityModel.getActivityId(id);
+
+            // Verificar si se encontró la actividad
+            if (!activity) {
+                return res.status(404).json({
+                    message: 'Actividad no encontrada',
+                });
+            }
+
+            // Llamar al método getImagesByActivityId de la clase ActivityModel para obtener las imágenes
+            const images = await ActivityModel.getImagesByActivityId(id);
+
+            // Responder con la actividad y sus imágenes
+            res.render('activities/detailActivity', {
+                activity,
+                images,
+            });
+
+            console.log('Actividad y sus imágenes:', {activity, images});
+        } catch (err) {
+            // Manejo de errores
+            console.error('Error al leer la actividad:', err);
+            res.status(500).json({
+                message: 'Error 500: ' + err.message,
             });
         }
     }
@@ -199,8 +296,15 @@ class activitiesController {
 
             // Organizar las imágenes por actividad
             const imagesByActivity = images.reduce((acc, item) => {
-                const {id, nombre, costo, descripcion, disponibilidad, urlImg} =
-                    item;
+                const {
+                    id,
+                    nombre,
+                    costo,
+                    descripcion,
+                    disponibilidad,
+                    ubicacion,
+                    urlImg,
+                } = item;
 
                 if (!acc[id]) {
                     acc[id] = {
@@ -209,6 +313,7 @@ class activitiesController {
                         costo,
                         descripcion,
                         disponibilidad,
+                        ubicacion,
                         imagen: urlImg, // Asignar la primera imagen
                     };
                 }
