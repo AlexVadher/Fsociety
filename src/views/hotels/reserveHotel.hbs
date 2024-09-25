@@ -1,0 +1,78 @@
+<body class="bg-gray-100 p-6"></body>
+<div class="max-w-7xl mx-auto p-4">
+    <!-- Contenedor Principal -->
+    <div class="flex flex-col md:flex-row gap-8">
+
+        <!-- Sección de Detalles del Hotel -->
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full md:w-2/5">
+            <img src="ruta/a/tu/imagen.jpg" alt="Hotel" class="rounded-lg mb-4">
+            <h2 class="text-xl font-bold mb-4">Nombre Hotel</h2>
+
+            <!-- Detalles del Hotel y Adicionales en un solo div -->
+            <div class="bg-gray-50 p-4 rounded-lg shadow-xl mb-4">
+                <h3 class="text-lg font-bold mb-2">Detalles del Hotel</h3>
+                <p class="text-gray-700">Nombre del hotel: Ej. "Kayak"</p>
+                <p class="text-gray-700">Fecha y Hora Seleccionadas: Ej. "25 de Agosto de 2024, 10:00 AM - 1:00 PM"</p>
+                <p class="text-gray-700">Número de Participantes: Ej. "3 Adultos, 1 Niño"</p>
+                <p class="text-gray-700 mt-4">Precio Total: Mostrar el costo total basado en los participantes y
+                    opciones seleccionadas.</p>
+                <p class="text-gray-700">Ubicación del Hotel: Dirección o punto de encuentro.</p>
+            </div>
+
+            <!-- Detalles de Costos -->
+            <div class="bg-gray-50 p-4 rounded-lg shadow-xl mb-8">
+                <h3 class="text-lg font-bold mb-4">Desglose de Costos Detallado</h3>
+                <div class="text-gray-700">
+                    <p>Adultos:</p>
+                    <p>Cantidad: 3 - Precio Unitario: $50.00 USD</p>
+                    <p>Subtotal: $150.00 USD</p>
+                </div>
+                <div class="text-gray-700 mt-4">
+                    <p>Niños:</p>
+                    <p>Cantidad: 1 - Precio Unitario: $25.00 USD</p>
+                    <p>Subtotal: $25.00 USD</p>
+                </div>
+                <div class="text-gray-700 font-bold mt-4">Total: 175,00 €</div>
+            </div>
+        </div>
+
+        <!-- Sección de Contacto y Costos -->
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full md:w-3/5">
+            <!-- Datos de Contacto -->
+            <div class="mb-8">
+                <h3 class="text-lg font-bold mb-4">Datos de Contacto</h3>
+                <form action="#" method="POST" class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="Nombre" class="border p-2 rounded-md">
+                    <input type="text" placeholder="Apellidos" class="border p-2 rounded-md">
+                    <input type="email" placeholder="Correo electrónico" class="border p-2 rounded-md col-span-2">
+                    <input type="tel" placeholder="Número de teléfono" class="border p-2 rounded-md col-span-2">
+                    <label class="flex items-center col-span-2">
+                        <input type="checkbox" class="mr-2"> Aceptación de Términos y Condiciones
+                    </label>
+                    <button type="submit"
+                        class="bg-blue-500 text-white p-2 rounded-md col-span-2 hover:bg-blue-600">Confirmar
+                        Reserva</button>
+                </form>
+            </div>
+
+            <!-- Política de Cancelación -->
+            <div class="text-gray-700">
+                <h3 class="font-bold mb-2">Política de Cancelación</h3>
+                <p>Puedes cancelar tu reserva sin costo hasta 48 horas antes del Hotel para un reembolso completo.
+                </p>
+                <p>Si cancelas dentro de las 48 horas previas o no te presentas, no se ofrecerá reembolso.</p>
+            </div>
+
+            <!-- Información de Contacto del Proveedor -->
+            <div class="text-gray-700 mt-4">
+                <h3 class="font-bold mb-2">Información de Contacto del Proveedor</h3>
+                <p>Teléfono: +1 (555) 123-4567</p>
+                <p>Correo electrónico: soporte@toursadventure.com</p>
+                <p>Dirección del Punto de Encuentro: Plaza Central, Avenida Principal 123, Ciudad del Sol</p>
+                <p>Horario de Atención: Lunes a Viernes, 9:00 AM - 6:00 PM</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
