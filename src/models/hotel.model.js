@@ -190,6 +190,18 @@ class hotelModel {
             throw error;
         }
     }
+
+    static async getHotelById(id) {
+        try {
+            const query = 'SELECT * FROM hoteles WHERE id = ?';
+            const values = [id];
+            const [rows] = await pool.query(query, values);
+            return rows;
+        } catch (error) {
+            console.error(`Error fetching item with ID ${id}:`, error);
+            throw error;
+        }
+    }
 }
 
 export default hotelModel;

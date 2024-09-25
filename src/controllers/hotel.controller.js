@@ -177,7 +177,7 @@ export class hotelController {
                     active: currentPath.includes('/admin/hotels'),
                 },
                 {
-                    name: 'Actividades',
+                    name: 'Hoteles',
                     link: `/admin/ListActivities`,
                     icon: 'fas fa-calendar-alt',
                     active: currentPath.includes('/admin/ListActivities'),
@@ -238,7 +238,7 @@ export class hotelController {
 
             console.log('Imágenes encontradas:', images); // Registro de las imágenes encontradas
 
-            // Organizar las imágenes por actividad
+            // Organizar las imágenes por Hotel
             const imagesByHotel = images.reduce((acc, item) => {
                 const {
                     id,
@@ -270,13 +270,13 @@ export class hotelController {
             // Convertir el objeto en un array
             const hotels = Object.values(imagesByHotel);
 
-            // Renderizar la vista de actividades con imágenes
+            // Renderizar la vista de Hoteles con imágenes
             res.render('hotels/homeHotel', {
                 hotels,
             });
         } catch (err) {
             // Manejo de errores
-            console.error('Error al leer os Hoteles:', err);
+            console.error('Error al leer los Hoteles:', err);
             res.status(500).json({
                 message: 'Error 500: ' + err.message,
             });
@@ -319,6 +319,83 @@ export class hotelController {
             console.error('Error al eliminar la Hotel:', err);
             res.status(500).json({
                 success: false,
+                message: 'Error 500: ' + err.message,
+            });
+        }
+    }
+    static async listHotelById(req, res) {
+        try {
+            // Obtener el ID de la hotel de los parámetros de la URL
+            const {id} = req.params;
+
+            // Validar que el ID esté presente
+            if (!id) {
+                return res.status(400).json({
+                    message: 'El ID del hotel es obligatorio',
+                });
+            }
+
+            // Llamar al método getHotelById de la clase hotelModel
+            const hotel = await hotelModel.getHotelById(id);
+
+            // Verificar si se encontró la Hotel
+            if (!hotel) {
+                return res.status(404).json({
+                    message: 'Hotel no encontrado',
+                });
+            }
+
+            // Llamar al método getImagesByhotelId de la clase HotelModel para obtener las imágenes
+            const images = await hotelModel.getImagesByHotelId(id);
+
+            // Responder con el hotel y sus imágenes
+            res.render('hotels/detailHotel', {
+                hotel,
+                images,
+            });
+
+            console.log('Hotel y sus imágenes:', {hotel, images});
+        } catch (err) {
+            // Manejo de errores
+            console.error('Error al leer la hotel:', err);
+            res.status(500).json({
+                message: 'Error 500: ' + err.message,
+            });
+        }
+    }
+
+    static async reserveHotel(req, res) {
+        try {
+            // Obtener el ID de la Hotel de los parámetros de la URL
+            const {id} = req.params;
+
+            // Validar que el ID esté presente
+            if (!id) {
+                return res.status(400).json({
+                    message: 'El ID del Hotel es obligatorio',
+                });
+            }
+
+            // Llamar al método gethotelById de la clase hotelModel
+            const hotel = await hotelModel.getHotelById(id);
+
+            // Verificar si se encontró la Hotel
+            if (!hotel) {
+                return res.status(404).json({
+                    message: 'Hotel no encontrada',
+                });
+            }
+
+            // Responder con la Hotel
+            res.render('hotels/reservehotel', {
+                hotel,
+            });
+
+            console.log('Hotel no encontrado:', hotel);
+        } catch (err) {
+            // Manejo de errores
+            console.error('Error al leer la Hotel:', err);
+            res.status(500).json({
                 message: 'Error 500: ' + err.message,
             });
         }

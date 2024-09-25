@@ -24,5 +24,11 @@ routerHotel.get(
     deleteHotelImages,
     hotelController.deleteHotel,
 );
+routerHotel.get(
+    '/details/hotel/reserve/:nombre/:id',
+    hotelController.reserveHotel,
+);
+
+routerHotel.get('/details/hotel/:id', hotelController.listHotelById);
 
 export default routerHotel;
