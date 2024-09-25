@@ -50,6 +50,12 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
+                    <label class="text-gray-700 font-medium">Descripción Detallada:</label>
+                    <textarea id="descripcionDetallada" name="descripcionDetallada" rows="3"
+                        class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                        required></textarea>
+                </div>
+                <div class="flex flex-col">
                     <label class="text-gray-700 font-medium">Detalles Principales:</label>
                     <textarea id="detallesPrincipales" name="detallesPrincipales" rows="3"
                         class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
@@ -68,7 +74,7 @@
                         class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed"
                         name="ubicacion" id="ubicacion" placeholder="Latitud, Longitud" required readonly>
                 </div>
-                {{> mapActivity}}
+                {{> map1}}
                 <!-- Disponibilidad -->
                 <div class="flex flex-col">
                     <div class="flex justify-center space-x-4 mt-2">

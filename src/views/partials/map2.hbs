@@ -1,0 +1,33 @@
+<div x-data="{ modalMapOpen: false }">
+    <!-- Botón para abrir el modal del mapa -->
+    <button type="button" @click="modalMapOpen = true"
+        class="font-bold bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
+        Abrir Mapa
+    </button>
+
+    <!-- Fondo del modal del mapa -->
+    <div x-show="modalMapOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalMapOpen"
+        @click.self="modalMapOpen = false"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm">
+        <!-- Contenedor del modal del mapa -->
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl p-6 relative">
+            <!-- Botón de cerrar -->
+            <button @click="modalMapOpen = false" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+            <!-- Contenido del modal del mapa -->
+            <h2 class="text-2xl font-semibold mb-4 text-center">Buscar Dirección y Ver Mapa</h2>
+            <div class="space-y-4">
+                <!-- Buscador -->
+                <div class="p-2 flex">
+                    <input type="text" name="Direccion" id="busqueda" placeholder="Buscar dirección"
+                        class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:ring focus:ring-blue-200">
+                    <button type="button" onclick="searchAddress()"
+                        class="w-40 ml-3 bg-blue-600 text-white py-2 rounded-r-md hover:bg-blue-700">Buscar</button>
+                </div>
+                <!-- Mapa -->
+                <div id="map" class="mt-4 h-72 rounded-lg shadow-md"></div>
+            </div>
+        </div>
+    </div>
+</div>

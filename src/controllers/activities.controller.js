@@ -12,6 +12,7 @@ class activitiesController {
                 costo,
                 incluido,
                 noIncluido,
+                descripcionDetallada,
                 detallesPrincipales,
                 requisitos,
                 disponibilidad,
@@ -24,6 +25,7 @@ class activitiesController {
                 !costo ||
                 !incluido ||
                 !noIncluido ||
+                !descripcionDetallada ||
                 !detallesPrincipales ||
                 !requisitos ||
                 !ubicacion ||
@@ -55,9 +57,10 @@ class activitiesController {
 
             // Construir el objeto `descripcion` con los campos individuales
             const descripcion = {
+                descripcionDetallada,
+                detallesPrincipales,
                 incluido,
                 noIncluido,
-                detallesPrincipales,
                 requisitos,
             };
 
@@ -82,7 +85,6 @@ class activitiesController {
             });
         }
     }
-
     // Método para Reservar una actividad (Post)
     static async reserveActivity(req, res) {
         try {
@@ -143,16 +145,59 @@ class activitiesController {
                 });
             }
 
+            // Extraer la actividad (asumiendo que es el primer objeto en el array)
+            const activityDetails = activity[0];
+
+            // Asegurarse de que 'descripcion' sea un objeto JSON válido
+            if (typeof activityDetails.descripcion === 'string') {
+                // Si es un string, intentar convertirlo en un objeto JSON
+                try {
+                    activityDetails.descripcion = JSON.parse(
+                        activityDetails.descripcion,
+                    );
+                } catch (error) {
+                    console.error('Error al parsear la descripción:', error);
+                    activityDetails.descripcion = {
+                        descripcionDetallada: '',
+                        detallesPrincipales: [],
+                        incluido: [],
+                        noIncluido: [],
+                        requisitos: [],
+                    };
+                }
+            }
+
+            // Convertir 'incluido', 'noIncluido' y 'requisitos' en arrays
+            activityDetails.descripcion.incluido =
+                activityDetails.descripcion.incluido
+                    .split(', ')
+                    .filter(Boolean);
+            activityDetails.descripcion.noIncluido =
+                activityDetails.descripcion.noIncluido
+                    .split(', ')
+                    .filter(Boolean);
+            activityDetails.descripcion.detallesPrincipales =
+                activityDetails.descripcion.detallesPrincipales
+                    .split(', ')
+                    .filter(Boolean);
+            activityDetails.descripcion.requisitos =
+                activityDetails.descripcion.requisitos
+                    .split(', ')
+                    .filter(Boolean);
+
             // Llamar al método getImagesByActivityId de la clase ActivityModel para obtener las imágenes
             const images = await ActivityModel.getImagesByActivityId(id);
 
             // Responder con la actividad y sus imágenes
             res.render('activities/detailActivity', {
-                activity,
+                activity: activityDetails, // Asegurarse de que se pase solo el primer objeto
                 images,
             });
 
-            console.log('Actividad y sus imágenes:', {activity, images});
+            console.log('Actividad y sus imágenes:', {
+                activity: activityDetails,
+                images,
+            });
         } catch (err) {
             // Manejo de errores
             console.error('Error al leer la actividad:', err);
@@ -161,6 +206,7 @@ class activitiesController {
             });
         }
     }
+
     // Método para listar todas las actividades (Get)
     static async listActivity(req, res) {
         try {
@@ -383,12 +429,21 @@ class activitiesController {
             });
         }
     }
-    // Métoodo para obtener una actividad por ID (Get)
+    // Método para actualizar una actividad por ID (Update)
     static async updateActivity(req, res) {
         try {
             // Obtener los datos del formulario de actualización desde req.body
             const {id} = req.params; // Obtener el ID de la actividad de los parámetros de la URL
-            const {nombre, costo, descripcion, disponibilidad} = req.body;
+            const {
+                nombre,
+                costo,
+                incluido,
+                noIncluido,
+                requisitos,
+                detallesPrincipales,
+                disponibilidad,
+                ubicacion,
+            } = req.body;
 
             // Validar que el ID esté presente
             if (!id) {
@@ -401,13 +456,19 @@ class activitiesController {
             if (
                 !nombre ||
                 !costo ||
-                !descripcion ||
+                !incluido ||
+                !noIncluido ||
+                !requisitos ||
+                !detallesPrincipales ||
+                !ubicacion ||
                 disponibilidad === undefined
             ) {
                 return res
                     .status(400)
                     .json({message: 'Todos los campos son obligatorios'});
             }
+
+            console.log('Datos recibidos:', req.body); // Registro de datos recibidos
 
             // Verificar que el costo sea un número válido
             if (isNaN(costo)) {
@@ -421,7 +482,8 @@ class activitiesController {
                 disponibilidad === '1' || disponibilidad === '0';
             if (!isDisponibilidadValid) {
                 return res.status(400).json({
-                    message: 'La disponibilidad debe ser un valor booleano',
+                    message:
+                        'La disponibilidad debe ser un valor booleano (1 o 0)',
                 });
             }
             console.log('disponibilidad:', disponibilidad);
@@ -429,14 +491,28 @@ class activitiesController {
             // Convertir disponibilidad a booleano
             const disponibilidadBoolean = disponibilidad === '1';
 
-            console.log('Datos para actualizar:', req.body); // Registro de datos recibidos
+            // Serializar el objeto `descripcion` a JSON
+            const descripcionJSON = JSON.stringify({
+                incluido,
+                noIncluido,
+                requisitos,
+                detallesPrincipales,
+            });
 
-            // crear objeto con los datos actualizados
+            console.log('Datos para actualizar:', {
+                nombre,
+                costo,
+                descripcion: descripcionJSON,
+                disponibilidad: disponibilidadBoolean,
+            });
+
+            // Crear objeto con los datos actualizados
             const activityData = {
                 nombre,
                 costo,
-                descripcion,
+                descripcion: descripcionJSON, // Asegurarse de pasar la descripción como JSON
                 disponibilidad: disponibilidadBoolean,
+                ubicacion,
             };
 
             // Llamar al método updateActivity de la clase ActivityModel
@@ -445,22 +521,17 @@ class activitiesController {
             console.log(
                 'Resultado de la actualización de la actividad:',
                 result,
-            ); // Registro del resultado
+            );
 
-            // Responder con éxito
-            /* res.status(200).json({
-                message: 'Actividad actualizada exitosamente',
-                body: result,
-            }); */
+            // Redirigir a la lista de actividades después de la actualización exitosa
             res.redirect('/admin/ListActivities');
         } catch (err) {
             // Manejo de errores
             console.error('Error al actualizar la actividad:', err);
-            res.status(500).json({
-                message: 'Error 500: ' + err.message,
-            });
+            res.status(500).json({message: 'Error 500: ' + err.message});
         }
     }
+
     // Método para subir imágenes de una actividad específica (Post)
     static async uploadImages(req, res) {
         try {

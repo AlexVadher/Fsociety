@@ -16,69 +16,127 @@
                     </div>
                     {{/each}}
                 </div>
-                {{#each activity}}
+
                 <article class="px-6 py-6 text-center">
-                    <h1 class="font-bold text-xl m-2">{{this.nombre}}</h1>
+                    <h1 class="font-bold text-xl m-2">{{activity.nombre}}</h1>
                     <p class="text-gray-700 text-base">
-                        {{this.descripcion}}
+                        {{activity.descripcion.descripcionDetallada}}
                     </p>
-                    <section class="mt-4 mt-4 flex justify-between">
+                    <section class="mt-4 flex justify-between">
                         <div class="w-1/2">
                             <h2 class="font-semibold block mb-2">Incluido:</h2>
                             <ul class="list-disc list-inside inline-block text-left">
-                                {{#each this.included}}
+                                {{#each activity.descripcion.incluido}}
                                 <li>{{this}}</li>
                                 {{/each}}
                             </ul>
                         </div>
                         <div class="w-1/2">
-                            <span class="font-semibold block mb-2">No Incluido:</span>
+                            <h2 class="font-semibold block mb-2">No Incluido:</h2>
                             <ul class="list-disc list-inside inline-block text-left">
-                                {{#each this.notIncluded}}
+                                {{#each activity.descripcion.noIncluido}}
                                 <li>{{this}}</li>
                                 {{/each}}
                             </ul>
                         </div>
                     </section>
                 </article>
-                {{/each}}
             </div>
         </section>
+
         <section class="col-span-4 ... rounded-ld">
-            {{#each activity}}
-            <article class="h-full bg-white rounded h-full w-full shadow-lg mr-2">
+            <article class="h-full w-full bg-white rounded shadow-lg mr-2">
                 <article class="flex justify-between p-4">
                     <div class="w-1/2">
-                        <h2 class="text-2xl font-bold mb-4">Detalles Principales</h2>
+                        <h2 class=" font-bold mb-4">Detalles Principales</h2>
                         <ul class="list-disc list-inside">
-                            {{#each this.detalles}}
+                            {{#each activity.descripcion.detallesPrincipales}}
                             <li>{{this}}</li>
                             {{/each}}
                         </ul>
                     </div>
                     <div class="w-1/2">
-                        <h2 class="text-2xl font-bold mb-4">Requisitos</h2>
+                        <h2 class=" font-bold mb-4">Requisitos</h2>
                         <ul class="list-disc list-inside">
-                            {{#each this.requisitos}}
+                            {{#each activity.descripcion.requisitos}}
                             <li>{{this}}</li>
                             {{/each}}
                         </ul>
                     </div>
                 </article>
                 <div class="flex justify-center m-2">
-                    <a href="/details/activity/reserve/{{this.nombre}}/{{this.id}}"
+                    <a href="/details/activity/reserve/{{activity.nombre}}/{{activity.id}}"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
                         Reservar Ahora
                     </a>
                 </div>
             </article>
-            {{/each}}
         </section>
-        <section class="row-span-2 col-span-4 ... ">
+
+        <section class="row-span-2 col-span-4">
             <article class="p-4 bg-white rounded shadow-lg h-full">
-                <h2 class="text-2xl font-bold mb-4">Mapa de Ubicación</h2>
-                <div id="map" class="w-full h-96 bg-gray-200"></div>
+                <h2 class="text-center font-bold mb-4">Mapa de Ubicación</h2>
+                <img src="https://maps.googleapis.com/maps/api/staticmap?center={{activity.ubicacion}}&zoom=15&size=600x400&maptype=roadmap&markers=color:red%7C{{activity.ubicacion}}&key={{API_KEY}}"
+                    alt="Mapa de Ubicación" class=" rounded-md shadow-md">
             </article>
+        </section>
+    </div>
+    {{!-- Recomendación de actividades --}}
+    <div class=" py-4">
+        <h2 class="text-center text-blue-800 text-3xl font-bold mt-10">¡Ver más actividades!</h2>
+        <section class="space-y-8">
+            <div class="carro mt-8">
+                <div class="m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+                <div class="m-2 p-2 rounded-lg shadow-lg shadow-gray-300">
+                    <img class="h-40 w-full object-cover rounded-md" src="https://picsum.photos/200/400" alt=""
+                        class="w-full h-48 object-cover rounded-lg">
+                    <h2 class="mt-2 text-2xl font-bold text-gray-700 text-center">Actividad 1</h2>
+                    <p class="mt-2 text-gray-500 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, voluptate.</p>
+                    <div class="flex justify-center">
+                        <button class="mt-4 px-6 py-3 rounded-md bg-blue-700 text-white">Reservar</button>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </main>

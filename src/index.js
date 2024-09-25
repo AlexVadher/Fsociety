@@ -11,6 +11,7 @@ import userRouter from './routes/user.routes.js'; // Rutas para los usuarios
 import routerActivity from './routes/activitites.routes.js';
 import routerHotel from './routes/hotel.routes.js';
 import routerHabitacion from './routes/habitacion.routes.js';
+import apikey from './middlewares/apikey.js'; // Middleware para pasar la clave de API a todas las vistas
 dotenv.config(); // Cargar variables de entorno
 
 // Inicializar express
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
         'Access-Control-Allow-Headers',
-        'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method',
+        'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method, x-google-api-key',
     );
     res.header(
         'Access-Control-Allow-Methods',
@@ -100,10 +101,7 @@ app.use(cors()); //Habilitamos CORS para que la API pueda ser consumida desde cu
 app.use(express.static(join(__dirname, '..', 'public')));
 
 // Middleware para pasar la clave de API a todas las vistas
-app.use((req, res, next) => {
-    res.locals.API_KEY = process.env.API_KEY_GOOGLE_MAPS; // Clave de API de Google Maps
-    next();
-});
+app.use(apikey);
 
 // Rutas de la aplicación
 app.get('/', (req, res) => {

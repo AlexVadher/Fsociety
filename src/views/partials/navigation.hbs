@@ -3,7 +3,8 @@
         <a href="/" class="text-white text-xl font-bold flex items-center">
             <img src="/img/logo.svg" alt="Logo" class="w-16 h-16 my-0"> <!-- Ajusta el tamaño del logo -->
         </a>
-        <button type="button" class="text-white focus:outline-none md:hidden" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="toggleMenu()">
+        <button type="button" class="text-white focus:outline-none md:hidden" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation" onclick="toggleMenu()">
             <i class="fas fa-bars"></i>
         </button>
         <div class="hidden w-full md:flex md:items-end md:w-auto " id="navbarNav">
@@ -15,16 +16,18 @@
                     <a href="/admin/hotels" class="font-bold text-neutral-950 hover:text-slate-100">Hoteles</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/activities" class="font-bold text-neutral-950 hover:text-slate-100">Actividades</a>
+                    <a href="/ListActivitiesHome"
+                        class="font-bold text-neutral-950 hover:text-slate-100">Actividades</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/additionalServices" class="font-bold text-neutral-950 hover:text-slate-100">Servicios Adicionales</a>
+                    <a href="/additionalServices" class="font-bold text-neutral-950 hover:text-slate-100">Servicios
+                        Adicionales</a>
                 </li>
             </ul>
-            {{#if user}} 
-                    {{>profile}}
-                {{else}}
-                    {{>login}}
+            {{#if user}}
+            {{>profile}}
+            {{else}}
+            {{>login}}
             {{/if}}
         </div>
     </div>

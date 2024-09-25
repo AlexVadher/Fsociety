@@ -1,4 +1,5 @@
 let map;
+let mapa;
 let marker;
 let geocoder;
 
@@ -11,6 +12,7 @@ function initMap() {
         mapTypeControl: false, // control de tipo de mapa
         streetViewControl: false, // control de Street View (Pegman)
     });
+
     // marcador para la ubicación en el mapa
     marker = new google.maps.Marker({
         map: map,

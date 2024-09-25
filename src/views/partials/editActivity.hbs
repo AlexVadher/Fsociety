@@ -17,14 +17,14 @@
             <h2 class="text-2xl font-semibold mb-4 text-center">Actualizar Actividad</h2>
             <form action="/admin/updateactivity/{{id}}" method="post" class="space-y-4">
                 <div class="grid grid-cols-2 gap-6">
-                    <!-- Nombre -->
+                    <!-- Costo -->
                     <div>
-                        <label class="block text-gray-700 font-semibold" for="nombre">Nombre</label>
+                        <label class="w-32 text-gray-700 font-semibold" for="nombre">Nombre</label>
                         <input type="text"
                             class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
                             id="nombre" name="nombre" value="{{nombre}}" required>
                     </div>
-                    <!-- Costo -->
+                    <!-- Nombre -->
                     <div>
                         <label class="block text-gray-700 font-semibold" for="costo">Costo</label>
                         <input type="number" step="0.01"
@@ -32,60 +32,62 @@
                             id="costo" name="costo" value="{{costo}}" required>
                     </div>
                 </div>
-
-                <!-- Descripción -->
-                <h3 class="text-gray-700 font-semibold">Descripción</h3>
-                <div class="space-y-4">
-                    <!-- Incluido -->
-                    <div>
-                        <label for="incluido" class="block text-gray-700 font-semibold">Incluido</label>
-                        <textarea id="incluido" name="descripcion[incluido]" rows="2"
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 font-medium">Incluido:</label>
+                        <textarea id="incluido" name="incluido" rows="2"
                             class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
                             required>{{descripcion.incluido}}</textarea>
                     </div>
-                    <!-- No Incluido -->
-                    <div>
-                        <label for="noIncluido" class="block text-gray-700 font-semibold">No Incluido</label>
-                        <textarea id="noIncluido" name="descripcion[noIncluido]" rows="2"
+                    <div class="flex flex-col">
+                        <label class="text-gray-700 font-medium">No Incluido:</label>
+                        <textarea id="noIncluido" name="noIncluido" rows="2"
                             class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
                             required>{{descripcion.noIncluido}}</textarea>
                     </div>
-                    <!-- Detalles Principales -->
-                    <div>
-                        <label for="detallesPrincipales" class="block text-gray-700 font-semibold">Detalles
-                            Principales</label>
-                        <textarea id="detallesPrincipales" name="descripcion[detallesPrincipales]" rows="2"
-                            class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
-                            required>{{descripcion.detallesPrincipales}}</textarea>
-                    </div>
-                    <!-- Requisitos -->
-                    <div>
-                        <label for="requisitos" class="block text-gray-700 font-semibold">Requisitos</label>
-                        <textarea id="requisitos" name="descripcion[requisitos]" rows="2"
-                            class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
-                            required>{{descripcion.requisitos}}</textarea>
-                    </div>
                 </div>
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-medium">Requisitos:</label>
+                    <textarea id="requisitos" name="requisitos" rows="3"
+                        class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                        required>{{descripcion.requisitos}}</textarea>
+                </div>
+                <!-- Detalles principales -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-medium">Detalles Principales:</label>
+                    <textarea id="detallesPrincipales" name="detallesPrincipales" rows="3"
+                        class="form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                        required>{{descripcion.detallesPrincipales}}</textarea>
+                </div>
+                <!-- Campo Ubicación (Coordenadas) -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-medium">Coordenadas de Ubicación</label>
+                    <input value="{{ubicacion}}" type="text"
+                        class="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed"
+                        name="ubicacion" id="ubicacion" placeholder="Latitud, Longitud" required readonly>
+                </div>
+                {{> map1}}
+                <!-- Mostrar el valor de disponibilidad para depuración -->
+                <p class="hidden">Disponibilidad: {{disponibilidad}}</p>
 
                 <!-- Disponibilidad -->
-                <div class="flex items-center mt-4">
+                <div class="flex items-center">
                     <div class="flex items-center ms-20">
                         <input type="radio" id="disponible" name="disponibilidad" value="1" {{#if (eq disponibilidad
                             1)}}checked{{/if}} required>
                         <label for="disponible" class="ml-2">Disponible</label>
                     </div>
-                    <div class="flex items-center ml-4">
-                        <input type="radio" id="no-disponible" name="disponibilidad" value="0" {{#if (eq disponibilidad
-                            0)}}checked{{/if}} required>
+                    <div class="flex items-center">
+                        <input class="ml-4" type="radio" id="no-disponible" name="disponibilidad" value="0" {{#if (eq
+                            disponibilidad 0)}}checked{{/if}} required>
                         <label for="no-disponible" class="ml-2">No disponible</label>
                     </div>
                 </div>
-
                 <!-- Botón de envío -->
                 <div class="mt-6">
-                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">
-                        Actualizar Actividad
-                    </button>
+                    <button type="submit"
+                        class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Actualizar
+                        Actividad</button>
                 </div>
             </form>
         </div>

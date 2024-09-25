@@ -119,22 +119,44 @@ class ActivityModel {
             throw error;
         }
     }
-    // Metodo para actualizar una actividad
+    // Método para actualizar una actividad
     static async updateActivity(id, activityData) {
         try {
-            const {nombre, costo, descripcion, disponibilidad} = activityData;
+            const {nombre, costo, descripcion, disponibilidad, ubicacion} =
+                activityData;
 
-            // Variables con la consulta SQL y los valores a actualizar
-            const query = `UPDATE actividades SET nombre = ?, costo = ?, descripcion = ?, disponibilidad = ? WHERE id = ?`;
-            const values = [nombre, costo, descripcion, disponibilidad, id];
+            // Verificar si el campo `descripcion` ya es un objeto o si necesita ser convertido en JSON
+            let descripcionJson;
+            if (typeof descripcion === 'object') {
+                descripcionJson = JSON.stringify(descripcion); // Serializar a JSON si es un objeto
+            } else {
+                descripcionJson = descripcion; // Mantener como está si ya es un string JSON
+            }
+
+            console.log('activityData:', activityData);
+            console.log('Descripción JSON:', descripcionJson);
+
+            // Consulta SQL para actualizar la actividad
+            const query = `UPDATE actividades SET nombre = ?, costo = ?, descripcion = ?, disponibilidad = ?, ubicacion = ? WHERE id = ?`;
+            const values = [
+                nombre,
+                costo,
+                descripcionJson,
+                disponibilidad,
+                ubicacion,
+                id,
+            ];
 
             // Ejecutar la consulta SQL
             const [result] = await pool.query(query, values);
+
+            return result;
         } catch (error) {
             console.error(`Error updating item with ID ${id}:`, error);
             throw error;
         }
     }
+
     // Método para cargar múltiples imágenes de una actividad
     static async uploadImages(activityData) {
         try {
