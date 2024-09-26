@@ -1,41 +1,52 @@
-<!-- Modal for Registering Habitacion -->
-<div x-show='registerModalOpen' x-transition.opacity.duration.200ms x-trap.inert.noscroll='registerModalOpen'
-    @click.self='registerModalOpen = false'
-    class='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm'>
-    <div class='bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative'>
-        <!-- Close Button -->
-        <button @click='registerModalOpen = false' class='absolute top-2 right-2 text-gray-500 hover:text-gray-700'>
-            <i class='fa-solid fa-xmark fa-2xl'></i>
-        </button>
+<div x-data='{ modalIsOpen: false }'>
+    <!-- Button to open the modal -->
+    <button type='button' @click='modalIsOpen = true' class='font-medium text-blue-500 hover:text-blue-700'>
+        <i class="fa-solid fa-plus"></i></button>
 
-        <!-- Register Form -->
-        <h2 class='text-2xl font-semibold mb-4 text-center'>Registrar
-            Habitación</h2>
-        <form action='/registerHabitacion' method='post' class='space-y-4'>
-            <!-- Código -->
-            <div class='flex items-center'>
-                <label class='w-32 text-gray-700 font-medium' for='codigo'>Código</label>
-                <input type='text' class='form-input mt-1 block w-full' id='codigo' name='codigo' required />
-            </div>
-            <!-- Tipo -->
-            <div class='flex items-center'>
-                <label class='w-32 text-gray-700 font-medium' for='tipo'>Tipo</label>
-                <input type='text' class='form-input mt-1 block w-full' id='tipo' name='tipo' required />
-            </div>
-            <!-- Costo -->
-            <div class='flex items-center'>
-                <label class='w-32 text-gray-700 font-medium' for='costo'>Costo</label>
-                <input type='text' class='form-input mt-1 block w-full' id='costo' name='costo' required />
-            </div>
-            <!-- Hotel ID (Hidden) -->
-            <input type='hidden' name='idhotel' :value='hotelId' />
+    <!-- Modal Background -->
+    <div x-show='modalIsOpen' x-transition.opacity.duration.200ms x-trap.inert.noscroll='modalIsOpen'
+        @click.self='modalIsOpen = false'
+        class='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm'>
+        <!-- Modal Container -->
+        <div class='bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative'>
+            <!-- Close Button -->
+            <button @click='modalIsOpen = false' class='absolute top-2 right-2 text-gray-500 hover:text-gray-700'>
+                <i class='fa-solid fa-xmark fa-2xl'></i>
+            </button>
+            <!-- Contenido del modal -->
+            <h2 class='text-2xl font-semibold mb-4 text-center'>Registrar Habitación</h2>
+            <form action='/registerHabitacion' method='post' class='space-y-4'>
+                <!-- Código -->
+                <div class='flex items-center'>
+                    <label class='w-32 text-gray-700 font-medium' for='codigo'>Código</label>
+                    <input type='text'
+                        class='form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200'
+                        id='codigo' name='codigo' required />
+                </div>
+                <!-- Tipo -->
+                <div class='flex items-center'>
+                    <label class='w-32 text-gray-700 font-medium' for='tipo'>Tipo</label>
+                    <input type='text'
+                        class='form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200'
+                        id='tipo' name='tipo' required />
+                </div>
+                <!-- Costo -->
+                <div class='flex items-center'>
+                    <label class='w-32 text-gray-700 font-medium' for='costo'>Costo</label>
+                    <input type='number'
+                        class='form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200'
+                        id='costo' name='costo' required />
+                </div>
+                <!-- Hotel ID (Hidden) -->
+                <input type='hidden' name='idhotel' value='{{id}}' />
 
-            <!-- Botón de Envío -->
-            <div class='mt-6'>
-                <button type='submit' class='w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700'>
-                    Registrar Habitación
-                </button>
-            </div>
-        </form>
+                <!-- Botón de envío -->
+                <div class='mt-6'>
+                    <button type='submit'
+                        class='w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700'>Registrar
+                        Habitación</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
