@@ -38,7 +38,7 @@ userRouter.get(
     authMiddleware,
     roleMiddleware('1'),
     (req, res) => {
-        res.render('admin/dashboard', {user: req.user});
+        res.render('admin/dashboard', {user: req.user, layout: 'admin'});
     },
 );
 

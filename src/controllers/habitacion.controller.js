@@ -21,23 +21,13 @@ export class habitacionController {
             });
             console.log('Resultado de la creación de la habitación:', result);
 
-            res.redirect('/partials/habitacionModal'); // Redirigir a la vista de habitaciones
+            res.redirect('/admin/hotels'); // Redirigir a la vista de habitaciones
         } catch (err) {
             console.error('Error al registrar la habitación:', err);
             res.status(500).json({
                 message: 'Error 500:' + err.message,
                 body: req.body,
             });
-        }
-    }
-
-    static async mostrarFormulario(req, res) {
-        try {
-            const hoteles = await hotelModel.getAllHotels(); // Suponiendo que tienes este método en tu modelo de hoteles
-            res.render('partials/registerHabitacion', {hoteles}); // Enviamos los hoteles a la vista
-        } catch (err) {
-            console.error('Error al obtener los hoteles:', err);
-            res.status(500).json({message: 'Error al cargar los hoteles'});
         }
     }
 
@@ -69,15 +59,23 @@ export class habitacionController {
             });
         }
     }
-
-    static async listHabitacion(req, res) {
+    static async showEditHabitacion(req, res) {
         try {
-            const habitaciones = await habitacionModel.getAllHabitaciones(); // Obtener las habitaciones
-            res.render('partials/habitacionModal', {habitaciones}); // Enviar las habitaciones a la vista
+            const {id} = req.params;
+            const habitacion = await habitacionModel.getHabitacionById(id); // Asegúrate de tener este método en tu modelo
+
+            if (!habitacion) {
+                return res
+                    .status(404)
+                    .json({message: 'Habitación no encontrada'});
+            }
+
+            // Renderizar la vista de edición con los datos de la habitación
+            res.render('editHabitacion', {habitacion});
         } catch (err) {
-            console.error('Error al listar las habitaciones:', err);
+            console.error('Error al mostrar la habitación para editar:', err);
             res.status(500).json({
-                message: 'Error al obtener la lista de habitaciones',
+                message: 'Error al obtener los datos de la habitación',
             });
         }
     }
@@ -88,8 +86,11 @@ export class habitacionController {
             const habitaciones = await habitacionModel.getHabitacionesByHotel(
                 hotelId,
             );
+
+            // Si todo está bien, enviamos las habitaciones al cliente en formato JSON
             res.status(200).json({habitaciones});
         } catch (error) {
+            console.error('Error al obtener las habitaciones:', error);
             res.status(500).json({message: 'Error al obtener habitaciones'});
         }
     }

@@ -55,6 +55,22 @@ class habitacionModel {
         }
     }
 
+    static async getHabitacionById(id) {
+        try {
+            const query = 'SELECT * FROM habitaciones WHERE id = ?'; // Asegúrate de que el nombre de la tabla sea correcto
+            const [rows] = await db.execute(query, [id]); // Ejecuta la consulta con el ID proporcionado
+
+            if (rows.length === 0) {
+                return null; // Si no se encuentra ninguna habitación, devuelve null
+            }
+
+            return rows[0]; // Devuelve la primera habitación encontrada
+        } catch (error) {
+            console.error('Error al obtener la habitación por ID:', error);
+            throw error; // Lanza el error para manejarlo en el controlador
+        }
+    }
+
     static async deleteHabitacion(id) {
         try {
             const [result] = await pool.query(

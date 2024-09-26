@@ -1,26 +1,17 @@
 <div x-data='{ modalIsOpen: false }'>
     <!-- Button to open the modal -->
-    <button
-        type='button'
-        @click='modalIsOpen = true'
-        class='font-bold bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-200'
-    >Registrar Hotel</button>
+    <button type='button' @click='modalIsOpen = true'
+        class='font-bold bg-blue-500 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-200'>Registrar
+        Hotel</button>
 
     <!-- Modal Background -->
-    <div
-        x-show='modalIsOpen'
-        x-transition.opacity.duration.200ms
-        x-trap.inert.noscroll='modalIsOpen'
+    <div x-show='modalIsOpen' x-transition.opacity.duration.200ms x-trap.inert.noscroll='modalIsOpen'
         @click.self='modalIsOpen = false'
-        class='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm'
-    >
+        class='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30 backdrop-blur-sm'>
         <!-- Modal Container -->
         <div class='bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative'>
             <!-- Close Button -->
-            <button
-                @click='modalIsOpen = false'
-                class='absolute top-2 right-2 text-gray-500 hover:text-gray-700'
-            >
+            <button @click='modalIsOpen = false' class='absolute top-2 right-2 text-gray-500 hover:text-gray-700'>
                 <i class='fa-solid fa-xmark fa-2xl'></i>
             </button>
             <!-- Contenido del modal -->
@@ -28,98 +19,54 @@
             <form action='/registerHotel' method='post' class='space-y-4'>
                 <!-- Nombre -->
                 <div class='flex items-center'>
-                    <label
-                        class='w-32 text-gray-700 font-medium'
-                        for='nombre'
-                    >Nombre del hotel</label>
-                    <input
-                        type='text'
+                    <label class='w-32 text-gray-700 font-medium' for='nombre'>Nombre del hotel</label>
+                    <input type='text'
                         class='form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200'
-                        id='nombre'
-                        name='nombre'
-                        required
-                    />
+                        id='nombre' name='nombre' required />
                 </div>
                 <!-- Teléfono -->
                 <div class='flex items-center'>
-                    <label
-                        class='w-32 text-gray-700 font-medium'
-                        for='telefono'
-                    >Teléfono</label>
-                    <input
-                        type='tel'
+                    <label class='w-32 text-gray-700 font-medium' for='telefono'>Teléfono</label>
+                    <input type='tel'
                         class='form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200'
-                        id='telefono'
-                        name='telefono'
-                        required
-                    />
+                        id='telefono' name='telefono' required />
                 </div>
                 <!-- Ubicación -->
                 <div class='flex items-center'>
-                    <label
-                        class='w-32 text-gray-700 font-medium'
-                        for='ubicacion'
-                    >Ubicación</label>
-                    <input
-                        type='text'
+                    <label class='w-32 text-gray-700 font-medium' for='ubicacion'>Ubicación</label>
+                    <input type='text'
                         class='form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200'
-                        id='ubicacion'
-                        name='ubicacion'
-                        required
-                    />
+                        id='ubicacion' name='ubicacion' required />
                 </div>
                 <!-- Estrellas -->
                 <div class='flex items-center'>
-                    <label
-                        class='w-32 text-gray-700 font-medium'
-                        for='estrellas'
-                    >Estrellas (1-5)</label>
-                    <input
-                        type='number'
+                    <label class='w-32 text-gray-700 font-medium' for='estrellas'>Estrellas (1-5)</label>
+                    <input type='number'
                         class='form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200'
-                        id='estrellas'
-                        name='estrellas'
-                        min='1'
-                        max='5'
-                        required
-                    />
+                        id='estrellas' name='estrellas' min='1' max='5' required />
                 </div>
                 <!-- Disponibilidad -->
                 <div class='flex items-center'>
-                    <label
-                        class='w-32 text-gray-700 font-medium'
-                        for='disponibilidad'
-                    >Disponibilidad</label>
-                    <select
-                        id='disponibilidad'
-                        name='disponibilidad'
+                    <label class='w-32 text-gray-700 font-medium' for='disponibilidad'>Disponibilidad</label>
+                    <select id='disponibilidad' name='disponibilidad'
                         class='form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200'
-                        required
-                    >
+                        required>
                         <option value='1'>Disponible</option>
                         <option value='0'>No Disponible</option>
                     </select>
                 </div>
                 <!-- Descripción -->
                 <div class='flex items-center'>
-                    <label
-                        class='w-32 text-gray-700 font-medium'
-                        for='descripcion'
-                    >Descripción</label>
-                    <textarea
-                        id='descripcion'
-                        name='descripcion'
-                        rows='4'
+                    <label class='w-32 text-gray-700 font-medium' for='descripcion'>Descripción</label>
+                    <textarea id='descripcion' name='descripcion' rows='4'
                         class='form-textarea mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200'
-                        required
-                    ></textarea>
+                        required></textarea>
                 </div>
                 <!-- Botón de envío -->
                 <div class='mt-6'>
-                    <button
-                        type='submit'
-                        class='w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700'
-                    >Registrar Hotel</button>
+                    <button type='submit'
+                        class='w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700'>Registrar
+                        Hotel</button>
                 </div>
             </form>
         </div>
