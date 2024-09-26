@@ -1,6 +1,4 @@
 import ActivityModel from '../models/activities.model.js';
-import fs from 'fs';
-import {join} from 'path';
 
 class activitiesController {
     // Método para crear una actividad (Post)
@@ -85,8 +83,8 @@ class activitiesController {
             });
         }
     }
-    // Método para Reservar una actividad (Post)
-    static async reserveActivity(req, res) {
+    // Método para ver detalles de la actividad antes de  Reservar (Get)
+    static async detailActivity(req, res) {
         try {
             // Obtener el ID de la actividad de los parámetros de la URL
             const {id} = req.params;
@@ -122,6 +120,107 @@ class activitiesController {
             });
         }
     }
+    // Método para reservar una actividad (Post)
+    static async reserveActivity(req, res) {
+        try {
+            // Obtener los datos del formulario de reserva de actividad desde req.body
+            const {id} = req.params; // Obtener el ID de la actividad de los parámetros de la URL
+            const {nombre, apellidos, telefono, email} = req.body;
+
+            console.log('Datos recibidos:', req.body); // Registro de datos recibidos
+
+            // Validar que el ID esté presente
+            if (!id) {
+                return res.status(400).json({
+                    message: 'El ID de la actividad es obligatorio',
+                });
+            }
+
+            // Validar que todos los campos requeridos estén presentes
+            if (!nombre || !apellidos || !telefono || !email) {
+                return res.status(400).json({
+                    message: 'Todos los campos son obligatorios',
+                });
+            }
+
+            // Verificar que el número de personas sea un número válido
+            if (isNaN(personas)) {
+                return res.status(400).json({
+                    message: 'El número de personas debe ser un número válido',
+                });
+            }
+
+            // Verificar que el teléfono sea un número válido
+            if (isNaN(telefono)) {
+                return res.status(400).json({
+                    message: 'El teléfono debe ser un número válido',
+                });
+            }
+
+            // crear objeto con los datos de la reserva
+            const reserveData = {
+                nombre,
+                fecha,
+                idUsuario: req.session.id,
+                estado,
+                costoTotal,
+            };
+            // Llamar al método reserveActivity del modelo
+            const reserve = await ActivityModel.reserveActivity(id, {
+                reserveData,
+            });
+
+            console.log('Resultado de la reserva de la actividad:', result);
+
+            // Crear objeto con los datos del cliente
+            const informacionCliente = {
+                nombre,
+                apellidos,
+                telefono,
+                email,
+            };
+            // crear objeto para descripción de la reserva ya que es un JSON
+            const descripcion = JSON.stringify({
+                numeroReserva: reserve.insertId,
+                fechaEmision: new Date().toISOString(), // Fecha actual en formato ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ)
+                montoTotal: costoTotal,
+                nombreActividad: nombre,
+                fechaReserva: fecha,
+                ubicacionActividad: ubicacion,
+                personas,
+                informacionCliente,
+            });
+
+            // crear objeto con los datos del detalle de la reserva
+            const detailesReserveData = {
+                idReserva: reserve.insertId,
+                idActividad: id,
+                descripcion,
+                comprobante,
+            };
+
+            // llamar al método detatailsReserveActivity del modelo
+            const detailReserve = await ActivityModel.detailsReserveActivity({
+                detailesReserveData,
+            });
+
+            console.log(
+                'Resultado de la reserva de la actividad:',
+                detailReserve,
+            );
+
+            // Redirigir a la página de inicio después de la reserva exitosa
+            res.redirect('/admin/ListActivities');
+        } catch (err) {
+            // Manejo de errores
+            console.error('Error al reservar la actividad:', err);
+            res.status(500).json({
+                message: 'Error 500: ' + err.message,
+                body: req.body,
+            });
+        }
+    }
+    // Validar que el ID esté presente
     // Método para obtener una actividad por ID (Get)
     static async listActivityById(req, res) {
         try {
@@ -206,7 +305,6 @@ class activitiesController {
             });
         }
     }
-
     // Método para listar todas las actividades (Get)
     static async listActivity(req, res) {
         try {
@@ -440,6 +538,7 @@ class activitiesController {
                 incluido,
                 noIncluido,
                 requisitos,
+                descripcionDetallada,
                 detallesPrincipales,
                 disponibilidad,
                 ubicacion,
@@ -459,6 +558,7 @@ class activitiesController {
                 !incluido ||
                 !noIncluido ||
                 !requisitos ||
+                !descripcionDetallada ||
                 !detallesPrincipales ||
                 !ubicacion ||
                 disponibilidad === undefined
@@ -497,6 +597,7 @@ class activitiesController {
                 noIncluido,
                 requisitos,
                 detallesPrincipales,
+                descripcionDetallada,
             });
 
             console.log('Datos para actualizar:', {
@@ -531,7 +632,6 @@ class activitiesController {
             res.status(500).json({message: 'Error 500: ' + err.message});
         }
     }
-
     // Método para subir imágenes de una actividad específica (Post)
     static async uploadImages(req, res) {
         try {
@@ -569,7 +669,7 @@ class activitiesController {
                 body: result,
             }); */
 
-            res.redirect('/activities');
+            res.redirect('/admin/ListActivities');
         } catch (err) {
             console.error('Error al subir las imágenes:', err);
             res.status(500).json({

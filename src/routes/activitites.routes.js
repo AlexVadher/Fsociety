@@ -26,6 +26,11 @@ routerActivity.get(
 // Ruta para mostrar la vista de reservar una actividad
 routerActivity.get(
     '/details/activity/reserve/:nombre/:id',
+    activitiesController.detailActivity,
+);
+// Ruta para reservar una actividad
+routerActivity.post(
+    '/activity/reservation/:id',
     activitiesController.reserveActivity,
 );
 // Ruta para subir imágenes de una actividad específica

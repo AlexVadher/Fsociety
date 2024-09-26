@@ -156,7 +156,37 @@ class ActivityModel {
             throw error;
         }
     }
-
+    // Método para reservar una actividad
+    static async reserveActivity(id, {reserveData}) {
+        try {
+            const {nombre, email, telefono, fecha} = reserveData;
+            const query = `
+            INSERT INTO detallesreservasactividades (nombre, email, telefono, fecha, idActividad)
+            VALUES (?, ?, ?, ?, ?)`;
+            const values = [nombre, email, telefono, fecha, id];
+            const [result] = await pool.query(query, values);
+            return result;
+        } catch (error) {
+            console.error('Error creating new reservation:', error);
+            throw error;
+        }
+    }
+    // Método para guardar los detalles de una reserva
+    static async detailsReserveActivity(id, {detailesReserveData}) {
+        try {
+            const {idReserva, idActividad, descripcion, comprobante} =
+                detailesReserveData;
+            const query = `
+            INSERT INTO detallesreservasactividades (idReserva, idActividad, descripcion, comprobante)
+            VALUES (?, ?, ?, ?)`;
+            const values = [idReserva, idActividad, descripcion, comprobante];
+            const [result] = await pool.query(query, values);
+            return result;
+        } catch (error) {
+            console.error('Error creating new reservation:', error);
+            throw error;
+        }
+    }
     // Método para cargar múltiples imágenes de una actividad
     static async uploadImages(activityData) {
         try {
