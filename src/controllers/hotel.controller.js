@@ -177,7 +177,7 @@ export class hotelController {
                     active: currentPath.includes('/admin/hotels'),
                 },
                 {
-                    name: 'Hoteles',
+                    name: 'Actividades',
                     link: `/admin/ListActivities`,
                     icon: 'fas fa-calendar-alt',
                     active: currentPath.includes('/admin/ListActivities'),

@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import hotelController from '../controllers/hotel.controller.js';
+import habitacionController from '../controllers/habitacion.controller.js';
 import uploadImages from '../middlewares/imgsHotels.middleware.js';
 import deleteHotelImages from '../middlewares/deleteImgsHotel.middleware.js';
 
@@ -30,5 +31,10 @@ routerHotel.get(
 );
 
 routerHotel.get('/details/hotel/:id', hotelController.listHotelById);
+
+routerHotel.get(
+    '/habitaciones/:hotelId',
+    habitacionController.getHabitacionesByHotel,
+);
 
 export default routerHotel;
