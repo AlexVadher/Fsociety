@@ -2,6 +2,8 @@ import {Router} from 'express';
 import activitiesController from '../controllers/activities.controller.js';
 import uploadImages from '../middlewares/imgsActivities.middleware.js';
 import deleteActivityImages from '../middlewares/deleteImgsActivities.middleware.js';
+import authMiddleware from '../middlewares/authToken.middleware.js';
+import roleMiddleware from '../middlewares/role.middleware.js';
 
 // Crear una instancia de Router para gestionar las rutas de actividades
 const routerActivity = Router();
@@ -12,7 +14,12 @@ routerActivity.post(
     activitiesController.createActivity,
 );
 // Ruta para mostrar todas las actividades
-routerActivity.get('/admin/ListActivities', activitiesController.listActivity);
+routerActivity.get(
+    '/admin/ListActivities',
+    authMiddleware,
+    roleMiddleware('1'),
+    activitiesController.listActivity,
+);
 // Ruta para actualizar una actividad
 routerActivity.post(
     '/admin/updateactivity/:id',

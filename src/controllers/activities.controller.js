@@ -220,7 +220,6 @@ class activitiesController {
             });
         }
     }
-    // Validar que el ID esté presente
     // Método para obtener una actividad por ID (Get)
     static async listActivityById(req, res) {
         try {
@@ -360,8 +359,14 @@ class activitiesController {
 
             const menuItems = [
                 {
+                    name: 'Dashboard',
+                    link: `/admin/dashboard`,
+                    icon: 'fas fa-chart-bar',
+                    active: currentPath.includes('/admin/Dashboard'),
+                },
+                {
                     name: 'Usuarios',
-                    link: `/admin/usuarios`,
+                    link: `#`,
                     icon: 'fas fa-users',
                     active: currentPath.includes('/admin/usuarios'),
                 },
@@ -379,21 +384,15 @@ class activitiesController {
                 },
                 {
                     name: 'Reservas',
-                    link: `/admin/reservas`,
+                    link: `#`,
                     icon: 'fas fa-book',
                     active: currentPath.includes('/admin/reservas'),
                 },
                 {
-                    name: 'Dashboard',
-                    link: `/admin/estadisticas`,
-                    icon: 'fas fa-chart-bar',
-                    active: currentPath.includes('/admin/Dashboard'),
-                },
-                {
                     name: 'Configuración',
-                    link: `/admin/configuracion`,
+                    link: `/profile/settings/:guid`,
                     icon: 'fas fa-cogs',
-                    active: currentPath.includes('/admin/configuracion'),
+                    active: currentPath.includes('/profile/settings/:guid'),
                 },
                 // Puedes añadir más elementos según sea necesario
             ];
@@ -410,7 +409,7 @@ class activitiesController {
                 activitiespage,
                 totalPages,
                 currentPage,
-                layout: 'main',
+                layout: 'admin',
                 title: 'Actividades',
                 currentPath,
                 menuItems: menuItems,

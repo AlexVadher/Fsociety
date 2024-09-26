@@ -122,7 +122,7 @@ export class userController {
                 generos,
                 orientaciones,
                 user,
-                layout: 'main',
+                layout: user.idRol === 1 ? 'admin' : 'main', // Verifica si idRol es 1
                 title: 'Perfil de Usuario',
                 currentPath,
                 menuItems: menuItems,
@@ -279,7 +279,7 @@ export class userController {
             // Renderizar la vista de configuración
             res.render('users/settings', {
                 user,
-                layout: 'main',
+                layout: user.idRol === 1 ? 'admin' : 'main', // Verifica si idRol es 1
                 title: 'Configuración',
                 currentPath,
                 menuItems,
@@ -359,6 +359,66 @@ export class userController {
             return res.status(500).json({
                 message: 'Error 500: ' + err.message,
                 body: req.body,
+            });
+        }
+    }
+    // Método para renderizar la vista de admin protegida
+    static async renderDashboard(req, res) {
+        try {
+            const {user} = req;
+            const currentPath = req.path;
+
+            const menuItems = [
+                {
+                    name: 'Dashboard',
+                    link: `/admin/dashboard`,
+                    icon: 'fas fa-chart-bar',
+                    active: currentPath.includes('/admin/dashboard'),
+                },
+                {
+                    name: 'Usuarios',
+                    link: `#`,
+                    icon: 'fas fa-users',
+                    active: currentPath.includes('/admin/usuarios'),
+                },
+                {
+                    name: 'Hoteles',
+                    link: `/admin/hotels`,
+                    icon: 'fas fa-hotel',
+                    active: currentPath.includes('/admin/hotels'),
+                },
+                {
+                    name: 'Actividades',
+                    link: `/admin/ListActivities`,
+                    icon: 'fas fa-calendar-alt',
+                    active: currentPath.includes('/admin/listActivities'),
+                },
+                {
+                    name: 'Reservas',
+                    link: `#`,
+                    icon: 'fas fa-book',
+                    active: currentPath.includes('/admin/reservas'),
+                },
+                {
+                    name: 'Configuración',
+                    link: `/profile/settings/:guid`,
+                    icon: 'fas fa-cogs',
+                    active: currentPath.includes('/profile/settings/:guid'),
+                },
+                // Puedes añadir más elementos según sea necesario
+            ];
+
+            // Activar dinámicamente el enlace actual
+            menuItems.forEach((item) => {
+                if (item.link === currentPath) {
+                    item.active = true;
+                }
+            });
+            res.render('admin/dashboard', {user, menuItems, layout: 'admin'});
+        } catch (err) {
+            console.error('Error al renderizar el dashboard:', err);
+            return res.status(500).json({
+                message: 'Error interno del servidor',
             });
         }
     }

@@ -1,4 +1,90 @@
-{{!-- views/admin/dashboard.hbs --}}
-<h1>Bienvenido al Dashboard</h1>
-<p>Contenido específico para el área de administración. {{user.nombre}}</p>
+<div class="flex min-h-screen bg-gray-100">
+    <!-- Sidebar -->
+    {{>asideAdmin}}
 
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <h1 class="text-3xl font-semibold mb-6">Dashboard - Actividades</h1>
+
+        <!-- Sección de estadísticas -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Tarjeta 1: Total de Actividades -->
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-gray-700">Total de Actividades</h2>
+                <p class="text-3xl font-bold text-blue-500 mt-4">120</p>
+            </div>
+
+            <!-- Tarjeta 2: Actividades Disponibles -->
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-gray-700">Actividades Disponibles</h2>
+                <p class="text-3xl font-bold text-green-500 mt-4">95</p>
+            </div>
+
+            <!-- Tarjeta 3: Actividades no Disponibles -->
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-gray-700">Actividades no Disponibles</h2>
+                <p class="text-3xl font-bold text-red-500 mt-4">25</p>
+            </div>
+
+            <!-- Tarjeta 4: Usuarios Activos -->
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-gray-700">Usuarios Activos</h2>
+                <p class="text-3xl font-bold text-purple-500 mt-4">150</p>
+            </div>
+        </div>
+
+        <!-- Contenedor principal para gráficos o contenido adicional -->
+        <div class="max-w-full mx-auto bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Gráfica de Actividades</h2>
+            <!-- Aquí podrías agregar una gráfica usando librerías como Chart.js -->
+            <canvas id="activityChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Tabla de actividades -->
+        <div class="max-w-full mx-auto bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-xl font-semibold mb-4">Lista de Actividades Registradas</h2>
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 border-b-2 border-gray-300 text-left">ID</th>
+                        <th class="py-2 px-4 border-b-2 border-gray-300 text-left">Nombre</th>
+                        <th class="py-2 px-4 border-b-2 border-gray-300 text-left">Costo</th>
+                        <th class="py-2 px-4 border-b-2 border-gray-300 text-left">Disponibilidad</th>
+                        <th class="py-2 px-4 border-b-2 border-gray-300 text-left">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="py-2 px-4 border-b border-gray-200">1</td>
+                        <td class="py-2 px-4 border-b border-gray-200">Actividad 1</td>
+                        <td class="py-2 px-4 border-b border-gray-200">$100</td>
+                        <td class="py-2 px-4 border-b border-gray-200">Disponible</td>
+                        <td class="py-2 px-4 border-b border-gray-200">
+                            <a href="#" class="text-blue-500 hover:underline">Editar</a>
+                            <a href="#" class="text-red-500 hover:underline ml-4">Eliminar</a>
+                        </td>
+                    </tr>
+                    <!-- Aquí puedes agregar más filas dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Aquí podrías agregar un script para renderizar una gráfica usando librerías como Chart.js
+    const ctx = document.getElementById('activityChart').getContext('2d');
+    const activityChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+            datasets: [{
+                label: 'Actividades Registradas',
+                data: [12, 19, 3, 5, 2],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        }
+    });
+</script>

@@ -103,14 +103,16 @@ app.use(express.static(join(__dirname, '..', 'public')));
 // Middleware para pasar la clave de API a todas las vistas
 app.use(apikey);
 
-// Rutas de la aplicación
+// Middleware para pasar la sesión a todas las vistas
+app.use((req, res, next) => {
+    // Pasar la sesión de usuario (si existe) a las vistas
+    res.locals.user = req.session.user || null;
+    next();
+});
+
+// Ruta principal
 app.get('/', (req, res) => {
-    // validar si existe la session del usuario
-    if (req.session.user) {
-        res.render('index', {user: req.session.user});
-    } else {
-        res.render('index');
-    }
+    res.render('index');
 });
 
 // Rutas de los usuarios

@@ -19,6 +19,12 @@
       <i class="fa-solid fa-user fa-xs mr-2"></i>
       Perfil
     </a>
+    {{#if (eq user.idRol 1)}}
+    <a href="/admin/dashboard" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-md">
+      <i class="fa-solid fa-tachometer-alt fa-xs mr-2"></i>
+      Dashboard
+    </a>
+    {{else}}
     <a href="/favoritos" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-md">
       <i class="fa-solid fa-heart fa-xs mr-2" style="color: #dd1515;"></i>
       Mis Favoritos
@@ -27,6 +33,7 @@
       <i class="fa-solid fa-calendar-alt fa-xs mr-2" style="color: #da9a23;"></i>
       Mis Reservas
     </a>
+    {{/if}}
     <a href="/profile/settings/" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-md">
       <i class="fa-solid fa-cog fa-xs mr-2"></i>
       Configuración

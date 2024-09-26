@@ -34,12 +34,10 @@ userRouter.post(
 
 // Ruta de admin protegida para usuarios autenticados
 userRouter.get(
-    '/admin/dashboard/',
+    '/admin/dashboard',
     authMiddleware,
     roleMiddleware('1'),
-    (req, res) => {
-        res.render('admin/dashboard', {user: req.user, layout: 'admin'});
-    },
+    userController.renderDashboard,
 );
 
 // mostrar formulario actividades
